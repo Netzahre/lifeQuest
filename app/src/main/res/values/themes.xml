@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LifeQuest" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    </style>
+
+    <style name="botonAzul">
+        <item name="android:background">@drawable/degradado_azul_dia</item> <!-- Gradiente Azul -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="botonNaranja">
+        <item name="android:background">@drawable/degradado_naranja_dia
+        </item> <!-- Gradiente Azul -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="botonRosa">
+        <item name="android:background">@drawable/degradado_rosa_dia</item> <!-- Gradiente Azul -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.LifeQuest" parent="Base.Theme.LifeQuest" />
+</resources>
