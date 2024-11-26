@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
     <!-- Imagen o avatar -->
@@ -11,54 +11,54 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/degradado_azul_dia"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/boton_azul_dia"
         android:scaleType="centerCrop"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="25dp" />
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/nombre_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="nombreUsuario"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="43dp" />
+        android:text="nombreUsuarioMax"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="30dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="184dp"
-        android:layout_height="110dp"
+        android:layout_width="137dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="227dp">
+        tools:layout_editor_absoluteX="274dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="45dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/imageButton"
-                android:layout_width="66dp"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/help" />
 
             <ImageButton
                 android:id="@+id/imageButton6"
-                android:layout_width="66dp"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
-                app:srcCompat="@drawable/tienda" />
+                app:srcCompat="@drawable/Heart" />
 
             <ImageButton
                 android:id="@+id/imageButton2"
-                android:layout_width="66dp"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/cambiarmodo" />
@@ -67,32 +67,163 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="45dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/imageButton3"
-                android:layout_width="66dp"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/coin" />
 
             <ImageButton
                 android:id="@+id/imageButton4"
-                android:layout_width="66dp"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/home" />
 
             <ImageButton
                 android:id="@+id/imageButton5"
-                android:layout_width="66dp"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/cronometro" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="97dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="13dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/resistencia" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0" />
+
+            <LinearLayout
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/fuerza" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="113dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0" />
+
+            <LinearLayout
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/sabiduria" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar5"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="411dp"
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/comidasSup"
+                style="@style/menuNaranja"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0" />
+
+            <Button
+                android:id="@+id/ejercicioSup"
+                style="@style/menuAzul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:shadowColor="@color/black"
+                android:text="Button"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0" />
+
+            <Button
+                android:id="@+id/diaSup"
+                style="@style/menuRosa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button"
+                app:backgroundTint="@null" />
+
         </LinearLayout>
     </LinearLayout>
 
