@@ -3,36 +3,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="160dp"
     android:background="@color/white">
 
     <!-- Imagen o avatar -->
     <!-- Texto del usuario -->
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/boton_azul_dia"
-        android:scaleType="centerCrop"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="210dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="23dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/nombre_usuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="nombreUsuarioMax"
-        android:textSize="12sp"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="30dp" />
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/boton_azul_dia"
+            android:scaleType="centerCrop" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
+
+        <TextView
+            android:id="@+id/nombre_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nombreUsuarioMaxLongitud"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="137dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="274dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout7"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +60,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/ayuda"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
@@ -53,7 +73,7 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
-                app:srcCompat="@drawable/Heart" />
+                app:srcCompat="@drawable/heart" />
 
             <ImageButton
                 android:id="@+id/imageButton2"
@@ -98,15 +118,18 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="97dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="13dp"
+            android:layout_height="17dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -182,17 +205,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="411dp"
-            android:layout_height="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/comidasSup"
                 style="@style/menuNaranja"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="133dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Button"
+                android:text="Comidas"
+                android:textSize="20sp"
                 app:backgroundTint="@null" />
 
             <Space
@@ -203,11 +227,12 @@
             <Button
                 android:id="@+id/ejercicioSup"
                 style="@style/menuAzul"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="133dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:shadowColor="@color/black"
-                android:text="Button"
+                android:text="Ejercicios"
+                android:textSize="20sp"
                 app:backgroundTint="@null" />
 
             <Space
@@ -218,10 +243,11 @@
             <Button
                 android:id="@+id/diaSup"
                 style="@style/menuRosa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="133dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Button"
+                android:text="Dia a dia"
+                android:textSize="20sp"
                 app:backgroundTint="@null" />
 
         </LinearLayout>
