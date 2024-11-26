@@ -99,7 +99,7 @@
                 app:srcCompat="@drawable/coin" />
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/home"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"

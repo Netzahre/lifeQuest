@@ -1,12 +1,15 @@
 package com.example.lifequest
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class Login : AppCompatActivity() {
+    lateinit var botonLogin : Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -15,6 +18,12 @@ class Login : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        botonLogin = findViewById(R.id.acceder)
+        botonLogin.setOnClickListener {
+            val intent = android.content.Intent(this, MainActivity::class.java)
+            println("Login")
+            startActivity(intent)
         }
     }
 }
