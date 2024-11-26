@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="216dp"
-        android:layout_height="230dp"
+        android:layout_height="216dp"
         app:srcCompat="@drawable/applogo"
         tools:layout_editor_absoluteX="97dp"
         tools:layout_editor_absoluteY="16dp" />
@@ -25,29 +25,7 @@
         android:textSize="34sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="255dp" />
-
-    <EditText
-        android:id="@+id/editTextText"
-        style="@style/espacioTexto"
-        android:layout_width="351dp"
-        android:layout_height="69dp"
-        android:ems="10"
-        android:hint="Usuario"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="358dp" />
-
-    <EditText
-        android:id="@+id/editTextText4"
-        style="@style/espacioTexto"
-        android:layout_width="351dp"
-        android:layout_height="69dp"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="484dp" />
+        tools:layout_editor_absoluteY="241dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -57,7 +35,18 @@
         android:text="Nombre usuario"
         android:textSize="20sp"
         tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="331dp" />
+        tools:layout_editor_absoluteY="307dp" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        style="@style/espacioTexto"
+        android:layout_width="351dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="Usuario"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="334dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -67,17 +56,61 @@
         android:text="Contraseña"
         android:textSize="20sp"
         tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="457dp" />
+        tools:layout_editor_absoluteY="410dp" />
+
+    <EditText
+        android:id="@+id/editTextText4"
+        style="@style/espacioTexto"
+        android:layout_width="351dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="437dp" />
 
     <Button
         android:id="@+id/button"
+        style="@style/botonAzul"
+        android:layout_width="188dp"
+        android:layout_height="55dp"
+        android:text="Acceder"
+        android:textSize="20sp"
         app:backgroundTint="@null"
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="516dp" />
 
+    <Button
+        android:id="@+id/button5"
+        style="@style/botonAzul"
+        android:layout_width="188dp"
+        android:layout_height="55dp"
+        android:text="Registrarse"
+        android:textSize="20sp"
+        app:backgroundTint="@null"
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="590dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/botonAzul"
-        android:text="Button"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="585dp" />
+        android:text="@string/passRecovery"
+        android:textAppearance="underline"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="140dp"
+        tools:layout_editor_absoluteY="667dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/TOS"
+        android:textAppearance="underline"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="696dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
