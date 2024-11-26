@@ -7,20 +7,38 @@
     </style>
 
     <style name="botonAzul">
-        <item name="android:background">@drawable/degradado_azul_dia</item> <!-- Gradiente Azul -->
+        <item name="android:background">@drawable/boton_azul_dia</item> <!-- Gradiente Azul -->
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="botonNaranja">
-        <item name="android:background">@drawable/degradado_naranja_dia
+        <item name="android:background">@drawable/boton_naranja_dia
         </item> <!-- Gradiente Azul -->
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="botonRosa">
-        <item name="android:background">@drawable/degradado_rosa_dia</item> <!-- Gradiente Azul -->
+        <item name="android:background">@drawable/boton_rosa_dia</item> <!-- Gradiente Azul -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="menuAzul">
+        <item name="android:background">@drawable/menu_azul_dia</item> <!-- Gradiente Azul -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="menuNaranja">
+        <item name="android:background">@drawable/menu_naranja_dia</item> <!-- Gradiente Azul -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="menuRosa">
+        <item name="android:background">@drawable/menu_rosa_dia</item> <!-- Gradiente Azul -->
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
     </style>
