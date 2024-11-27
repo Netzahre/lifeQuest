@@ -1,5 +1,6 @@
 package com.example.lifequest
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -25,5 +26,9 @@ class Login : AppCompatActivity() {
             println("Login")
             startActivity(intent)
         }
+    }
+    private fun getNightModePreference(): Boolean {
+        val sharedPref = getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
+        return sharedPref.getBoolean("night_mode", false)  // Devuelve false si no hay preferencia guardada (modo claro por defecto)
     }
 }

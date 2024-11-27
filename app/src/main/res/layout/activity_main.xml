@@ -7,20 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/menu_superior"
-        layout="@layout/menu_superior"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
+    <com.example.lifequest.menuSuperior
+        android:id="@+id/menuSuperior"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="416dp"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"></com.example.lifequest.menuSuperior>
 
     <Button
         android:id="@+id/button2"
+        style="@style/botonAzul"
         android:layout_width="171dp"
         android:layout_height="51dp"
         android:layout_marginTop="172dp"
-        style="@style/botonAzul"
         android:text="Button"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,10 +32,10 @@
 
     <Button
         android:id="@+id/button3"
+        style="@style/botonRosa"
         android:layout_width="181dp"
         android:layout_height="62dp"
         android:layout_marginTop="292dp"
-        style="@style/botonRosa"
         android:text="Button"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,15 +45,17 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="184dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="416dp"
         style="@style/botonNaranja"
+        android:layout_width="184dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="416dp"
+        android:layout_marginBottom="424dp"
         android:text="Button"
         app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/menuSuperior" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
