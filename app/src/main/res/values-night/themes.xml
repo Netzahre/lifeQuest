@@ -6,4 +6,9 @@
 
 
     </style>
+    <style name="botonAzul">
+        <item name="android:background">@drawable/boton_azul_noche</item> <!-- Gradiente Azul -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>s
 </resources>
