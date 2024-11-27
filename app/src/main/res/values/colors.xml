@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="progreso_naranja">#FFA35C</color>
+    <color name="progreso_azul">#74E5FB</color>
+    <color name="progreso_rosa">#FF70C8</color>
+
 </resources>

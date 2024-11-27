@@ -16,11 +16,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class menuSuperior @JvmOverloads constructor(
-
-    contexto : Context, atributos : AttributeSet? = null, defStyleAttr : Int = 0) : LinearLayout(contexto, atributos, defStyleAttr
+    contexto: Context, atributos: AttributeSet? = null, defStyleAttr: Int = 0
+) : LinearLayout(
+    contexto, atributos, defStyleAttr
 ) {
     private val PREFS_NAME = "theme_prefs"
     private val KEY_THEME = "current_theme"
+
     init {
 
         //Infla el layout del menu superior (????)
@@ -66,6 +68,7 @@ class menuSuperior @JvmOverloads constructor(
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 saveNightModePreference(false)  // Guardamos que es modo claro
             }
+
             Configuration.UI_MODE_NIGHT_NO -> {
                 // Cambia a modo oscuro
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

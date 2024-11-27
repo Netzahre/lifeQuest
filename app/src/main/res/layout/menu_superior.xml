@@ -2,12 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
+    style="@style/fondo"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:background="@color/white">
-
-    <!-- Imagen o avatar -->
-    <!-- Texto del usuario -->
+    android:layout_height="160dp">
 
     <LinearLayout
         android:id="@+id/perfil"
@@ -61,6 +58,7 @@
 
             <ImageButton
                 android:id="@+id/ayuda"
+                style="@style/icono"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
@@ -69,7 +67,9 @@
 
             <ImageButton
                 android:id="@+id/stats"
+                style="@style/icono"
                 android:layout_width="48dp"
+
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
@@ -77,9 +77,11 @@
 
             <ImageButton
                 android:id="@+id/cambiarModo"
+                style="@style/icono"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
+
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/cambiarmodo" />
 
@@ -92,23 +94,29 @@
 
             <ImageButton
                 android:id="@+id/imageButton3"
+                style="@style/icono"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
+
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/coin" />
 
             <ImageButton
                 android:id="@+id/home"
+                style="@style/icono"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/home" />
 
             <ImageButton
                 android:id="@+id/imageButton5"
+                style="@style/icono"
                 android:layout_width="48dp"
+
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
@@ -139,6 +147,7 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
+                    style="@style/icono"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -149,7 +158,9 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:progress="40"
+                    android:progressTint="@color/progreso_naranja" />
             </LinearLayout>
 
             <Space
@@ -164,7 +175,9 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
+                    style="@style/icono"
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     app:srcCompat="@drawable/fuerza" />
@@ -174,7 +187,9 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="113dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:progress="50"
+                    android:progressTint="@color/progreso_azul" />
             </LinearLayout>
 
             <Space
@@ -189,6 +204,7 @@
 
                 <ImageView
                     android:id="@+id/imageView5"
+                    style="@style/icono"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -197,9 +213,11 @@
                 <ProgressBar
                     android:id="@+id/progressBar5"
                     style="?android:attr/progressBarStyleHorizontal"
+                    android:progressTint="@color/progreso_rosa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:progress="50" />
 
             </LinearLayout>
         </LinearLayout>
