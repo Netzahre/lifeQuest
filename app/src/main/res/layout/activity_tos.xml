@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TOS">
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView12"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terminos de uso"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="708dp"
+            android:scrollbarSize="0dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Última actualización: Cuando toque  1. ACEPTACIÓN DE LOS TÉRMINOS Al descargar, instalar, acceder o utilizar la aplicación &quot;[Nombre de la App]&quot; (en adelante, &quot;la Aplicación&quot;), usted acepta cumplir con estos Términos y Condiciones de uso (en adelante, &quot;los Términos&quot;). Si no está de acuerdo con estos Términos, debe desinstalar la Aplicación y dejar de utilizarla inmediatamente.  2. DESCRIPCIÓN DE LA APLICACIÓN La Aplicación está diseñada para ayudar a los usuarios a gestionar diversos aspectos de su vida, como la planificación de tareas, el seguimiento de la ingesta de alimentos, y la monitorización de actividades físicas. También incluye elementos de gamificación para incentivar hábitos de vida saludables, mediante la obtención de puntos y niveles en función de los objetivos logrados.  3. REQUISITOS DE USO Para utilizar la Aplicación, debe ser mayor de 18 años o tener el consentimiento de un padre o tutor legal si es menor de 18 años. También debe tener acceso a un dispositivo compatible y a una conexión a internet estable. El uso de la Aplicación está sujeto a cualquier tarifa aplicable que pueda cobrarse por el uso de servicios móviles y de datos.  4. INFORMACIÓN PERSONAL Y PRIVACIDAD El uso de la Aplicación puede implicar el procesamiento de su información personal. Para más detalles sobre cómo recopilamos, utilizamos y protegemos su información personal, consulte nuestra [Política de Privacidad]. Al utilizar la Aplicación, usted acepta la recopilación y uso de su información conforme a dicha Política.  5. USO DE LA APLICACIÓN Usted acepta utilizar la Aplicación exclusivamente para su uso personal. No debe utilizarla para fines comerciales, ilegales o no autorizados. En particular, usted se compromete a no:  Usar la Aplicación de manera que pueda dañar, deshabilitar, sobrecargar o deteriorar los servidores o redes conectadas a la Aplicación. Interferir con el uso y disfrute de la Aplicación por parte de otros usuarios. Intentar acceder de manera no autorizada a otros sistemas o cuentas relacionados con la Aplicación. 6. PAGO Y SUSCRIPCIONES Algunas funcionalidades de la Aplicación pueden estar disponibles a través de una suscripción de pago o compras dentro de la Aplicación. Si elige comprar una suscripción o realizar una compra, acepta pagar todas las tarifas aplicables, incluidos los impuestos correspondientes. Nos reservamos el derecho de cambiar las tarifas en cualquier momento, notificándole con antelación cualquier cambio." />
+            </LinearLayout>
+        </ScrollView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/atrasTOS"
+            style="@style/botonAzul"
+            android:layout_width="243dp"
+            android:layout_height="75dp"
+            android:text="Atras"
+            android:textSize="34sp"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

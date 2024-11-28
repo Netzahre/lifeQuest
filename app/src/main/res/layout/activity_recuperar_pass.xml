@@ -5,19 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
-    style="@style/fondo">
+    style="@style/fondo"
+
+    tools:context=".recuperarPass">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -27,38 +26,48 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="5dp" />
+            android:layout_height="15dp" />
 
         <TextView
             android:id="@+id/textView"
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bienvenido/a"
-            android:textSize="34sp"
-            android:textStyle="bold" />
+            android:text="¿Olvidaste tu contraseña?"
+            android:textSize="32dp"
+            android:textStyle="bold|italic" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <TextView
+            android:id="@+id/textView9"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Introduce tu email y te enviaremos un link para restablecerla"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout6"
-        android:layout_width="0dp"
+        android:layout_width="367dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginBottom="56dp"
         android:gravity="start"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        tools:layout_editor_absoluteX="22dp"
+        tools:layout_editor_absoluteY="397dp">
 
         <TextView
             android:id="@+id/textView2"
             style="@style/texto"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre usuario"
+            android:text="Email"
+            android:textAlignment="center"
             android:textSize="20sp" />
 
         <EditText
@@ -67,48 +76,26 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Usuario"
+            android:hint="Email"
             android:inputType="text" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            style="@style/texto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Contraseña"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/editTextText4"
-            style="@style/espacioTexto"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="text" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="558dp">
 
         <Button
             android:id="@+id/cerrarses"
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="Acceder"
+            android:text="restablecer"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 
@@ -121,25 +108,13 @@
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="Registrarse"
+            android:text="atras"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/passRecovery"
-            android:textSize="16sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="110dp" />
 
         <TextView
             android:id="@+id/textView5"
@@ -149,5 +124,4 @@
             android:text="@string/TOS"
             android:textSize="16sp" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

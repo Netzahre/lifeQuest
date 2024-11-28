@@ -5,17 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
+    tools:context=".perfil"
     style="@style/fondo">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="112dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -34,62 +35,66 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bienvenido/a"
+            android:text="user"
             android:textSize="34sp"
             android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginBottom="56dp"
-        android:gravity="start"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/textView2"
-            style="@style/texto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nombre usuario"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/editTextText"
-            style="@style/espacioTexto"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:hint="Usuario"
-            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="10dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/EmailUser"
             style="@style/texto"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contraseña"
+            android:text="EmailUser"
+            android:textAlignment="center"
             android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/editTextText4"
-            style="@style/espacioTexto"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="text" />
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/textView15"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Monedas ahorradas"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/monedas3"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/textView14"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Monedas gastadas"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/monedasGastadas"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAlignment="center"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -106,40 +111,15 @@
         <Button
             android:id="@+id/cerrarses"
             style="@style/botonAzul"
-            android:layout_width="243dp"
+            android:layout_width="wrap_content"
             android:layout_height="75dp"
-            android:text="Acceder"
-            android:textSize="34sp"
-            app:backgroundTint="@null" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
-
-        <Button
-            android:id="@+id/atras"
-            style="@style/botonAzul"
-            android:layout_width="243dp"
-            android:layout_height="75dp"
-            android:text="Registrarse"
+            android:text="Cerrar Sesion"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/passRecovery"
-            android:textSize="16sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
 
         <TextView
             android:id="@+id/textView5"
@@ -149,5 +129,16 @@
             android:text="@string/TOS"
             android:textSize="16sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/atrasPerfil"
+        style="@style/botonAzul"
+        android:layout_width="196dp"
+        android:layout_height="66dp"
+        android:text="Atras"
+        android:textSize="34sp"
+        app:backgroundTint="@null"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

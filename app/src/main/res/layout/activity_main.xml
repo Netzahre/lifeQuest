@@ -11,53 +11,68 @@
         android:id="@+id/menuSuperior"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="416dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button2"
-        style="@style/botonAzul"
-        android:layout_width="171dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="172dp"
-        android:text="Button"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button3"
-        style="@style/botonRosa"
-        android:layout_width="181dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="292dp"
-        android:text="Button"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button4"
-        style="@style/botonNaranja"
-        android:layout_width="184dp"
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="416dp"
-        android:layout_marginBottom="424dp"
-        android:text="Button"
-        app:backgroundTint="@null"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuSuperior" />
+        app:layout_constraintTop_toBottomOf="@+id/menuSuperior">
+
+        <Button
+            android:id="@+id/comidasSup2"
+            style="@style/menuNaranja"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Tareas"
+            android:textSize="60sp"
+            app:backgroundTint="@null" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="0" />
+
+        <Button
+            android:id="@+id/ejerciciosSup2"
+            style="@style/menuAzul"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:shadowColor="@color/black"
+            android:text="Logros"
+            android:textSize="60sp"
+            app:backgroundTint="@null" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="0" />
+
+        <Button
+            android:id="@+id/diaSup2"
+            style="@style/menuRosa"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Calendario"
+            android:textSize="60sp"
+            app:backgroundTint="@null" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

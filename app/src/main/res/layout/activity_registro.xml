@@ -3,26 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
-    style="@style/fondo">
+    tools:context=".Registro">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="216dp"
-            android:layout_height="216dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:srcCompat="@drawable/applogo" />
 
         <Space
@@ -37,6 +38,15 @@
             android:text="Bienvenido/a"
             android:textSize="34sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView6"
+            style="@style/texto"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:text="¡Vamos a crear una cuenta para que puedas empezar!"
+            android:textAlignment="center"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,13 +55,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
         android:layout_marginEnd="22dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="13dp"
         android:gravity="start"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <TextView
             android:id="@+id/textView2"
@@ -72,7 +82,28 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextText2"
+            style="@style/espacioTexto"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="text" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <TextView
             android:id="@+id/textView4"
@@ -90,18 +121,39 @@
             android:ems="10"
             android:hint="Contraseña"
             android:inputType="text" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            style="@style/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Repite tu contraseña"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextText3"
+            style="@style/espacioTexto"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="text" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
         <Button
             android:id="@+id/cerrarses"
@@ -114,7 +166,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="35dp" />
+            android:layout_height="25dp" />
 
         <Button
             android:id="@+id/atras"
@@ -130,18 +182,6 @@
             android:layout_height="20dp" />
 
         <TextView
-            android:id="@+id/textView3"
-            style="@style/url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/passRecovery"
-            android:textSize="16sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
             android:id="@+id/textView5"
             style="@style/url"
             android:layout_width="wrap_content"
@@ -149,5 +189,4 @@
             android:text="@string/TOS"
             android:textSize="16sp" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
