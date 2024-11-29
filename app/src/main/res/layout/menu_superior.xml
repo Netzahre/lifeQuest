@@ -74,7 +74,6 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-
                 android:backgroundTint="#00FFFFFF"
                 android:contentDescription="Cambiar Modo"
                 app:srcCompat="@drawable/cambiarmodo" />
@@ -98,7 +97,7 @@
                 app:srcCompat="@drawable/coin" />
 
             <ImageButton
-                android:id="@+id/home"
+                android:id="@+id/mic"
                 style="@style/icono"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -106,7 +105,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
                 android:contentDescription="Home"
-                app:srcCompat="@drawable/home" />
+                app:srcCompat="@drawable/mic" />
 
         </LinearLayout>
     </LinearLayout>

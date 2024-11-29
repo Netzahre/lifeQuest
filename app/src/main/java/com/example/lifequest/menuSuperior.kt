@@ -20,7 +20,7 @@ class menuSuperior @JvmOverloads constructor(
         LayoutInflater.from(contexto).inflate(R.layout.menu_superior, this, true)
 
         //Configura la navegacion
-        findViewById<ImageButton>(R.id.home).setOnClickListener {
+        findViewById<ImageButton>(R.id.mic).setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
         }
@@ -29,6 +29,19 @@ class menuSuperior @JvmOverloads constructor(
             cambiarModo()
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun cambiarModo() {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
