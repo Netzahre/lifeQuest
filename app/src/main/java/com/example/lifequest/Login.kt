@@ -22,8 +22,7 @@ class Login : AppCompatActivity() {
         }
         botonLogin = findViewById(R.id.cerrarses)
         botonLogin.setOnClickListener {
-            val intent = android.content.Intent(this, MainActivity::class.java)
-            println("Login")
+            val intent = android.content.Intent(this, crearTarea::class.java)
             startActivity(intent)
         }
     }

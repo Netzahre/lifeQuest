@@ -39,15 +39,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
+            android:background="@drawable/menu_naranja_dia"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView13"
-                style="@style/menuAzul"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Logros"
+                android:text="Tareas"
+                style="@style/menuNaranja"
                 android:textAlignment="center"
                 android:textSize="34sp" />
         </LinearLayout>
@@ -64,7 +64,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/crearLogro"
+                android:id="@+id/crearTarea"
                 style="@style/botonAzul"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/borrarLogro"
+                android:id="@+id/borrarTarea"
                 style="@style/botonAzul"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
@@ -96,13 +96,13 @@
             android:contentDescription="tareas">
 
             <LinearLayout
-                android:id="@+id/contenedorLogros"
+                android:id="@+id/contenedorTareas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerLogros"
+                    android:id="@+id/listaTareasDia"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp" />

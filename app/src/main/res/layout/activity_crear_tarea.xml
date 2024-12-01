@@ -1,0 +1,254 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="cantidad"
+    style="fondo"
+    tools:context=".crearTarea">
+
+
+    <com.example.lifequest.menuSuperior
+        android:id="@+id/menuSuperior"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menuSuperior">
+        <!-- Header -->
+
+        <!-- Botones de Añadir y Cancelar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/menuNaranja"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Añadir tarea"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/añadirtar"
+                style="@style/botonAzul"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Añadir"
+                android:textSize="19sp"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+            <Button
+                android:id="@+id/botonAtras"
+                style="@style/botonAzul"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Cancelar"
+                android:textSize="19sp"
+                app:backgroundTint="@null" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
+            android:layout_weight="0" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarSize="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/texto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Datos básicos"
+                        android:textAlignment="center"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/nombreTarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Nombre de la tarea" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/texto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Monedas de recompensa"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <SeekBar
+                        android:id="@+id/barraProgreso"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressBackgroundTint="#8C8C8C"
+                        android:progressTint="@color/progreso_naranja"
+                        android:thumbTint="@color/progreso_naranja" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/cantidadMonLabel"
+                            android:layout_width="220dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:text="0"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="monedas"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/texto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Veces que se repite la tarea"
+                        android:textAlignment="center"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/cantidadRepeticiones"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:ems="10"
+                        android:hint="¿Cuantas veces se repite la tarea?"
+                        android:inputType="number" />
+
+                    <Spinner
+                        android:id="@+id/tipoRepeticion"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        style="@style/texto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha inicio tarea"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <CalendarView
+                        android:id="@+id/calendario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="cantidad"
+                        android:minDate="01/01/2024" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Barra de cantidad de experiencia -->
+
+        <!-- Estadística Spinner -->
+
+        <!-- Fecha tarea -->
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

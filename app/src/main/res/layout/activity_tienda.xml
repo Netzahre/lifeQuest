@@ -6,7 +6,7 @@
     style="@style/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activityTienda">
 
     <com.example.lifequest.menuSuperior
         android:id="@+id/menuSuperior"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Logros"
+                android:text="Tienda"
                 android:textAlignment="center"
                 android:textSize="34sp" />
         </LinearLayout>
@@ -64,7 +64,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/crearLogro"
+                android:id="@+id/crearPremio"
                 style="@style/botonAzul"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/borrarLogro"
+                android:id="@+id/borrarPremio"
                 style="@style/botonAzul"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
@@ -92,22 +92,21 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="0"
             android:contentDescription="tareas">
 
-            <LinearLayout
-                android:id="@+id/contenedorLogros"
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/contenedorPremios"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="2dp"
+                app:alignItems="center"
+                app:flexDirection="row"
+                app:flexWrap="wrap"
+                app:justifyContent="center">
+            </com.google.android.flexbox.FlexboxLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerLogros"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="2dp" />
-
-            </LinearLayout>
         </ScrollView>
 
     </LinearLayout>

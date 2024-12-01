@@ -13,6 +13,24 @@
         android:theme="@style/Theme.LifeQuest"
         tools:targetApi="31">
         <activity
+            android:name=".crearPremio"
+            android:exported="false" />
+        <activity
+            android:name=".crearLogro"
+            android:exported="false" />
+        <activity
+            android:name=".calendario_activity"
+            android:exported="false" />
+        <activity
+            android:name=".crearTarea"
+            android:exported="false" />
+        <activity
+            android:name=".tareas"
+            android:exported="false" />
+        <activity
+            android:name=".activityTienda"
+            android:exported="false" />
+        <activity
             android:name=".formularioLogro"
             android:exported="false" />
         <activity

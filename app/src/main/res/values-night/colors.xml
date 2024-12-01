@@ -3,6 +3,4 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="progreso_naranja">#a9541d</color>
-    <color name="progreso_azul">#166094</color>
-    <color name="progreso_rosa">#a92f79</color>
 </resources>
