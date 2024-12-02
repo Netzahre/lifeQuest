@@ -20,7 +20,7 @@ class Login : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        botonLogin = findViewById(R.id.cerrarses)
+        botonLogin = findViewById(R.id.cerrarse)
         botonLogin.setOnClickListener {
             val intent = android.content.Intent(this, crearTarea::class.java)
             startActivity(intent)

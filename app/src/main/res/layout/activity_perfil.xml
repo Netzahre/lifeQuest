@@ -131,7 +131,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/cerrarses"
+            android:id="@+id/cerrarse"
             style="@style/botonAzul"
             android:layout_width="wrap_content"
             android:layout_height="75dp"
