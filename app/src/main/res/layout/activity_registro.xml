@@ -6,7 +6,7 @@
     style="@style/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registro">
+    tools:context=".RegistroActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -72,7 +72,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/nombreRegistro"
             style="@style/espacioTexto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -93,7 +93,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/correoRegistro"
             style="@style/espacioTexto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -114,13 +114,13 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextText4"
+            android:id="@+id/contrasenaRegistro"
             style="@style/espacioTexto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="text" />
+            android:inputType="textPassword" />
 
         <Space
             android:layout_width="match_parent"
@@ -135,13 +135,13 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextText3"
+            android:id="@+id/contrasenaConfirmacion"
             style="@style/espacioTexto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="text" />
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -169,7 +169,7 @@
             android:layout_height="25dp" />
 
         <Button
-            android:id="@+id/cerrarse"
+            android:id="@+id/botonAtras"
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
@@ -182,7 +182,7 @@
             android:layout_height="20dp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/urlTOS"
             style="@style/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

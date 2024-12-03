@@ -86,7 +86,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/tienda"
                 style="@style/icono"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -127,7 +127,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/comidasSup"
+                android:id="@+id/tareasMenuSuperior"
                 style="@style/menuNaranja"
                 android:layout_width="133dp"
                 android:layout_height="48dp"
@@ -142,7 +142,7 @@
                 android:layout_weight="0" />
 
             <Button
-                android:id="@+id/ejerciciosSup"
+                android:id="@+id/logrosMenuSuperior"
                 style="@style/menuAzul"
                 android:layout_width="133dp"
                 android:layout_height="48dp"
@@ -158,7 +158,7 @@
                 android:layout_weight="0" />
 
             <Button
-                android:id="@+id/diaSup"
+                android:id="@+id/agendaMenuSuperior"
                 style="@style/menuRosa"
                 android:layout_width="133dp"
                 android:layout_height="48dp"

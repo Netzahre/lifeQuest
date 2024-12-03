@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class tareas : AppCompatActivity() {
+class TareasActivity : AppCompatActivity() {
     private val tareasSeleccionadas = mutableSetOf<Int>() // Almacena IDs de logros seleccionados
     private var modoSeleccionActivo = false // Controla si el modo de selección está activo
 
@@ -34,7 +34,7 @@ class tareas : AppCompatActivity() {
         cagarTareas(contenedorTareas)
 
         botonCrear.setOnClickListener {
-            val intent = android.content.Intent(this, crearTarea::class.java)
+            val intent = android.content.Intent(this, CrearTareaActivity::class.java)
             startActivity(intent)
         }
 
@@ -86,7 +86,7 @@ class tareas : AppCompatActivity() {
 
         for ((index, tarea) in logros.withIndex()) {
             val inflater = LayoutInflater.from(this)
-            val nuevaTarea = inflater.inflate(R.layout.tarea_norepetible, null)
+            val nuevaTarea = inflater.inflate(R.layout.tarea, null)
 
             nuevaTarea.findViewById<TextView>(R.id.nombre).text = tarea.first
             nuevaTarea.findViewById<TextView>(R.id.ganancia).text = tarea.second

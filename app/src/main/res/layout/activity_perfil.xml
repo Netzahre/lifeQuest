@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".perfil"
+    tools:context=".PerfilActivity"
     style="@style/fondo">
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_height="5dp" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/mosrarUsuarioPerfil"
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:layout_height="10dp" />
 
         <TextView
-            android:id="@+id/EmailUser"
+            android:id="@+id/mostrarEmailPerfil"
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,16 +57,15 @@
             android:layout_height="10dp" />
 
         <TextView
-            android:id="@+id/textView15"
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Monedas ahorradas"
+            android:text="Monedas en posesion"
             android:textAlignment="center"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/monedas3"
+            android:id="@+id/mostrarMonedasPerfil"
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,7 +109,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/monedasGastadas2"
+            android:id="@+id/tareascompletadas"
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,7 +130,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/cerrarse"
+            android:id="@+id/cerrarSesion"
             style="@style/botonAzul"
             android:layout_width="wrap_content"
             android:layout_height="75dp"
@@ -144,7 +143,7 @@
             android:layout_height="20dp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/urlTOS"
             style="@style/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

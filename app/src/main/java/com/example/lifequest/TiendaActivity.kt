@@ -16,7 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.flexbox.FlexboxLayout
 
-class activityTienda : AppCompatActivity() {
+class TiendaActivity : AppCompatActivity() {
     private val premiosSeleccionados = mutableSetOf<Int>() // Almacena IDs de premios seleccionados
     private var modoSeleccionActivo = false // Controla si el modo de selección está activo
 

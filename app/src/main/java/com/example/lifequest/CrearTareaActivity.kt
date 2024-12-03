@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class crearTarea : AppCompatActivity() {
+class CrearTareaActivity : AppCompatActivity() {
 
     lateinit var cantidadMonedas : TextView
     lateinit var añadirTarea : Button

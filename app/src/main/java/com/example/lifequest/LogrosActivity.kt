@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class activityLogros : AppCompatActivity() {
+class LogrosActivity : AppCompatActivity() {
     private val logrosSeleccionados = mutableSetOf<Int>() // Almacena IDs de logros seleccionados
     private var modoSeleccionActivo = false // Controla si el modo de selección está activo
 
@@ -23,7 +23,7 @@ class activityLogros : AppCompatActivity() {
             insets
         }
 
-        val botonCrear = findViewById<Button>(R.id.crearPremio)
+        val botonCrear = findViewById<Button>(R.id.crearLogro)
         val botonBorrar = findViewById<Button>(R.id.borrarLogro)
         val contenedorLogros = findViewById<LinearLayout>(R.id.contenedorLogros)
 

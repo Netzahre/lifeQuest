@@ -13,43 +13,40 @@
         android:theme="@style/Theme.LifeQuest"
         tools:targetApi="31">
         <activity
-            android:name=".crearPremio"
+            android:name=".CrearPremioActivity"
             android:exported="false" />
         <activity
-            android:name=".crearLogro"
+            android:name=".CrearLogroActivity"
             android:exported="false" />
         <activity
-            android:name=".calendario_activity"
+            android:name=".CalendarioActivity"
             android:exported="false" />
         <activity
-            android:name=".crearTarea"
+            android:name=".CrearTareaActivity"
             android:exported="false" />
         <activity
-            android:name=".tareas"
+            android:name=".TareasActivity"
             android:exported="false" />
         <activity
-            android:name=".activityTienda"
+            android:name=".TiendaActivity"
             android:exported="false" />
         <activity
-            android:name=".formularioLogro"
+            android:name=".LogrosActivity"
             android:exported="false" />
         <activity
-            android:name=".activityLogros"
+            android:name=".PerfilActivity"
             android:exported="false" />
         <activity
-            android:name=".perfil"
+            android:name=".TOSActivity"
             android:exported="false" />
         <activity
-            android:name=".TOS"
+            android:name=".RecuperarPassActivity"
             android:exported="false" />
         <activity
-            android:name=".recuperarPass"
+            android:name=".RegistroActivity"
             android:exported="false" />
         <activity
-            android:name=".Registro"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +55,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:exported="true" />
     </application>
 

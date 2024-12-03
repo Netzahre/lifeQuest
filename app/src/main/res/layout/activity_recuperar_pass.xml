@@ -3,20 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/fondo"
-
-    tools:context=".recuperarPass">
+    tools:context=".RecuperarPassActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="16dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView"
@@ -54,12 +55,16 @@
 
     <LinearLayout
         android:id="@+id/linearLayout6"
-        android:layout_width="367dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="22dp"
         android:gravity="start"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="22dp"
-        tools:layout_editor_absoluteY="397dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <TextView
             android:id="@+id/textView2"
@@ -71,7 +76,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/correoRecuperar"
             style="@style/espacioTexto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -85,13 +90,15 @@
         android:id="@+id/linearLayout7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="558dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/cerrarse"
+            android:id="@+id/restablecer"
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
@@ -117,7 +124,7 @@
             android:layout_height="110dp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/urlTOS"
             style="@style/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

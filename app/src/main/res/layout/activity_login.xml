@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
+    tools:context=".LoginActivity"
     style="@style/fondo">
 
     <LinearLayout
@@ -62,13 +62,14 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/usuario"
             style="@style/espacioTexto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Usuario"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="netzahre" />
 
         <Space
             android:layout_width="match_parent"
@@ -83,13 +84,14 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextText4"
+            android:id="@+id/contrasenauser"
             style="@style/espacioTexto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="text" />
+            android:inputType="textPassword"
+            android:text="pollito23" />
     </LinearLayout>
 
     <LinearLayout
@@ -104,7 +106,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/cerrarse"
+            android:id="@+id/acceder"
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
@@ -117,7 +119,7 @@
             android:layout_height="35dp" />
 
         <Button
-            android:id="@+id/atras"
+            android:id="@+id/accederRegistro"
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
@@ -130,7 +132,7 @@
             android:layout_height="20dp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/passOlvidada"
             style="@style/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,7 +144,7 @@
             android:layout_height="10dp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/urlTOS"
             style="@style/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
