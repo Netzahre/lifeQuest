@@ -40,6 +40,23 @@ class PerfilActivity : AppCompatActivity() {
         urlTOS = findViewById(R.id.urlTOS)
         cerrarPerfil = findViewById(R.id.atrasPerfil)
 
+        val cursor = db.rawQuery("SELECT usuario FROM sesionActual", null)
+        if (cursor.moveToFirst()) {
+            val cursor = db.rawQuery("SELECT * FROM usuarios WHERE usuario = '${cursor.getString(0)}'", null)
+            if (cursor.moveToFirst()) {
+                nombreUsuario.text = cursor.getString(0)
+                cantidadMonedas.text = cursor.getInt(3).toString()
+                cantidadTareas.text = cursor.getInt(4).toString()
+                monedasGastadas.text = cursor.getInt(5).toString()
+                emailUsuario.text = cursor.getString(1)
+
+
+            }
+        }
+        urlTOS.setOnClickListener {
+            val intent = Intent(this, TOSActivity::class.java)
+            startActivity(intent)
+        }
         cerrarSesion.setOnClickListener {
             db.execSQL("DELETE FROM sesionActual")
             Toast.makeText(this, "Sesion cerrada", Toast.LENGTH_SHORT).show()

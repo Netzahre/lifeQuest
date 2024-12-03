@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/menuSuperior">
 
         <Button
-            android:id="@+id/comidasSup2"
+            android:id="@+id/tareasDash"
             style="@style/menuNaranja"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -49,7 +49,7 @@
             android:layout_weight="0" />
 
         <Button
-            android:id="@+id/ejerciciosSup2"
+            android:id="@+id/logrosDash"
             style="@style/menuAzul"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -65,7 +65,7 @@
             android:layout_weight="0" />
 
         <Button
-            android:id="@+id/diaSup2"
+            android:id="@+id/agendaDash"
             style="@style/menuRosa"
             android:layout_width="match_parent"
             android:layout_height="48dp"
