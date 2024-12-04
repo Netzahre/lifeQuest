@@ -30,7 +30,6 @@ class TareasActivity : AppCompatActivity() {
 
         tareasLayout = findViewById(R.id.contenedorTareas)
 
-        // Cargar tareas de la base de datos
         cargarTareas()
 
         val botonCrear = findViewById<Button>(R.id.crearTarea)
@@ -48,7 +47,7 @@ class TareasActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        cargarTareas()  // Recarga las tareas cuando la actividad vuelve al foco
+        cargarTareas()
     }
 
     fun obtenerFechaActual(): String {
@@ -99,7 +98,6 @@ class TareasActivity : AppCompatActivity() {
             cursor.close()
             bd.close()
 
-            // Actualiza las tareas en la vista
             actualizarTareasEnVista(tareasList)
         }
     }
@@ -118,7 +116,10 @@ class TareasActivity : AppCompatActivity() {
 
             // Deshabilitar el CheckBox si la tarea ya está completada o no es el momento adecuado para marcarla
             checkBox.isChecked = tarea.completada == 1
-            checkBox.isEnabled = !isRepeticionPendiente(tarea) && tarea.vecesCompletada < tarea.repeticiones
+
+            if (tarea.tipoRepeticion == "dias" || tarea.tipoRepeticion == "semanas") {
+                checkBox.isEnabled = !isRepeticionPendiente(tarea)
+            }
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked && !isRepeticionPendiente(tarea)) {
@@ -128,12 +129,11 @@ class TareasActivity : AppCompatActivity() {
                     actualizarTareaEnBaseDeDatos(tarea)
                     darRecompensa(tarea)
 
-                    if (tarea.tipoRepeticion != "Diaria" && tarea.tipoRepeticion != "Semanal") {
+                    if (tarea.tipoRepeticion != "dias" && tarea.tipoRepeticion != "semanas") {
                         if (tarea.vecesCompletada >= tarea.repeticiones) {
                             eliminarTarea(tarea)
                         }
                     }
-
                 } else {
                     tarea.completada = 0
                     actualizarTareaEnBaseDeDatos(tarea)

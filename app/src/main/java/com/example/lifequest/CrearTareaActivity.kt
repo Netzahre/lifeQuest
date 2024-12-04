@@ -40,7 +40,7 @@ class CrearTareaActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        var listaspinner = arrayOf("veces", "dias", "semanas", "meses")
+        var listaspinner = arrayOf("veces", "dias", "semanas")
         tipoRepeticion = findViewById<Spinner>(R.id.tipoRepeticion)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaspinner)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -105,7 +105,6 @@ class CrearTareaActivity : AppCompatActivity() {
                 put("repeticiones", repeticiones)
                 put("tipoRepeticion", tipo)
                 put("fechaInicio", fechaFormateada)
-                put("completada", 0)
                 put("usuario", usuarioActual)
             }
             bd.insert("Tareas", null, values)
