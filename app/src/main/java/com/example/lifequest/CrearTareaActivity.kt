@@ -92,7 +92,6 @@ class CrearTareaActivity : AppCompatActivity() {
             val month = datePicker.month
             val dayOfMonth = datePicker.dayOfMonth
 
-            // Convertir la fecha seleccionada a milisegundos
             val calendar = Calendar.getInstance()
             calendar.set(year, month, dayOfMonth)
             val fechaEnMilisegundos = calendar.timeInMillis
