@@ -2,8 +2,10 @@ package com.example.lifequest
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CalendarView
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Spinner
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -26,7 +29,7 @@ class CrearTareaActivity : AppCompatActivity() {
     lateinit var barraProgreso: SeekBar
     lateinit var cantidadRepeticiones: EditText
     lateinit var tipoRepeticion: Spinner
-    lateinit var calendario: CalendarView
+    lateinit var datePicker: DatePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,19 +40,25 @@ class CrearTareaActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        var listaspinner = arrayOf("veces", "dias", "semanas", "meses")
+        tipoRepeticion = findViewById<Spinner>(R.id.tipoRepeticion)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaspinner)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        tipoRepeticion.adapter = adapter
+
         cantidadMonedas = findViewById(R.id.cantidadMonLabel)
-        anadirTarea = findViewById(R.id.añadirtar)
+        anadirTarea = findViewById(R.id.anadirtar)
         botonAtras = findViewById(R.id.botonAtras)
         nombreTextView = findViewById(R.id.nombreTarea)
         barraProgreso = findViewById(R.id.barraProgreso)
         cantidadRepeticiones = findViewById(R.id.cantidadRepeticiones)
-        tipoRepeticion = findViewById(R.id.tipoRepeticion)
-        calendario = findViewById(R.id.calendario)
+        datePicker = findViewById(R.id.calendario)
 
         barraProgreso.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 cantidadMonedas.text = progress.toString()
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
@@ -62,45 +71,66 @@ class CrearTareaActivity : AppCompatActivity() {
             finish()
         }
     }
+    private fun formatearFecha(fechaEnMilisegundos: Long): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val fecha = Date(fechaEnMilisegundos)
+        return sdf.format(fecha)
+    }
 
     fun añadirTarea() {
         val usuarioActual = obtenerUsuarioActual()
         if (usuarioActual == null) {
-            // Manejar el caso donde no hay usuario activo
+            Toast.makeText(this, "Error al obtener usuario", Toast.LENGTH_SHORT).show()
             return
         }
+        try {
+            val nombre = nombreTextView.text.toString()
+            val monedas = cantidadMonedas.text.toString().toIntOrNull() ?: 0
+            val repeticiones = cantidadRepeticiones.text.toString().toIntOrNull() ?: 1
+            val tipo = tipoRepeticion.selectedItem.toString()
+            val year = datePicker.year
+            val month = datePicker.month
+            val dayOfMonth = datePicker.dayOfMonth
 
-        val nombre = nombreTextView.text.toString()
-        val monedas = cantidadMonedas.text.toString().toIntOrNull() ?: 0
-        val repeticiones = cantidadRepeticiones.text.toString().toIntOrNull() ?: 1
-        val tipo = tipoRepeticion.selectedItem.toString()
-        val fecha = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            // Convertir la fecha seleccionada a milisegundos
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, dayOfMonth)
+            val fechaEnMilisegundos = calendar.timeInMillis
+            val fechaFormateada = formatearFecha(fechaEnMilisegundos)
 
-        val bd = SQLiteAyudante(this, "LifeQuestDB", null, 1).writableDatabase
-        val values = ContentValues().apply {
-            put("nombre", nombre)
-            put("monedas", monedas)
-            put("repeticiones", repeticiones)
-            put("tipoRepeticion", tipo)
-            put("fechaInicio", fecha)
-            put("completada", 0)
-            put("usuario", usuarioActual)
+            val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+            val values = ContentValues().apply {
+                put("nombre", nombre)
+                put("monedas", monedas)
+                put("repeticiones", repeticiones)
+                put("tipoRepeticion", tipo)
+                put("fechaInicio", fechaFormateada)
+                put("completada", 0)
+                put("usuario", usuarioActual)
+            }
+            bd.insert("Tareas", null, values)
+            Toast.makeText(this, "Tarea añadida", Toast.LENGTH_SHORT).show()
+            bd.close()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al añadir tarea", Toast.LENGTH_SHORT).show()
         }
-        bd.insert("Tareas", null, values)
-        bd.close()
         finish()
     }
 
     fun obtenerUsuarioActual(): String? {
-        val bd = SQLiteAyudante(this, "LifeQuestDB", null, 1).readableDatabase
-        val cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
         var usuario: String? = null
-        if (cursor.moveToFirst()) {
-            usuario = cursor.getString(0)
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
+        try {
+            var cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
+            if (cursor.moveToFirst()) {
+                usuario = cursor.getString(0)
+                cursor.close()
+                bd.close()
+                return usuario
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al obtener usuario: ${e.message}", Toast.LENGTH_LONG).show()
         }
-        cursor.close()
-        bd.close()
         return usuario
     }
-
 }

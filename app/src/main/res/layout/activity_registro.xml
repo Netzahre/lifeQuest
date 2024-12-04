@@ -78,7 +78,8 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Usuario"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="netzahre" />
 
         <Space
             android:layout_width="match_parent"
@@ -99,7 +100,8 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Email"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="zuljin3@gmail.com" />
 
         <Space
             android:layout_width="match_parent"
@@ -120,7 +122,8 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="pollito23" />
 
         <Space
             android:layout_width="match_parent"
@@ -141,7 +144,8 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="pollito23" />
     </LinearLayout>
 
     <LinearLayout

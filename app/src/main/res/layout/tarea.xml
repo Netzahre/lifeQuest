@@ -2,12 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="385dp"
-    android:layout_height="80dp"
+    android:id="@+id/cardView"
+    style="@style/fondoCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp"
-    style="@style/fondoCard"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -20,11 +21,11 @@
 
         <!-- CheckBox o RadioButton -->
 
-        <RadioButton
-            android:id="@+id/radio"
+        <CheckBox
+            android:id="@+id/checkbox"
+            style="@style/icono"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            style="@style/icono"
             android:layout_marginStart="8dp"
             android:buttonTint="@color/black"
             android:checked="false" />
@@ -38,19 +39,19 @@
 
             <TextView
                 android:id="@+id/nombre"
+                style="@style/texto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tarea NO Repetible"
-                style="@style/texto"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ganancia"
+                style="@style/texto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(+5 monedas)"
-                style="@style/texto"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>

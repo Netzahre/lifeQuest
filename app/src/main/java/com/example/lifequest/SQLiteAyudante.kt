@@ -13,7 +13,7 @@ class SQLiteAyudante(
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("CREATE TABLE usuarios (usuario TEXT PRIMARY KEY, correo TEXT, contrasena TEXT, monedas INTEGER, tareas_completadas INTEGER, monedas_gastadas INTEGER, modoOscuro INTEGER)")
         db?.execSQL("CREATE TABLE sesionActual (usuario TEXT PRIMARY KEY, modoOscuro INTEGER)")
-        db?.execSQL("CREATE TABLE Tareas (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, monedas INTEGER, repeticiones INTEGER, tipoRepeticion TEXT, fechaInicio TEXT, completada INTEGER, usuario TEXT, FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON DELETE CASCADE)")
+        db?.execSQL("CREATE TABLE Tareas (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, monedas INTEGER, repeticiones INTEGER, tipoRepeticion TEXT, fechaInicio TEXT, completada INTEGER, ultimaRepeticion TEXT, vecesCompletada INTEGER, usuario TEXT, FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON DELETE CASCADE)")
         db?.execSQL("CREATE TABLE premios (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, descripcion TEXT, costo INTEGER, usuario TEXT)")
 
     }
