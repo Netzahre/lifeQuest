@@ -18,7 +18,6 @@ class TareasActivity : AppCompatActivity() {
     private val tareasSeleccionadas = mutableSetOf<Int>()
     private var modoSeleccionActivo = false
     private lateinit var tareasLayout: LinearLayout
-    private val tareas = mutableListOf<Tarea>() // Aquí se almacenan las tareas que mostrarás
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,9 +128,12 @@ class TareasActivity : AppCompatActivity() {
                     actualizarTareaEnBaseDeDatos(tarea)
                     darRecompensa(tarea)
 
-                    if (tarea.vecesCompletada >= tarea.repeticiones) {
-                        eliminarTarea(tarea)
+                    if (tarea.tipoRepeticion != "Diaria" && tarea.tipoRepeticion != "Semanal") {
+                        if (tarea.vecesCompletada >= tarea.repeticiones) {
+                            eliminarTarea(tarea)
+                        }
                     }
+
                 } else {
                     tarea.completada = 0
                     actualizarTareaEnBaseDeDatos(tarea)
@@ -153,6 +155,91 @@ class TareasActivity : AppCompatActivity() {
             tareasLayout.addView(tareaView) // Agregar la vista de la tarea al LinearLayout
         }
     }
+
+    private fun eliminarTarea(tarea: Tarea) {
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+        bd.execSQL(
+            "DELETE FROM Tareas WHERE id = ?",
+            arrayOf(tarea.id)
+        )
+        bd.close()
+
+        // Recargar las tareas después de eliminar una
+        cargarTareas()
+    }
+    private fun darRecompensa(tarea: Tarea) {
+        val usuarioActivo = obtenerUsuarioActual() ?: return
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+
+        bd.execSQL(
+            "UPDATE Usuarios SET monedas = monedas + ? WHERE usuario = ?",
+            arrayOf(tarea.monedas, usuarioActivo)
+        )
+
+        bd.close()
+    }
+
+    private fun actualizarTareaEnBaseDeDatos(tarea: Tarea) {
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+        bd.execSQL(
+            "UPDATE Tareas SET completada = ?, vecesCompletada = ?, ultimaRepeticion = ? WHERE id = ?",
+            arrayOf(tarea.completada, tarea.vecesCompletada, tarea.ultimaRepeticion, tarea.id)
+        )
+        bd.close()
+    }
+
+
+    private fun isRepeticionPendiente(tarea: Tarea): Boolean {
+        // Verifica si ha pasado el tiempo necesario para completar la tarea
+        val ultimaRepeticion = tarea.ultimaRepeticion
+        val tipoRepeticion = tarea.tipoRepeticion
+        val repeticiones = tarea.repeticiones
+
+        if (ultimaRepeticion == null) {
+            return false // Si nunca se ha completado, se puede completar
+        }
+
+        // Obtener la fecha actual
+        val fechaActual = obtenerFechaActual()
+
+        return when (tipoRepeticion) {
+            "Diaria" -> {
+                // Comprobar si han pasado 'repeticiones' días desde la última repetición
+                val diferenciaDias = obtenerDiferenciaEnDias(fechaActual, ultimaRepeticion)
+                diferenciaDias < repeticiones
+            }
+
+            "Semanal" -> {
+                // Comprobar si han pasado 'repeticiones' semanas desde la última repetición
+                val diferenciaSemanas = obtenerDiferenciaEnSemanas(fechaActual, ultimaRepeticion)
+                diferenciaSemanas < repeticiones
+            }
+
+            "Veces" -> {
+                // Si el tipo es "Veces", solo se puede marcar como completada si no ha alcanzado el número de veces
+                tarea.vecesCompletada < repeticiones
+            }
+
+            else -> false
+        }
+    }
+
+    private fun obtenerDiferenciaEnDias(fecha1: String, fecha2: String): Int {
+        // Lógica para calcular la diferencia en días entre dos fechas
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date1 = sdf.parse(fecha1)
+        val date2 = sdf.parse(fecha2)
+
+        val diferencia = date1.time - date2.time
+        return (diferencia / (1000 * 60 * 60 * 24)).toInt() // Convertir la diferencia a días
+    }
+
+    private fun obtenerDiferenciaEnSemanas(fecha1: String, fecha2: String): Int {
+        // Lógica para calcular la diferencia en semanas entre dos fechas
+        val diasDiferencia = obtenerDiferenciaEnDias(fecha1, fecha2)
+        return diasDiferencia / 7
+    }
+
 
     private fun borrarTareasSeleccionadas() {
         val usuarioActivo = obtenerUsuarioActual()
