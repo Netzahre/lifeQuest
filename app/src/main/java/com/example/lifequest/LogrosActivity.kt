@@ -31,41 +31,43 @@ class LogrosActivity : AppCompatActivity() {
         cargarLogrosDesdeBD(contenedorLogros)
 
         botonCrear.setOnClickListener {
-            // Lógica para añadir un nuevo logro
-            val inflater = LayoutInflater.from(this)
-            val nuevoLogro = inflater.inflate(R.layout.logro, null)
-
-            // Personaliza los textos del logro
-            nuevoLogro.findViewById<TextView>(R.id.nombre).text = "Logro Ejemplo"
-            nuevoLogro.findViewById<TextView>(R.id.ganancia).text = "Descripción del logro"
-
-            // Configura los márgenes manualmente
-            val layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            layoutParams.setMargins(16, 8, 16, 8)
-            nuevoLogro.layoutParams = layoutParams
-
-            // Asigna un ID temporal para el logro
-            val logroId = contenedorLogros.childCount // ID temporal basado en posición
-            nuevoLogro.tag = logroId
-
-            // Lógica de selección (solo en modo de selección)
-            nuevoLogro.setOnClickListener {
-                if (modoSeleccionActivo) {
-                    if (logrosSeleccionados.contains(logroId)) {
-                        logrosSeleccionados.remove(logroId)
-                        nuevoLogro.alpha = 1.0f // Deseleccionado
-                    } else {
-                        logrosSeleccionados.add(logroId)
-                        nuevoLogro.alpha = 0.5f // Seleccionado
-                    }
-                }
-            }
-
-            // Agrega el nuevo logro al contenedor
-            contenedorLogros.addView(nuevoLogro)
+            val intent = android.content.Intent(this, CrearLogroActivity::class.java)
+            startActivity(intent)
+//            // Lógica para añadir un nuevo logro
+//            val inflater = LayoutInflater.from(this)
+//            val nuevoLogro = inflater.inflate(R.layout.logro, null)
+//
+//            // Personaliza los textos del logro
+//            nuevoLogro.findViewById<TextView>(R.id.nombre).text = "Logro Ejemplo"
+//            nuevoLogro.findViewById<TextView>(R.id.ganancia).text = "Descripción del logro"
+//
+//            // Configura los márgenes manualmente
+//            val layoutParams = LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.WRAP_CONTENT
+//            )
+//            layoutParams.setMargins(16, 8, 16, 8)
+//            nuevoLogro.layoutParams = layoutParams
+//
+//            // Asigna un ID temporal para el logro
+//            val logroId = contenedorLogros.childCount // ID temporal basado en posición
+//            nuevoLogro.tag = logroId
+//
+//            // Lógica de selección (solo en modo de selección)
+//            nuevoLogro.setOnClickListener {
+//                if (modoSeleccionActivo) {
+//                    if (logrosSeleccionados.contains(logroId)) {
+//                        logrosSeleccionados.remove(logroId)
+//                        nuevoLogro.alpha = 1.0f // Deseleccionado
+//                    } else {
+//                        logrosSeleccionados.add(logroId)
+//                        nuevoLogro.alpha = 0.5f // Seleccionado
+//                    }
+//                }
+//            }
+//
+//            // Agrega el nuevo logro al contenedor
+//            contenedorLogros.addView(nuevoLogro)
         }
 
         botonBorrar.setOnClickListener {

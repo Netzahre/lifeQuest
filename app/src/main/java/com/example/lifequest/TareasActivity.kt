@@ -1,5 +1,6 @@
 package com.example.lifequest
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -41,7 +42,18 @@ class TareasActivity : AppCompatActivity() {
         }
 
         botonBorrar.setOnClickListener {
-            borrarTareasSeleccionadas()
+            if (!modoSeleccionActivo) {
+                // Activar modo selección
+                modoSeleccionActivo = true
+                tareasSeleccionadas.clear()
+                botonBorrar.text = "Confirmar"
+                Toast.makeText(this, "Selecciona las tareas a eliminar", Toast.LENGTH_SHORT).show()
+            } else {
+                // Confirmar eliminación de tareas seleccionadas
+                borrarTareasSeleccionadas()
+                modoSeleccionActivo = false
+                botonBorrar.text = "Borrar"
+            }
         }
     }
 
@@ -58,7 +70,7 @@ class TareasActivity : AppCompatActivity() {
     private fun cargarTareas() {
         val usuarioActivo = obtenerUsuarioActual()
         if (usuarioActivo != null) {
-            val fechaActual = obtenerFechaActual()  // Obtén la fecha actual
+            val fechaActual = obtenerFechaActual()
 
             val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
 
@@ -103,7 +115,7 @@ class TareasActivity : AppCompatActivity() {
     }
 
     private fun actualizarTareasEnVista(tareasList: List<Tarea>) {
-        tareasLayout.removeAllViews() // Limpiar el LinearLayout
+        tareasLayout.removeAllViews()
 
         tareasList.forEach { tarea ->
             val tareaView = layoutInflater.inflate(R.layout.tarea, tareasLayout, false)
@@ -114,7 +126,6 @@ class TareasActivity : AppCompatActivity() {
             nombreTextView.text = tarea.nombre
             gananciaTextView.text = "${tarea.monedas} monedas"
 
-            // Deshabilitar el CheckBox si la tarea ya está completada o no es el momento adecuado para marcarla
             checkBox.isChecked = tarea.completada == 1
 
             if (tarea.tipoRepeticion == "dias" || tarea.tipoRepeticion == "semanas") {
@@ -123,59 +134,89 @@ class TareasActivity : AppCompatActivity() {
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked && !isRepeticionPendiente(tarea)) {
-                    tarea.completada = 1
-                    tarea.vecesCompletada += 1
-                    tarea.ultimaRepeticion = obtenerFechaActual()
-                    actualizarTareaEnBaseDeDatos(tarea)
-                    darRecompensa(tarea)
-
-                    if (tarea.tipoRepeticion != "dias" && tarea.tipoRepeticion != "semanas") {
-                        if (tarea.vecesCompletada >= tarea.repeticiones) {
-                            eliminarTarea(tarea)
-                        }
-                    }
+                    completarTarea(tarea)
                 } else {
                     tarea.completada = 0
                     actualizarTareaEnBaseDeDatos(tarea)
                 }
             }
 
-            // Manejar la selección/deselección de tareas
             tareaView.setOnClickListener {
                 if (modoSeleccionActivo) {
+                    // Cambiar estado de selección
                     if (tareasSeleccionadas.contains(tarea.id)) {
                         tareasSeleccionadas.remove(tarea.id)
+                        tareaView.alpha = 1f // Quitar selección
                     } else {
                         tareasSeleccionadas.add(tarea.id)
+                        tareaView.alpha = 0.5f // Marcar como seleccionada
                     }
-                    tareaView.alpha = if (tareasSeleccionadas.contains(tarea.id)) 0.5f else 1f
+                } else {
+                    // Otras acciones cuando no está en modo selección
+                    Toast.makeText(
+                        this,
+                        "Mantén pulsado 'Borrar tareas' para activar la selección",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-
-            tareasLayout.addView(tareaView) // Agregar la vista de la tarea al LinearLayout
         }
+    }
+    private fun completarTarea(tarea: Tarea) {
+        tarea.completada = 1
+        tarea.vecesCompletada += 1
+        tarea.ultimaRepeticion = obtenerFechaActual()
+
+        actualizarTareaEnBaseDeDatos(tarea)
+        darRecompensa(tarea)
+        actualizarLogros(tarea)
+
+        if (tarea.tipoRepeticion != "dias" && tarea.tipoRepeticion != "semanas") {
+            if (tarea.vecesCompletada >= tarea.repeticiones) {
+                eliminarTarea(tarea)
+            }
+        }
+    }
+
+    private fun actualizarLogros(tarea: Tarea) {
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+
+        val cursor = bd.rawQuery(
+            "SELECT id, repeticiones_necesarias, progreso, completado FROM logros WHERE tarea_asociada = ? AND completado = 0",
+            arrayOf(tarea.nombre)
+        )
+
+        while (cursor.moveToNext()) {
+            val logroId = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+            val repeticionesNecesarias = cursor.getInt(cursor.getColumnIndexOrThrow("repeticiones_necesarias"))
+            val progresoActual = cursor.getInt(cursor.getColumnIndexOrThrow("progreso"))
+
+            val nuevoProgreso = progresoActual + 1
+            val completado = if (nuevoProgreso >= repeticionesNecesarias) 1 else 0
+
+            val values = ContentValues().apply {
+                put("progreso", nuevoProgreso)
+                put("completado", completado)
+            }
+
+            bd.update("logros", values, "id = ?", arrayOf(logroId.toString()))
+        }
+
+        cursor.close()
+        bd.close()
     }
 
     private fun eliminarTarea(tarea: Tarea) {
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
-        bd.execSQL(
-            "DELETE FROM Tareas WHERE id = ?",
-            arrayOf(tarea.id)
-        )
+        bd.execSQL("DELETE FROM Tareas WHERE id = ?", arrayOf(tarea.id))
         bd.close()
-
-        // Recargar las tareas después de eliminar una
         cargarTareas()
     }
+
     private fun darRecompensa(tarea: Tarea) {
         val usuarioActivo = obtenerUsuarioActual() ?: return
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
-
-        bd.execSQL(
-            "UPDATE Usuarios SET monedas = monedas + ? WHERE usuario = ?",
-            arrayOf(tarea.monedas, usuarioActivo)
-        )
-
+        bd.execSQL("UPDATE Usuarios SET monedas = monedas + ? WHERE usuario = ?", arrayOf(tarea.monedas, usuarioActivo))
         bd.close()
     }
 
@@ -188,96 +229,7 @@ class TareasActivity : AppCompatActivity() {
         bd.close()
     }
 
-
-    private fun isRepeticionPendiente(tarea: Tarea): Boolean {
-        // Verifica si ha pasado el tiempo necesario para completar la tarea
-        val ultimaRepeticion = tarea.ultimaRepeticion
-        val tipoRepeticion = tarea.tipoRepeticion
-        val repeticiones = tarea.repeticiones
-
-        if (ultimaRepeticion == null) {
-            return false // Si nunca se ha completado, se puede completar
-        }
-
-        // Obtener la fecha actual
-        val fechaActual = obtenerFechaActual()
-
-        return when (tipoRepeticion) {
-            "Diaria" -> {
-                // Comprobar si han pasado 'repeticiones' días desde la última repetición
-                val diferenciaDias = obtenerDiferenciaEnDias(fechaActual, ultimaRepeticion)
-                diferenciaDias < repeticiones
-            }
-
-            "Semanal" -> {
-                // Comprobar si han pasado 'repeticiones' semanas desde la última repetición
-                val diferenciaSemanas = obtenerDiferenciaEnSemanas(fechaActual, ultimaRepeticion)
-                diferenciaSemanas < repeticiones
-            }
-
-            "Veces" -> {
-                // Si el tipo es "Veces", solo se puede marcar como completada si no ha alcanzado el número de veces
-                tarea.vecesCompletada < repeticiones
-            }
-
-            else -> false
-        }
-    }
-
-    private fun obtenerDiferenciaEnDias(fecha1: String, fecha2: String): Int {
-        // Lógica para calcular la diferencia en días entre dos fechas
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date1 = sdf.parse(fecha1)
-        val date2 = sdf.parse(fecha2)
-
-        val diferencia = date1.time - date2.time
-        return (diferencia / (1000 * 60 * 60 * 24)).toInt() // Convertir la diferencia a días
-    }
-
-    private fun obtenerDiferenciaEnSemanas(fecha1: String, fecha2: String): Int {
-        // Lógica para calcular la diferencia en semanas entre dos fechas
-        val diasDiferencia = obtenerDiferenciaEnDias(fecha1, fecha2)
-        return diasDiferencia / 7
-    }
-
-
-    private fun borrarTareasSeleccionadas() {
-        val usuarioActivo = obtenerUsuarioActual()
-        if (usuarioActivo == null) {
-            Toast.makeText(this, "No se encontró un usuario activo", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (!modoSeleccionActivo) {
-            modoSeleccionActivo = true
-            Toast.makeText(this, "Selecciona las tareas a borrar", Toast.LENGTH_SHORT).show()
-        } else {
-            if (tareasSeleccionadas.isEmpty()) {
-                Toast.makeText(this, "No has seleccionado ninguna tarea", Toast.LENGTH_SHORT).show()
-                return
-            }
-
-            // Eliminar las tareas de la base de datos
-            val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
-            for (id in tareasSeleccionadas) {
-                bd.execSQL(
-                    "DELETE FROM Tareas WHERE id = ? AND usuario = ?",
-                    arrayOf(id.toString(), usuarioActivo)
-                )
-            }
-            bd.close()
-
-            // Limpiar el LinearLayout y recargar las tareas
-            tareasSeleccionadas.clear()
-            Toast.makeText(this, "Tareas eliminadas", Toast.LENGTH_SHORT).show()
-
-            // Desactivar el modo selección
-            modoSeleccionActivo = false
-            cargarTareas()
-        }
-    }
-
-    fun obtenerUsuarioActual(): String? {
+    private fun obtenerUsuarioActual(): String? {
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
         val cursor = bd.rawQuery("SELECT usuario FROM sesionActual LIMIT 1", null)
         var usuario: String? = null
@@ -288,4 +240,57 @@ class TareasActivity : AppCompatActivity() {
         bd.close()
         return usuario
     }
+
+    private fun isRepeticionPendiente(tarea: Tarea): Boolean {
+        val ultimaRepeticion = tarea.ultimaRepeticion
+        val tipoRepeticion = tarea.tipoRepeticion
+        val repeticiones = tarea.repeticiones
+
+        if (ultimaRepeticion == null) return false
+
+        val fechaActual = obtenerFechaActual()
+
+        return when (tipoRepeticion) {
+            "Diaria" -> obtenerDiferenciaEnDias(fechaActual, ultimaRepeticion) < repeticiones
+            "Semanal" -> obtenerDiferenciaEnSemanas(fechaActual, ultimaRepeticion) < repeticiones
+            else -> false
+        }
+    }
+
+    private fun obtenerDiferenciaEnDias(fechaActual: String, fechaAnterior: String): Int {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val actual = sdf.parse(fechaActual)
+        val anterior = sdf.parse(fechaAnterior)
+        return ((actual.time - anterior.time) / (1000 * 60 * 60 * 24)).toInt()
+    }
+
+    private fun obtenerDiferenciaEnSemanas(fechaActual: String, fechaAnterior: String): Int {
+        val dias = obtenerDiferenciaEnDias(fechaActual, fechaAnterior)
+        return dias / 7
+    }
+
+    private fun borrarTareasSeleccionadas() {
+        if (tareasSeleccionadas.isEmpty()) {
+            Toast.makeText(this, "No hay tareas seleccionadas para eliminar", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+        tareasSeleccionadas.forEach { id ->
+            bd.execSQL("DELETE FROM Tareas WHERE id = ?", arrayOf(id))
+        }
+        tareasSeleccionadas.clear()
+        bd.close()
+
+        Toast.makeText(this, "Tareas eliminadas", Toast.LENGTH_SHORT).show()
+
+        // Restablecer la transparencia de las tareas
+        for (i in 0 until tareasLayout.childCount) {
+            val tareaView = tareasLayout.getChildAt(i)
+            tareaView.alpha = 1f
+        }
+
+        cargarTareas()
+    }
+
 }

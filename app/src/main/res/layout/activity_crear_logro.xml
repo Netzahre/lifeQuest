@@ -60,7 +60,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/añadirLogro"
+                android:id="@+id/anadirLogro"
                 style="@style/botonAzul"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
@@ -118,12 +118,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="Nombre de la tarea" />
-
-                    <EditText
-                        android:id="@+id/descripcionLogro"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:hint="Descripcion del logro" />
 
                 </LinearLayout>
 
@@ -218,7 +212,7 @@
                         android:textAlignment="center" />
 
                     <Spinner
-                        android:id="@+id/tipoRepeticion"
+                        android:id="@+id/tareaAsignada"
                         android:layout_width="match_parent"
                         android:layout_height="48dp" />
 
