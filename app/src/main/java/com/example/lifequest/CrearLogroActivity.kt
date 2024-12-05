@@ -19,7 +19,7 @@ class CrearLogroActivity : AppCompatActivity() {
     private lateinit var dbHelper: SQLiteAyudante
     private lateinit var tareasSpinner: Spinner
     private lateinit var tareasLista: List<String>
-    lateinit var barraProgreso: SeekBar
+    private lateinit var barraProgreso: SeekBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +39,7 @@ class CrearLogroActivity : AppCompatActivity() {
             insets
         }
 
+        barraProgreso = findViewById(R.id.barraLogro)
         val nombreLogroInput = findViewById<EditText>(R.id.nombreLogro)
         val premioLogroInput = findViewById<TextView>(R.id.cantidadMonedas)
         val repeticionesInput = findViewById<EditText>(R.id.cantidadRepeticiones)
@@ -85,15 +86,10 @@ class CrearLogroActivity : AppCompatActivity() {
     // Método para cargar las tareas en el Spinner
     private fun cargarTareasEnSpinner() {
         val db = dbHelper.readableDatabase
-        val usuario = db.rawQuery("SELECT usuario FROM sesionActual", null)
-        if (!usuario.moveToFirst()) {
-            return
-        }
-        val usuarioActual = usuario.getString(usuario.getColumnIndexOrThrow("usuario"))
-        usuario.close()
+        val usuario = obtenerUsuarioActual()
 
         // Consulta para obtener las tareas del usuario actual
-        val cursor = db.rawQuery("SELECT nombre FROM Tareas WHERE usuario = ?", arrayOf(usuarioActual))
+        val cursor = db.rawQuery("SELECT nombre FROM Tareas WHERE usuario = ?", arrayOf(usuario))
         // Extraer nombres de tareas en una lista
         tareasLista = mutableListOf<String>().apply {
             while (cursor.moveToNext()) {
@@ -105,7 +101,7 @@ class CrearLogroActivity : AppCompatActivity() {
         // Configurar el adaptador del Spinner
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            android.R.layout.simple_spinner_dropdown_item,
             tareasLista
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -115,18 +111,40 @@ class CrearLogroActivity : AppCompatActivity() {
     // Método para insertar el logro en la base de datos
     private fun crearLogro(
         nombre: String,
-        descripcion: String,
+        premio: String,
         tareaAsociada: String,
         repeticionesNecesarias: Int
     ) {
+        val usuario = obtenerUsuarioActual()
         val db = dbHelper.writableDatabase
+
         val values = ContentValues().apply {
             put("nombre", nombre)
-            put("descripcion", descripcion)
+            put("premio", premio)
             put("tarea_asociada", tareaAsociada)
             put("repeticiones_necesarias", repeticionesNecesarias)
+            put("progreso", 0)
+            put("completado", 0)
+            put("usuario", usuario)
         }
         db.insert("logros", null, values)
+    }
+
+    fun obtenerUsuarioActual(): String? {
+        var usuario: String? = null
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
+        try {
+            var cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
+            if (cursor.moveToFirst()) {
+                usuario = cursor.getString(0)
+                cursor.close()
+                bd.close()
+                return usuario
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al obtener usuario: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+        return usuario
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.lifequest
 
 import android.content.DialogInterface
+import android.content.ContentValues
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +16,12 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.flexbox.FlexboxLayout
+import android.database.sqlite.SQLiteDatabase
 
 class TiendaActivity : AppCompatActivity() {
     private val premiosSeleccionados = mutableSetOf<Int>() // Almacena IDs de premios seleccionados
     private var modoSeleccionActivo = false // Controla si el modo de selección está activo
-
+    private lateinit var contenedorPremios: FlexboxLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,53 +34,14 @@ class TiendaActivity : AppCompatActivity() {
 
         val botonCrear = findViewById<Button>(R.id.crearPremio)
         val botonBorrar = findViewById<Button>(R.id.borrarPremio)
-        val contenedorPremios = findViewById<FlexboxLayout>(R.id.contenedorPremios) // Cambio aquí
+        contenedorPremios = findViewById(R.id.contenedorPremios)
 
-        // Carga los premios (usando datos simulados por ahora)
-        cargarPremios(contenedorPremios)
+        // Carga los premios desde la base de datos
+        cargarPremios()
 
         botonCrear.setOnClickListener {
-            // Lógica para añadir un nuevo premio
-            val inflater = LayoutInflater.from(this)
-            val nuevoPremio = inflater.inflate(
-                R.layout.premio,
-                contenedorPremios,
-                false
-            ) // Inflar en el contenedor para respetar la jerarquía
-
-            // Personaliza los textos del premio
-            nuevoPremio.findViewById<TextView>(R.id.nombrePremio).text = "Nuevo Premio"
-            nuevoPremio.findViewById<TextView>(R.id.costoPremio).text = "Descripción del premio"
-
-            // Se asegura de que la vista inflada tenga las dimensiones correctas
-            val layoutParams = FlexboxLayout.LayoutParams(
-                100.dpToPx(),  // Convertimos 100dp a píxeles según la densidad de la pantalla
-                100.dpToPx()   // Lo mismo para la altura
-            )
-
-            // Asigna un ID temporal para el premio
-            val premioId = contenedorPremios.childCount
-            nuevoPremio.tag = premioId
-
-            nuevoPremio.setOnClickListener {
-                // Verifica si estamos en modo selección o no
-                if (!modoSeleccionActivo) {
-                    // Si no estamos en modo borrado, mostramos el diálogo de compra
-                    mostrarDialogoCompra(nuevoPremio)
-                } else {
-                    // Modo de selección para borrado
-                    val premioId = nuevoPremio.tag as Int
-                    if (premiosSeleccionados.contains(premioId)) {
-                        premiosSeleccionados.remove(premioId)
-                        nuevoPremio.alpha = 1.0f // Deseleccionado
-                    } else {
-                        premiosSeleccionados.add(premioId)
-                        nuevoPremio.alpha = 0.5f // Seleccionado
-                    }
-                }
-            }
-
-            contenedorPremios.addView(nuevoPremio)
+            val intent = android.content.Intent(this, CrearPremioActivity::class.java)
+            startActivity(intent)
         }
 
 
@@ -98,8 +61,9 @@ class TiendaActivity : AppCompatActivity() {
                     }
                     premiosSeleccionados.clear()
 
-                    // Actualiza los tags y las vistas después de la eliminación
-                    actualizarTagsPremios(contenedorPremios)
+
+                    // Eliminar premios de la base de datos
+                    eliminarPremiosDeDB(premiosSeleccionados)
 
                     Toast.makeText(this, "Premios eliminados", Toast.LENGTH_SHORT).show()
                 }
@@ -109,18 +73,19 @@ class TiendaActivity : AppCompatActivity() {
         }
     }
 
-    // Función para actualizar los tags de los premios restantes después de una eliminación
-    private fun actualizarTagsPremios(contenedorPremios: FlexboxLayout) {
-        for (i in 0 until contenedorPremios.childCount) {
-            val vista = contenedorPremios.getChildAt(i)
-            if (vista is CardView) {
-                vista.tag = i // Actualiza el tag de cada CardView con su índice actual
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        cargarPremios()
     }
 
-    fun Int.dpToPx(): Int {
-        return (this * Resources.getSystem().displayMetrics.density).toInt()
+    private fun eliminarPremiosDeDB(premiosSeleccionados: MutableSet<Int>) {
+        val dbHelper = SQLiteAyudante(this, "LifeQuest", null, 1)
+        val db = dbHelper.writableDatabase
+        for (id in premiosSeleccionados) {
+            // Elimina los premios seleccionados de la base de datos
+            db.delete("premios", "id=?", arrayOf(id.toString()))
+        }
+        db.close()
     }
 
     private fun resetearEstadoPremios(contenedorPremios: FlexboxLayout) {
@@ -134,31 +99,60 @@ class TiendaActivity : AppCompatActivity() {
         }
     }
 
-    private fun cargarPremios(contenedorPremios: FlexboxLayout) {
-        // Aquí obtendrás los premios (por ahora simulados)
-        val premios = listOf(
-            Pair("Premio 1", "Descripción 1"),
-            Pair("Premio 2", "Descripción 2"),
-            Pair("Premio 3", "Descripción 3")
-        ) // Datos simulados
+    private fun cargarPremios() {
+        contenedorPremios.removeAllViews() // Limpia el contenedor antes de cargar los premios
+        val dbHelper = SQLiteAyudante(this, "LifeQuest", null, 1)
+        val db = dbHelper.readableDatabase
 
-        for ((index, premio) in premios.withIndex()) {
+        val usuarioActual = obtenerUsuarioActual()  // Método para obtener el usuario actual
+
+        // Consulta SQL ajustada para obtener solo los campos id, nombre y costo
+        val query = "SELECT id, nombre, costo FROM premios WHERE usuario = ?"
+        val cursor = db.rawQuery(query, arrayOf(usuarioActual))
+
+        val premiosList = mutableListOf<Premio>()
+
+        // Recogemos todos los premios y los almacenamos en la lista premiosList
+        while (cursor.moveToNext()) {
+            val premioId = cursor.getInt(cursor.getColumnIndex("id"))
+            val premioNombre = cursor.getString(cursor.getColumnIndex("nombre"))
+            val premioCosto = cursor.getInt(cursor.getColumnIndex("costo"))
+
+            // Creamos el objeto Premio y lo agregamos a la lista
+            val premio = Premio(premioId, premioNombre, premioCosto)
+            premiosList.add(premio)
+        }
+
+        cursor.close()
+
+        // Usamos los objetos Premio para actualizar la vista
+        for (premio in premiosList) {
             val inflater = LayoutInflater.from(this)
             val nuevoPremio = inflater.inflate(R.layout.premio, contenedorPremios, false)
 
-            // Personaliza los textos
-            nuevoPremio.findViewById<TextView>(R.id.nombrePremio).text = premio.first
-            nuevoPremio.findViewById<TextView>(R.id.costoPremio).text = premio.second
+            // Actualizamos los textos con la información del objeto Premio
+            nuevoPremio.findViewById<TextView>(R.id.nombrePremio).text = premio.nombre
+            nuevoPremio.findViewById<TextView>(R.id.costoPremio).text = premio.costo.toString()
 
-            nuevoPremio.tag = index // ID asignado a cada premio
+            // Asignamos un tag único para identificar el premio
+            nuevoPremio.tag = premio.id
 
             nuevoPremio.setOnClickListener {
-                // Verifica si estamos en modo selección o no
+                // Si no estamos en modo selección, mostramos el diálogo de compra
                 if (!modoSeleccionActivo) {
-                    // Si no estamos en modo borrado, mostramos el diálogo de compra
-                    mostrarDialogoCompra(nuevoPremio)
+                    //Verificamos que el usuario pueda comprar el premio
+                    val monedasDisponibles = db.rawQuery("SELECT monedas FROM usuarios WHERE usuario = '$usuarioActual'", null)
+                    monedasDisponibles.moveToFirst()
+                    val monedas = monedasDisponibles.getInt(0)
+                    if (monedas < premio.costo) {
+                        Toast.makeText(this, "No tienes suficientes monedas para comprar este premio", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    } else {
+                        monedasDisponibles.close()
+                        mostrarDialogoCompra(nuevoPremio)
+                    }
                 } else {
-                    // Modo de selección para borrado
+                    // Modo de selección para eliminar
                     val premioId = nuevoPremio.tag as Int
                     if (premiosSeleccionados.contains(premioId)) {
                         premiosSeleccionados.remove(premioId)
@@ -170,32 +164,31 @@ class TiendaActivity : AppCompatActivity() {
                 }
             }
 
+            // Agregamos el nuevo premio al contenedor
             contenedorPremios.addView(nuevoPremio)
         }
     }
+
     private fun mostrarDialogoCompra(premioView: View) {
         val premioNombre =
             (premioView as CardView).findViewById<TextView>(R.id.nombrePremio).text.toString()
+        val premioPrecio = premioView.findViewById<TextView>(R .id.costoPremio).text.toString()
+        val usuarioActual = obtenerUsuarioActual()
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Confirmar compra")
             .setMessage("¿Deseas comprar el premio '$premioNombre'?")
             .setPositiveButton("Comprar") { dialog: DialogInterface, id: Int ->
                 // Lógica para procesar la compra del premio
-                Toast.makeText(this, "Compra confirmada para $premioNombre", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Compra confirmada para $premioNombre", Toast.LENGTH_SHORT)
+                    .show()
 
-                // Eliminar el premio del contenedor
-                val contenedorPremios = findViewById<FlexboxLayout>(R.id.contenedorPremios)
-                contenedorPremios.removeView(premioView)  // Elimina la vista del contenedor
+                val db = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+                //Añadimos las monedsa gastadas al usuario y lo restamos de monedas disponibles
+                db.execSQL("UPDATE usuarios SET monedas = monedas - $premioPrecio WHERE usuario = '$usuarioActual'")
+                db.execSQL("UPDATE usuarios SET monedas_gastadas  = monedas_gastadas  + $premioPrecio WHERE usuario = '$usuarioActual'")
+                db.close()
 
-                // Si el premio estaba en la lista de premios seleccionados, eliminarlo de la lista
-                val premioId = premioView.tag as? Int
-                premioId?.let {
-                    premiosSeleccionados.remove(it)
-                }
-
-                // Aquí deberías agregar la lógica para realizar la compra, actualizar la base de datos, etc.
-                // Por ejemplo, actualizar el estado de los premios en la base de datos (si es necesario)
             }
             .setNegativeButton("Cancelar") { dialog: DialogInterface, id: Int ->
                 dialog.dismiss()  // Cierra el diálogo sin hacer nada
@@ -205,5 +198,15 @@ class TiendaActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun obtenerUsuarioActual(): String? {
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
+        val cursor = bd.rawQuery("SELECT usuario FROM sesionActual LIMIT 1", null)
+        var usuario: String? = null
+        if (cursor.moveToFirst()) {
+            usuario = cursor.getString(0)
+        }
+        cursor.close()
+        bd.close()
+        return usuario
+    }
 }
-

@@ -160,6 +160,8 @@ class TareasActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+            tareasLayout.addView(tareaView)
+
         }
     }
     private fun completarTarea(tarea: Tarea) {
@@ -170,7 +172,12 @@ class TareasActivity : AppCompatActivity() {
         actualizarTareaEnBaseDeDatos(tarea)
         darRecompensa(tarea)
         actualizarLogros(tarea)
+        //Actualizamos las tareas completadas del usuario
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+        bd.execSQL("UPDATE Usuarios SET tareas_completadas  = tareas_completadas  + 1 WHERE usuario = ?", arrayOf(tarea.usuario))
+        bd.close()
 
+        //Eliminar tarea si ya se completó todas las repeticiones
         if (tarea.tipoRepeticion != "dias" && tarea.tipoRepeticion != "semanas") {
             if (tarea.vecesCompletada >= tarea.repeticiones) {
                 eliminarTarea(tarea)
@@ -182,17 +189,25 @@ class TareasActivity : AppCompatActivity() {
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
 
         val cursor = bd.rawQuery(
-            "SELECT id, repeticiones_necesarias, progreso, completado FROM logros WHERE tarea_asociada = ? AND completado = 0",
+            "SELECT * FROM logros WHERE tarea_asociada = ? AND completado = 0",
             arrayOf(tarea.nombre)
         )
 
         while (cursor.moveToNext()) {
             val logroId = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+            val premioLogro = cursor.getInt(cursor.getColumnIndexOrThrow("premio"))
             val repeticionesNecesarias = cursor.getInt(cursor.getColumnIndexOrThrow("repeticiones_necesarias"))
             val progresoActual = cursor.getInt(cursor.getColumnIndexOrThrow("progreso"))
-
             val nuevoProgreso = progresoActual + 1
             val completado = if (nuevoProgreso >= repeticionesNecesarias) 1 else 0
+
+            if (completado == 1) {
+                val nombreLogro = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
+                Toast.makeText(this, "¡Logro completado: $nombreLogro!", Toast.LENGTH_LONG).show()
+                //Dar monedas por completar logro
+                val usuarioActivo = obtenerUsuarioActual() ?: return
+                bd.execSQL("UPDATE Usuarios SET monedas = monedas + ? WHERE usuario = ?", arrayOf(premioLogro, usuarioActivo))
+            }
 
             val values = ContentValues().apply {
                 put("progreso", nuevoProgreso)
@@ -200,6 +215,7 @@ class TareasActivity : AppCompatActivity() {
             }
 
             bd.update("logros", values, "id = ?", arrayOf(logroId.toString()))
+
         }
 
         cursor.close()
@@ -229,15 +245,20 @@ class TareasActivity : AppCompatActivity() {
         bd.close()
     }
 
-    private fun obtenerUsuarioActual(): String? {
-        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
-        val cursor = bd.rawQuery("SELECT usuario FROM sesionActual LIMIT 1", null)
+    fun obtenerUsuarioActual(): String? {
         var usuario: String? = null
-        if (cursor.moveToFirst()) {
-            usuario = cursor.getString(0)
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
+        try {
+            var cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
+            if (cursor.moveToFirst()) {
+                usuario = cursor.getString(0)
+                cursor.close()
+                bd.close()
+                return usuario
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al obtener usuario: ${e.message}", Toast.LENGTH_LONG).show()
         }
-        cursor.close()
-        bd.close()
         return usuario
     }
 

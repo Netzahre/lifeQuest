@@ -36,7 +36,6 @@
         app:layout_constraintTop_toBottomOf="@+id/menuSuperior">
         <!-- Header -->
 
-        <!-- Botones de Añadir y Cancelar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,12 +64,10 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <CalendarView
+            <DatePicker
                 android:id="@+id/calendario"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="cantidad"
-                android:minDate="01/01/2024" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -80,24 +77,12 @@
             android:scrollbarSize="0dp">
 
             <LinearLayout
+                android:id="@+id/listaTareasDia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/listaTareasDia"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="2dp" />
             </LinearLayout>
         </ScrollView>
-
-        <!-- Barra de cantidad de experiencia -->
-
-        <!-- Estadística Spinner -->
-
-        <!-- Fecha tarea -->
-
     </LinearLayout>
 
 

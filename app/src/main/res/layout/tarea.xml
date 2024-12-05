@@ -19,8 +19,6 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <!-- CheckBox o RadioButton -->
-
         <CheckBox
             android:id="@+id/checkbox"
             style="@style/icono"
