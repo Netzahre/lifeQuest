@@ -18,8 +18,8 @@ class TOSActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        atras = findViewById(R.id.atrasTOS)
 
+        atras = findViewById(R.id.atrasTOS)
         atras.setOnClickListener {
             finish()
         }

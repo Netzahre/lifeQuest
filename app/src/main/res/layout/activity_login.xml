@@ -68,8 +68,7 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Usuario"
-            android:inputType="text"
-            android:text="netzahre" />
+            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"
@@ -90,8 +89,7 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:text="pollito23" />
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout

@@ -3,6 +3,7 @@ package com.example.lifequest
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
@@ -19,6 +20,7 @@ class TareasActivity : AppCompatActivity() {
     private val tareasSeleccionadas = mutableSetOf<Int>()
     private var modoSeleccionActivo = false
     private lateinit var tareasLayout: LinearLayout
+    private val SPEECH_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,12 @@ class TareasActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
+        menuSuperior.configurarTextoDeAyuda("Aquí puedes ver tus tareas pendientes y completarlas. Mantén pulsado el botón de borrar para seleccionar tareas y eliminar")
+        menuSuperior.microfono.setOnClickListener {
+            startSpeechToText()
         }
 
         tareasLayout = findViewById(R.id.contenedorTareas)
@@ -57,14 +65,18 @@ class TareasActivity : AppCompatActivity() {
         }
     }
 
+    private fun mostrarMensaje(mensaje: String) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
+    }
+
     override fun onResume() {
         super.onResume()
         cargarTareas()
     }
 
-    fun obtenerFechaActual(): String {
+    private fun obtenerFechaActual(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        return sdf.format(Date()) // Devuelve la fecha actual como String en formato "yyyy-MM-dd"
+        return sdf.format(Date())
     }
 
     private fun cargarTareas() {
@@ -75,8 +87,21 @@ class TareasActivity : AppCompatActivity() {
             val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
 
             val cursor = bd.rawQuery(
-                "SELECT * FROM Tareas WHERE usuario = ? AND fechaInicio <= ? ORDER BY fechaInicio ASC",
-                arrayOf(usuarioActivo, fechaActual)
+                """
+                SELECT * FROM Tareas 
+                WHERE usuario = ? 
+                AND (
+                    (tipoRepeticion = 'dias' AND 
+                     (julianday(?) - julianday(ultimaRepeticion) >= repeticiones OR ultimaRepeticion IS NULL)) 
+                    OR 
+                    (tipoRepeticion = 'semanas' AND 
+                     (julianday(?) - julianday(ultimaRepeticion) >= repeticiones * 7 OR ultimaRepeticion IS NULL)) 
+                    OR 
+                    (tipoRepeticion = 'veces')
+                ) AND (fechaInicio <= ? OR fechaInicio IS NULL)
+                ORDER BY fechaInicio ASC
+            """,
+                arrayOf(usuarioActivo, fechaActual, fechaActual, fechaActual)
             )
 
             val tareasList = mutableListOf<Tarea>()
@@ -114,6 +139,7 @@ class TareasActivity : AppCompatActivity() {
         }
     }
 
+
     private fun actualizarTareasEnVista(tareasList: List<Tarea>) {
         tareasLayout.removeAllViews()
 
@@ -124,13 +150,17 @@ class TareasActivity : AppCompatActivity() {
             val checkBox = tareaView.findViewById<CheckBox>(R.id.checkbox)
 
             nombreTextView.text = tarea.nombre
-            gananciaTextView.text = "${tarea.monedas} monedas"
-
-            checkBox.isChecked = tarea.completada == 1
-
-            if (tarea.tipoRepeticion == "dias" || tarea.tipoRepeticion == "semanas") {
-                checkBox.isEnabled = !isRepeticionPendiente(tarea)
+            if (tarea.tipoRepeticion == "veces") {
+                gananciaTextView.text =
+                    "${tarea.monedas} monedas - completado ${tarea.vecesCompletada} veces de ${tarea.repeticiones}"
+                gananciaTextView.text = "${tarea.monedas} monedas"
+            } else {
+                gananciaTextView.text = "${tarea.monedas} monedas"
             }
+
+            checkBox.isChecked = false;
+
+            checkBox.isEnabled = !isRepeticionPendiente(tarea)
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked && !isRepeticionPendiente(tarea)) {
@@ -143,16 +173,14 @@ class TareasActivity : AppCompatActivity() {
 
             tareaView.setOnClickListener {
                 if (modoSeleccionActivo) {
-                    // Cambiar estado de selección
                     if (tareasSeleccionadas.contains(tarea.id)) {
                         tareasSeleccionadas.remove(tarea.id)
-                        tareaView.alpha = 1f // Quitar selección
+                        tareaView.alpha = 1f
                     } else {
                         tareasSeleccionadas.add(tarea.id)
-                        tareaView.alpha = 0.5f // Marcar como seleccionada
+                        tareaView.alpha = 0.5f
                     }
                 } else {
-                    // Otras acciones cuando no está en modo selección
                     Toast.makeText(
                         this,
                         "Mantén pulsado 'Borrar tareas' para activar la selección",
@@ -161,28 +189,50 @@ class TareasActivity : AppCompatActivity() {
                 }
             }
             tareasLayout.addView(tareaView)
-
         }
     }
+
+    private fun isRepeticionPendiente(tarea: Tarea): Boolean {
+        val fechaActual = obtenerFechaActual()
+        return tarea.ultimaRepeticion != null && tarea.ultimaRepeticion != fechaActual
+    }
+
     private fun completarTarea(tarea: Tarea) {
-        tarea.completada = 1
         tarea.vecesCompletada += 1
         tarea.ultimaRepeticion = obtenerFechaActual()
 
         actualizarTareaEnBaseDeDatos(tarea)
         darRecompensa(tarea)
         actualizarLogros(tarea)
-        //Actualizamos las tareas completadas del usuario
+
+        // Actualizamos las tareas completadas del usuario
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
-        bd.execSQL("UPDATE Usuarios SET tareas_completadas  = tareas_completadas  + 1 WHERE usuario = ?", arrayOf(tarea.usuario))
+        bd.execSQL(
+            "UPDATE Usuarios SET tareas_completadas = tareas_completadas + 1 WHERE usuario = ?",
+            arrayOf(tarea.usuario)
+        )
         bd.close()
 
-        //Eliminar tarea si ya se completó todas las repeticiones
-        if (tarea.tipoRepeticion != "dias" && tarea.tipoRepeticion != "semanas") {
-            if (tarea.vecesCompletada >= tarea.repeticiones) {
-                eliminarTarea(tarea)
-            }
+        // Quitar de la vista las tareas completadas diarias/semanales
+        if (tarea.tipoRepeticion == "dias" || tarea.tipoRepeticion == "semanas") {
+            cargarTareas()
+        } else if (tarea.vecesCompletada >= tarea.repeticiones) {
+            // Eliminar tareas no recurrentes si se completaron todas las repeticiones
+            eliminarTarea(tarea)
         }
+        cargarTareas()
+    }
+
+
+    private fun darRecompensa(tarea: Tarea) {
+        val usuarioActivo = obtenerUsuarioActual() ?: return
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+
+        bd.execSQL(
+            "UPDATE Usuarios SET monedas = monedas + ? WHERE usuario = ?",
+            arrayOf(tarea.monedas, usuarioActivo)
+        )
+        bd.close()
     }
 
     private fun actualizarLogros(tarea: Tarea) {
@@ -194,32 +244,88 @@ class TareasActivity : AppCompatActivity() {
         )
 
         while (cursor.moveToNext()) {
+            val progresoActual = cursor.getInt(cursor.getColumnIndexOrThrow("progreso")) + 1
+            val repeticionesNecesarias =
+                cursor.getInt(cursor.getColumnIndexOrThrow("repeticiones_necesarias"))
             val logroId = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
-            val premioLogro = cursor.getInt(cursor.getColumnIndexOrThrow("premio"))
-            val repeticionesNecesarias = cursor.getInt(cursor.getColumnIndexOrThrow("repeticiones_necesarias"))
-            val progresoActual = cursor.getInt(cursor.getColumnIndexOrThrow("progreso"))
-            val nuevoProgreso = progresoActual + 1
-            val completado = if (nuevoProgreso >= repeticionesNecesarias) 1 else 0
-
-            if (completado == 1) {
-                val nombreLogro = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
-                Toast.makeText(this, "¡Logro completado: $nombreLogro!", Toast.LENGTH_LONG).show()
-                //Dar monedas por completar logro
-                val usuarioActivo = obtenerUsuarioActual() ?: return
-                bd.execSQL("UPDATE Usuarios SET monedas = monedas + ? WHERE usuario = ?", arrayOf(premioLogro, usuarioActivo))
-            }
+            val premio = cursor.getInt(cursor.getColumnIndexOrThrow("premio"))
 
             val values = ContentValues().apply {
-                put("progreso", nuevoProgreso)
-                put("completado", completado)
+                put("progreso", progresoActual)
+                if (progresoActual >= repeticionesNecesarias) {
+                    put("completado", 1)
+
+                    // Sumar las monedas del premio al saldo del usuario
+                    darPremioLogro(premio)
+                }
             }
 
-            bd.update("logros", values, "id = ?", arrayOf(logroId.toString()))
-
+            bd.update(
+                "logros",
+                values,
+                "id = ?",
+                arrayOf(logroId.toString())
+            )
         }
 
         cursor.close()
         bd.close()
+    }
+
+    private fun darPremioLogro(premio: Int) {
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+        val usuarioActual = obtenerUsuarioActual() // Método que devuelve el usuario actual
+
+        // Leer el saldo actual de monedas del usuario
+        val cursor = bd.rawQuery(
+            "SELECT monedas FROM Usuarios WHERE usuario = ?",
+            arrayOf(usuarioActual)
+        )
+        var saldoActual = 0
+        if (cursor.moveToFirst()) {
+            saldoActual = cursor.getInt(cursor.getColumnIndexOrThrow("monedas"))
+        }
+        cursor.close()
+
+        // Actualizar el saldo de monedas
+        val nuevoSaldo = saldoActual + premio
+        val values = ContentValues().apply {
+            put("monedas", nuevoSaldo)
+        }
+
+        bd.update(
+            "Usuarios",
+            values,
+            "usuario = ?",
+            arrayOf(usuarioActual)
+        )
+
+        bd.close()
+    }
+
+    private fun borrarTareasSeleccionadas() {
+        if (tareasSeleccionadas.isEmpty()) {
+            Toast.makeText(this, "No hay tareas seleccionadas para eliminar", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
+        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
+        tareasSeleccionadas.forEach { id ->
+            bd.execSQL("DELETE FROM Tareas WHERE id = ?", arrayOf(id))
+        }
+        tareasSeleccionadas.clear()
+        bd.close()
+
+        Toast.makeText(this, "Tareas eliminadas", Toast.LENGTH_SHORT).show()
+
+        // Restablecer la transparencia de las tareas
+        for (i in 0 until tareasLayout.childCount) {
+            val tareaView = tareasLayout.getChildAt(i)
+            tareaView.alpha = 1f
+        }
+
+        cargarTareas()
     }
 
     private fun eliminarTarea(tarea: Tarea) {
@@ -227,13 +333,6 @@ class TareasActivity : AppCompatActivity() {
         bd.execSQL("DELETE FROM Tareas WHERE id = ?", arrayOf(tarea.id))
         bd.close()
         cargarTareas()
-    }
-
-    private fun darRecompensa(tarea: Tarea) {
-        val usuarioActivo = obtenerUsuarioActual() ?: return
-        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
-        bd.execSQL("UPDATE Usuarios SET monedas = monedas + ? WHERE usuario = ?", arrayOf(tarea.monedas, usuarioActivo))
-        bd.close()
     }
 
     private fun actualizarTareaEnBaseDeDatos(tarea: Tarea) {
@@ -261,57 +360,87 @@ class TareasActivity : AppCompatActivity() {
         }
         return usuario
     }
-
-    private fun isRepeticionPendiente(tarea: Tarea): Boolean {
-        val ultimaRepeticion = tarea.ultimaRepeticion
-        val tipoRepeticion = tarea.tipoRepeticion
-        val repeticiones = tarea.repeticiones
-
-        if (ultimaRepeticion == null) return false
-
-        val fechaActual = obtenerFechaActual()
-
-        return when (tipoRepeticion) {
-            "Diaria" -> obtenerDiferenciaEnDias(fechaActual, ultimaRepeticion) < repeticiones
-            "Semanal" -> obtenerDiferenciaEnSemanas(fechaActual, ultimaRepeticion) < repeticiones
-            else -> false
-        }
-    }
-
-    private fun obtenerDiferenciaEnDias(fechaActual: String, fechaAnterior: String): Int {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val actual = sdf.parse(fechaActual)
-        val anterior = sdf.parse(fechaAnterior)
-        return ((actual.time - anterior.time) / (1000 * 60 * 60 * 24)).toInt()
-    }
-
-    private fun obtenerDiferenciaEnSemanas(fechaActual: String, fechaAnterior: String): Int {
-        val dias = obtenerDiferenciaEnDias(fechaActual, fechaAnterior)
-        return dias / 7
-    }
-
-    private fun borrarTareasSeleccionadas() {
-        if (tareasSeleccionadas.isEmpty()) {
-            Toast.makeText(this, "No hay tareas seleccionadas para eliminar", Toast.LENGTH_SHORT).show()
-            return
+    private fun startSpeechToText() {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                )
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+                putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
+            }
+            try {
+                startActivityForResult(intent, SPEECH_REQUEST_CODE)
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this, "El reconocimiento de voz no está disponible",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
-        val bd = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
-        tareasSeleccionadas.forEach { id ->
-            bd.execSQL("DELETE FROM Tareas WHERE id = ?", arrayOf(id))
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+                val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                result?.let {
+                    val accion = it[0].lowercase()
+                    when (accion) {
+                        "tareas" -> {
+                            val intent = Intent(this, TareasActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        "logros" -> {
+                            val intent = Intent(this, LogrosActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        "tienda" -> {
+                            val intent = Intent(this, TiendaActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        "perfil" -> {
+                            val intent = Intent(this, PerfilActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        "ayuda" -> {
+                            val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
+                            menuSuperior.mostrarAyuda("Aquí puedes ver tus tareas pendientes y completarlas. Mantén pulsado el botón de borrar para seleccionar tareas y eliminar")
+                        }
+
+                        "añadir tarea" -> {
+                            val intent = Intent(this, CrearTareaActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        "añadir logro" -> {
+                            val intent = Intent(this, CrearLogroActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        "cambiar modo" -> {
+                            val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
+                            menuSuperior.cambiarModo()
+                        }
+
+                        "añadir premio" -> {
+                            val intent = Intent(this, CrearPremioActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        "Terminos de uso" -> {
+                            val intent = Intent(this, TOSActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        else -> {
+                            Toast.makeText(this, "No se reconoció la acción", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
         }
-        tareasSeleccionadas.clear()
-        bd.close()
-
-        Toast.makeText(this, "Tareas eliminadas", Toast.LENGTH_SHORT).show()
-
-        // Restablecer la transparencia de las tareas
-        for (i in 0 until tareasLayout.childCount) {
-            val tareaView = tareasLayout.getChildAt(i)
-            tareaView.alpha = 1f
-        }
-
-        cargarTareas()
-    }
-
 }

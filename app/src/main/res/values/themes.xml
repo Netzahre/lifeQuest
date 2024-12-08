@@ -29,6 +29,18 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="botonRosa">
+        <item name="android:background">@drawable/boton_rosa_dia</item> <!-- Gradiente Rosa -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="botonNaranja">
+        <item name="android:background">@drawable/boton_naranja_dia</item> <!-- Gradiente Naranja -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="menuAzul">
         <item name="android:background">@drawable/menu_azul_dia</item> <!-- Gradiente Azul -->
         <item name="android:textColor">#FFFFFF</item>

@@ -1,5 +1,6 @@
 package com.example.lifequest
 
+// Clase que representa una tarea
 data class Tarea(
     val id: Int,
     val nombre: String,

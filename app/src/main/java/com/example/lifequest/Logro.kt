@@ -1,5 +1,6 @@
 package com.example.lifequest
 
+// Clase que representa un logro
 data class Logro(
     val id: Int,
     val nombre: String,
@@ -7,15 +8,8 @@ data class Logro(
     val repeticionesNecesarias: Int,
     val progreso: Int,
     val completado: Boolean
-) {
-    fun esCompletado(): Boolean {
-        return completado
-    }
+)
 
-    fun porcentajeProgreso(): Int {
-        return (progreso * 100) / repeticionesNecesarias
-    }
-}
 
 
 

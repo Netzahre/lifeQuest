@@ -43,7 +43,8 @@ class RecuperarPassActivity : AppCompatActivity() {
         }
     }
 
-    private fun mostrarToast(mensaje: String) {
+    //Funcion para mostrar un mensaje en pantalla
+    private fun mostrarMensaje(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 
@@ -65,9 +66,9 @@ class RecuperarPassActivity : AppCompatActivity() {
 
         if (cursor.moveToFirst()) {
             val contrasena = cursor.getString(0)
-            mostrarToast("Contraseña: $contrasena")
+            mostrarMensaje("Contraseña: $contrasena")
 
-            mostrarToast("Correo enviado con éxito")
+            mostrarMensaje("Correo enviado con éxito")
         } else {
             correoUser.error = "Correo no registrado"
         }

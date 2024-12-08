@@ -36,11 +36,11 @@ class LoginActivity : AppCompatActivity() {
             val contrasena = findViewById<EditText>(R.id.contrasenauser).text.toString()
 
             if (loginUsuario(usuario, contrasena)) {
-                mostrarToast("Inicio de sesion exitoso")
+                mostrarMensaje("Inicio de sesion exitoso")
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
             } else {
-                mostrarToast("Usuario o contraseña incorrectos")
+                mostrarMensaje("Usuario o contraseña incorrectos")
             }
         }
 
@@ -60,13 +60,15 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun mostrarToast(mensaje: String) {
+    // Función para mostrar un mensaje Toast
+    fun mostrarMensaje(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 
+    // Función para iniciar sesión
     fun loginUsuario(usuario: String, contrasena: String): Boolean {
         if (usuario.isEmpty() || contrasena.isEmpty()) {
-            mostrarToast("Por favor, rellene todos los campos")
+            mostrarMensaje("Por favor, rellene todos los campos")
             return false
         }
 

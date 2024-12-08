@@ -8,7 +8,6 @@
     style="@style/fondo"
     tools:context=".CrearPremioActivity">
 
-
     <com.example.lifequest.MenuSuperiorActivity
         android:id="@+id/menuSuperior"
         android:layout_width="0dp"
@@ -43,43 +42,46 @@
 
             <TextView
                 android:id="@+id/textView13"
-                style="@style/menuAzul"
-                android:layout_width="wrap_content"
+                style="@style/menuRosa"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Añadir Premio"
+                android:text="Tienda"
                 android:textAlignment="center"
                 android:textSize="34sp" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_weight="0" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
+            android:layout_weight="0"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/añadirPremio"
-                style="@style/botonAzul"
-                android:layout_width="130dp"
+                app:backgroundTint="@null"
+                style="@style/botonRosa"
+                android:layout_width="155dp"
                 android:layout_height="wrap_content"
                 android:text="Añadir"
-                android:textSize="19sp"
-                app:backgroundTint="@null" />
+                android:textSize="20sp"/>
 
             <Space
-                android:layout_width="112dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0" />
+                android:layout_weight="1" />
 
             <Button
-                android:id="@+id/botonAtras"
-                style="@style/botonAzul"
-                android:layout_width="130dp"
+                android:id="@+id/atrasPremio"
+                style="@style/botonRosa"
+                android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Cancelar"
-                android:textSize="19sp"
+                android:text="Atras"
+                android:textSize="20sp"
                 app:backgroundTint="@null" />
 
         </LinearLayout>
@@ -183,9 +185,7 @@
                         android:layout_height="10dp" />
 
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

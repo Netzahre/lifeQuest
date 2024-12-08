@@ -37,7 +37,7 @@ class RegistroActivity : AppCompatActivity() {
                 findViewById<EditText>(R.id.contrasenaConfirmacion).text.toString()
 
             if (registrarUsuario(nombre, correo, contrasena, contrasenaConfirmacion)) {
-                mostrarToast("Usuario registrado con exito")
+                mostrarMensaje("Usuario registrado con exito")
                 val intent = android.content.Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -53,7 +53,7 @@ class RegistroActivity : AppCompatActivity() {
 
     }
 
-    fun mostrarToast(mensaje: String) {
+    fun mostrarMensaje(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 
@@ -65,19 +65,19 @@ class RegistroActivity : AppCompatActivity() {
         contrasenaConfirmacion: String
     ): Boolean {
         if (nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty() || contrasenaConfirmacion.isEmpty()) {
-            mostrarToast("Por favor, llena todos los campos")
+            mostrarMensaje("Por favor, llena todos los campos")
             return false
         }
         if (contrasena != contrasenaConfirmacion) {
-            mostrarToast("Las contraseñas no coinciden")
+            mostrarMensaje("Las contraseñas no coinciden")
             return false
         }
         if (usuarioExiste(nombre)) {
-            mostrarToast("El usuario ya existe")
+            mostrarMensaje("El usuario ya existe")
             return false
         }
         if (correoRegistrado(correo)) {
-            mostrarToast("El correo ya está registrado")
+            mostrarMensaje("El correo ya está registrado")
             return false
         }
         try {
@@ -95,7 +95,7 @@ class RegistroActivity : AppCompatActivity() {
             return true
 
         } catch (e: Exception) {
-            mostrarToast("Error al registrar el usuario")
+            mostrarMensaje("Error al registrar el usuario")
             return false
         }
 
