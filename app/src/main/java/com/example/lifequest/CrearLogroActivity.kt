@@ -50,7 +50,7 @@ class CrearLogroActivity : AppCompatActivity() {
         tareasSpinner = findViewById(R.id.tareaAsignada)
 
         val botonGuardar = findViewById<Button>(R.id.anadirLogro)
-        val repeticionesInput = findViewById<EditText>(R.id.cantidadRepeticiones)
+        repeticionesInput = findViewById(R.id.cantidadRepeticiones)
         val atras = findViewById<Button>(R.id.atrasLogro)
 
         barraProgreso.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -188,7 +188,7 @@ class CrearLogroActivity : AppCompatActivity() {
             }
 
         } catch (e: Exception) {
-            Toast.makeText(this, "Error al obtener usuario", Toast.LENGTH_LONG).show()
+            mostrarMensaje("Error al obtener el usuario actual")
         }
 
         return usuario
@@ -274,37 +274,7 @@ class CrearLogroActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        //Regex para buscar una palabra seguida de un espacio y un número
-                        val regex =
-                            Regex("(\\D+)\\s+(\\d+)")
-                        val matchResult = regex.find(accion)
-                        if (matchResult != null) {
-                            val key =
-                                matchResult.groupValues[1].trim()
-                            val value =
-                                matchResult.groupValues[2].toInt()
-                            when (key) {
-                                "monedas" -> {
-                                    premioLogroInput.text = value.toString()
-                                }
-
-                                "repeticiones" -> {
-                                    val repeticionesInput =
-                                        findViewById<EditText>(R.id.cantidadRepeticiones)
-                                    repeticionesInput.setText(value.toString())
-                                }
-
-                                else -> {
-                                    //Regex para buscar la palabra nombre seguida de un espacio y una cadena de texto
-                                    val regexNombre = Regex("nombre\\s+(\\w+)")
-                                    val matchResultNombre = regexNombre.find(accion)
-                                    if (matchResultNombre != null) {
-                                        val nombre = matchResultNombre.groupValues[1]
-                                        nombreLogroInput.setText(nombre)
-                                    }
-                                }
-                            }
-                        }
+                        mostrarMensaje("No se reconoció el comando")
                     }
                 }
             }

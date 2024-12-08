@@ -99,7 +99,7 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Email"
-            android:inputType="text"/>
+            android:inputType="textEmailAddress"/>
 
         <Space
             android:layout_width="match_parent"

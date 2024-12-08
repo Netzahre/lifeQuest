@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CalendarView
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.SeekBar
@@ -28,7 +27,7 @@ class CrearTareaActivity : AppCompatActivity() {
     lateinit var cantidadMonedas: TextView
     lateinit var anadirTarea: Button
     lateinit var botonAtras: Button
-    lateinit var nombreTextView: EditText
+    lateinit var nombreTextEdit: EditText
     lateinit var barraProgreso: SeekBar
     lateinit var cantidadRepeticiones: EditText
     lateinit var tipoRepeticion: Spinner
@@ -61,7 +60,7 @@ class CrearTareaActivity : AppCompatActivity() {
         cantidadMonedas = findViewById(R.id.cantidadMonLabel)
         anadirTarea = findViewById(R.id.anadirtar)
         botonAtras = findViewById(R.id.botonAtras)
-        nombreTextView = findViewById(R.id.nombreTarea)
+        nombreTextEdit = findViewById(R.id.nombreTarea)
         barraProgreso = findViewById(R.id.barraProgreso)
         cantidadRepeticiones = findViewById(R.id.cantidadRepeticiones)
         datePicker = findViewById(R.id.calendario)
@@ -108,7 +107,7 @@ class CrearTareaActivity : AppCompatActivity() {
             mostrarMensaje("No se ha podido obtener el usuario actual")
             return
         }
-        val nombre = nombreTextView.text.toString()
+        val nombre = nombreTextEdit.text.toString()
         val monedas = cantidadMonedas.text.toString().toIntOrNull() ?: 0
         val repeticiones = cantidadRepeticiones.text.toString().toIntOrNull() ?: 1
         val tipo = tipoRepeticion.selectedItem.toString()
@@ -145,7 +144,6 @@ class CrearTareaActivity : AppCompatActivity() {
 
         // Insertar la tarea en la base de datos
         val resultado = bd.insert("Tareas", null, values)
-        mostrarMensaje("Tarea añadida correctamente")
         bd.close()
 
         // Mostrar un mensaje en función del resultado
@@ -249,46 +247,7 @@ class CrearTareaActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        // Regex para extraer la acción y los valores asociados (por ejemplo, "monedas 15")
-                        val regex =
-                            Regex("(\\D+)\\s+(\\d+)")
-                        val matchResult = regex.find(accion)
-                        if (matchResult != null) {
-                            // Extraer la palabra clave y el número
-                            val key =
-                                matchResult.groupValues[1].trim()
-                            val value =
-                                matchResult.groupValues[2].toInt()
-                            when (key) {
-                                // Actualizar los valores de la tarea en función de la palabra clave
-                                "monedas" -> {
-                                    cantidadMonedas.text = value.toString()
-                                }
-
-                                "repeticiones" -> {
-                                    cantidadRepeticiones.setText(value.toString())
-                                }
-
-                                else -> {
-                                    // Regex para buscar una palabra clave y un valor (por ejemplo, "nombre tarea")
-                                    val regex =
-                                        Regex("(\\D+)\\s+(\\D+)")
-                                    val matchResult = regex.find(accion)
-                                    if (matchResult != null) {
-                                        // Extraer la palabra clave y el valor
-                                        val key =
-                                            matchResult.groupValues[1].trim()
-                                        val value =
-                                            matchResult.groupValues[2].trim()
-                                        when (key) {
-                                            "nombre" -> {
-                                                nombreTextView.setText(value)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        mostrarMensaje("No se ha entendido la acción")
                     }
                 }
             }

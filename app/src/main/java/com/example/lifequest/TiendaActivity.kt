@@ -38,10 +38,10 @@ class TiendaActivity : AppCompatActivity() {
         }
 
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                menuSuperior.configurarTextoDeAyuda("En la tienda puedes comprar premios con las monedas que has ganado. ¡No olvides revisar tus tareas y logros para ganar más monedas!")
-                menuSuperior.microfono.setOnClickListener {
+        menuSuperior.configurarTextoDeAyuda("En la tienda puedes comprar premios con las monedas que has ganado. ¡No olvides revisar tus tareas y logros para ganar más monedas!")
+        menuSuperior.microfono.setOnClickListener {
                     startSpeechToText()
-                }
+        }
 
         val botonCrear = findViewById<Button>(R.id.crearPremio)
         val botonBorrar = findViewById<Button>(R.id.borrarPremio)
@@ -141,7 +141,7 @@ class TiendaActivity : AppCompatActivity() {
 
             val premiNombreIndex = cursor.getColumnIndex("nombre")
             val premioNombre = cursor.getString(premiNombreIndex)
-            val premioCosto = premioCostoIndex
+            val premioCosto = cursor.getInt(premioCostoIndex)
 
             // Creamos un objeto Premio con los datos obtenidos
             val premio = Premio(premioId, premioNombre, premioCosto)
@@ -158,6 +158,8 @@ class TiendaActivity : AppCompatActivity() {
             nuevoPremio.findViewById<TextView>(R.id.nombrePremio).text = premio.nombre
             nuevoPremio.findViewById<TextView>(R.id.costoPremio).text = premio.costo.toString()
 
+            // Asignamos el ID del premio al contenedor
+            nuevoPremio.tag = premio.id
 
             nuevoPremio.setOnClickListener {
                 // Si no estamos en modo selección, mostramos el diálogo de compra
@@ -286,7 +288,7 @@ private fun startSpeechToText() {
 
                     "ayuda" -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda("Este es el menu principal de la aplicacion, desde aqui puedes navegar a las distintas secciones de la aplicacion.")
+                        menuSuperior.mostrarAyuda("En la tienda puedes comprar premios con las monedas que has ganado. ¡No olvides revisar tus tareas y logros para ganar más monedas!")
                     }
 
                     "añadir tarea" -> {

@@ -59,7 +59,7 @@ class RecuperarPassActivity : AppCompatActivity() {
             return
         }
 
-        val db = SQLiteAyudante(this, "LifeQuestDB", null, 1)
+        val db = SQLiteAyudante(this, "LifeQuest", null, 1)
         val cursor = db.readableDatabase.rawQuery(
             "SELECT contrasena FROM usuarios WHERE correo = '$correo'", null
         )

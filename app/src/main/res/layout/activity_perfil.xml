@@ -23,13 +23,11 @@
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/atrasPerfil"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/progreso_naranja"
-        app:tabSelectedTextColor="@color/progreso_naranja"
-        app:tabTextColor="@color/black" />
+        app:tabIndicatorColor="@color/azul"
+        style="@style/texto"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

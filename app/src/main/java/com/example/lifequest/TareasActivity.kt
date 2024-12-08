@@ -220,6 +220,7 @@ class TareasActivity : AppCompatActivity() {
             // Eliminar tareas no recurrentes si se completaron todas las repeticiones
             eliminarTarea(tarea)
         }
+        mostrarMensaje("¡Tarea completada! +${tarea.monedas} monedas")
         cargarTareas()
     }
 

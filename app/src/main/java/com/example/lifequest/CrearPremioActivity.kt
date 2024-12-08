@@ -205,30 +205,6 @@ class CrearPremioActivity : AppCompatActivity() {
                         val intent = Intent(this, TOSActivity::class.java)
                         startActivity(intent)
                     }
-
-                    else -> {
-                        // Busca texto en el formato "palabra clave número" (por ejemplo, "monedas 15")
-                        val regex =
-                            Regex("(\\D+)\\s+(\\d+)")
-                        val matchResult = regex.find(accion)
-                        if (matchResult != null) {
-                            // Extraer la palabra clave y el número
-                            val key =
-                                matchResult.groupValues[1].trim()
-                            val value =
-                                matchResult.groupValues[2].toInt()
-
-                            when (key) {
-                                "monedas" -> {
-                                    cantidadMonedas.text = value.toString()
-                                }
-
-                                "nombre" -> {
-                                    nombrePremioEditText.setText(value.toString())
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }

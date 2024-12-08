@@ -2,5 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="progreso_naranja">#a9541d</color>
+    <color name="naranja">#a9541d</color>
+    <color name="azul">#166094</color>
+
 </resources>

@@ -148,8 +148,8 @@
                         android:max="100"
                         android:progress="0"
                         android:progressBackgroundTint="#8C8C8C"
-                        android:progressTint="@color/progreso_naranja"
-                        android:thumbTint="@color/progreso_naranja" />
+                        android:progressTint="@color/naranja"
+                        android:thumbTint="@color/naranja" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

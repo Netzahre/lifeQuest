@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.lifequest.LoginActivity
 import com.example.lifequest.R
 import com.example.lifequest.SQLiteAyudante
 import java.io.ByteArrayOutputStream
@@ -31,15 +32,26 @@ class ConfiguracionFragment : Fragment() {
         imagenPerfil = view.findViewById(R.id.imagenPerfil)
         val cambiarImagenPerfil = view.findViewById<Button>(R.id.cambiarImagenPerfil)
 
-        // Botón para cambiar imagen
+        // Botón para cambiar imagen de perfil (abrir galería) y cargar imagen guardada (no funciona)
         cambiarImagenPerfil.setOnClickListener {
-            abrirGaleria()
+            mostrarMensaje("Esto no funciona, me descoloca el fragment") // No funciona
+//            abrirGaleria()
+        }
+
+        val cerrarSesion = view.findViewById<Button>(R.id.cerrarSesion)
+        cerrarSesion.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
         }
 
         // Cargar imagen guardada
-        cargarImagenDesdeSQLite()
+//        cargarImagenDesdeSQLite()
 
         return view
+    }
+
+    private fun mostrarMensaje(mensaje: String) {
+        Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
     }
 
     // Abrir galería
@@ -56,11 +68,16 @@ class ConfiguracionFragment : Fragment() {
             val imageUri: Uri? = data?.data
             if (imageUri != null) {
                 val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, imageUri)
+
+                // Establecer la imagen redimensionada en el ImageView
                 imagenPerfil.setImageBitmap(bitmap)
+
+                // Guardar la imagen redimensionada en SQLite
                 guardarImagenEnSQLite(bitmap)
             }
         }
     }
+
 
     // Guardar imagen en SQLite
     private fun guardarImagenEnSQLite(bitmap: Bitmap) {
@@ -76,7 +93,7 @@ class ConfiguracionFragment : Fragment() {
         db.update("usuarios", contentValues, "usuario = ?", arrayOf("nombreUsuario"))
         db.close()
 
-        Toast.makeText(requireContext(), "Imagen guardada", Toast.LENGTH_SHORT).show()
+        mostrarMensaje("Imagen de perfil actualizada")
     }
 
     // Cargar imagen desde SQLite

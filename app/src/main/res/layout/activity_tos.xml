@@ -48,15 +48,11 @@
             </LinearLayout>
         </ScrollView>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
         <Button
             android:id="@+id/atrasTOS"
             style="@style/botonAzul"
             android:layout_width="243dp"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:text="Atras"
             android:textSize="34sp"
             app:backgroundTint="@null" />
