@@ -15,7 +15,6 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <!-- Título -->
         <TextView
             android:id="@+id/nombrePremio"
             android:layout_width="wrap_content"
@@ -27,7 +26,6 @@
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <!-- Subtítulo -->
         <TextView
             android:id="@+id/costoPremio"
             android:layout_width="wrap_content"
@@ -35,7 +33,6 @@
             android:gravity="center"
             android:text="costo"
             style="@style/texto"
-
             android:textSize="10sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
