@@ -82,7 +82,6 @@
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
                 android:text="Borrar"
-
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 

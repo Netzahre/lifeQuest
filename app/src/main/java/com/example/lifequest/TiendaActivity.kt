@@ -22,8 +22,8 @@ import android.speech.RecognizerIntent
 import java.util.Locale
 
 class TiendaActivity : AppCompatActivity() {
-    private val premiosSeleccionados = mutableSetOf<Int>() // Almacena IDs de premios seleccionados
-    private var modoSeleccionActivo = false // Controla si el modo de selección está activo
+    private val premiosSeleccionados = mutableSetOf<Int>()
+    private var modoSeleccionActivo = false
     private lateinit var contenedorPremios: FlexboxLayout
     private val SPEECH_REQUEST_CODE = 1
 
@@ -40,7 +40,7 @@ class TiendaActivity : AppCompatActivity() {
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
         menuSuperior.configurarTextoDeAyuda("En la tienda puedes comprar premios con las monedas que has ganado. ¡No olvides revisar tus tareas y logros para ganar más monedas!")
         menuSuperior.microfono.setOnClickListener {
-                    startSpeechToText()
+            startSpeechToText()
         }
 
         val botonCrear = findViewById<Button>(R.id.crearPremio)
@@ -192,7 +192,8 @@ class TiendaActivity : AppCompatActivity() {
     private fun verificarCompra(premio: Premio): Boolean {
         val usuarioActual = obtenerUsuarioActual()
         val db = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
-        val monedasDisponibles = db.rawQuery("SELECT monedas FROM usuarios WHERE usuario = '$usuarioActual'", null)
+        val monedasDisponibles =
+            db.rawQuery("SELECT monedas FROM usuarios WHERE usuario = '$usuarioActual'", null)
         monedasDisponibles.moveToFirst()
         val monedas = monedasDisponibles.getInt(0)
         monedasDisponibles.close()
@@ -204,7 +205,7 @@ class TiendaActivity : AppCompatActivity() {
     private fun mostrarDialogoCompra(premioView: View) {
         val premioNombre =
             (premioView as CardView).findViewById<TextView>(R.id.nombrePremio).text.toString()
-        val premioPrecio = premioView.findViewById<TextView>(R .id.costoPremio).text.toString()
+        val premioPrecio = premioView.findViewById<TextView>(R.id.costoPremio).text.toString()
         val usuarioActual = obtenerUsuarioActual()
 
         val builder = AlertDialog.Builder(this)
@@ -240,7 +241,8 @@ class TiendaActivity : AppCompatActivity() {
         bd.close()
         return usuario
     }
-private fun startSpeechToText() {
+
+    private fun startSpeechToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
