@@ -160,10 +160,10 @@ class TareasActivity : AppCompatActivity() {
 
             checkBox.isChecked = false;
 
-            checkBox.isEnabled = !isRepeticionPendiente(tarea)
+            checkBox.isEnabled = isRepeticionPendiente(tarea)
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked && !isRepeticionPendiente(tarea)) {
+                if (isChecked && isRepeticionPendiente(tarea)) {
                     completarTarea(tarea)
                 } else {
                     tarea.completada = 0
@@ -194,7 +194,13 @@ class TareasActivity : AppCompatActivity() {
 
     private fun isRepeticionPendiente(tarea: Tarea): Boolean {
         val fechaActual = obtenerFechaActual()
-        return tarea.ultimaRepeticion != null && tarea.ultimaRepeticion != fechaActual
+        if (tarea.ultimaRepeticion == null) {
+            return true;
+        }
+        if (tarea.ultimaRepeticion != fechaActual) {
+            return true
+        }
+        return false
     }
 
     private fun completarTarea(tarea: Tarea) {
