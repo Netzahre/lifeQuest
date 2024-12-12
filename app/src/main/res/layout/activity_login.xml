@@ -34,7 +34,7 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bienvenido/a"
+            android:text="@string/bienvenido_a"
             android:textSize="34sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -58,7 +58,7 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre usuario"
+            android:text="@string/nombre_usuario"
             android:textSize="20sp" />
 
         <EditText
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Usuario"
+            android:hint="@string/usuario"
             android:inputType="text" />
 
         <Space
@@ -79,7 +79,7 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contraseña"
+            android:text="@string/contrasena"
             android:textSize="20sp" />
 
         <EditText
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Contraseña"
+            android:hint="@string/contrasena"
             android:inputType="textPassword" />
     </LinearLayout>
 
@@ -108,7 +108,7 @@
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="Acceder"
+            android:text="@string/acceder"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 
@@ -121,7 +121,7 @@
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="Registrarse"
+            android:text="@string/registrarse"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 

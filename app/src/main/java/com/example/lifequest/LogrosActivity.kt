@@ -1,7 +1,6 @@
 package com.example.lifequest
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.LayoutInflater
@@ -30,7 +29,7 @@ class LogrosActivity : AppCompatActivity() {
         }
 
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-        menuSuperior.configurarTextoDeAyuda("Este es el menu de logros, aqui puedes ver los logros que has completado y los que te faltan por completar.")
+        menuSuperior.configurarTextoDeAyuda(getString(R.string.ayuda_logros))
         menuSuperior.microfono.setOnClickListener {
             startSpeechToText()
         }
@@ -42,7 +41,7 @@ class LogrosActivity : AppCompatActivity() {
         cargarLogrosDesdeBD()
 
         botonCrear.setOnClickListener {
-            val intent = android.content.Intent(this, CrearLogroActivity::class.java)
+            val intent = Intent(this, CrearLogroActivity::class.java)
             startActivity(intent)
         }
 
@@ -50,19 +49,19 @@ class LogrosActivity : AppCompatActivity() {
             if (!modoSeleccionActivo) {
                 // Activa el modo de selección
                 modoSeleccionActivo = true
-                botonBorrar.text = "Confirmar"
-                mostrarMensaje("Selecciona los logros que deseas borrar")
+                botonBorrar.text = getString(R.string.confirmar)
+                mostrarMensaje(getString(R.string.selecciona_los_logros_que_deseas_borrar))
             } else {
                 // Confirma y borra los logros seleccionados
                 if (logrosSeleccionados.isEmpty()) {
-                    mostrarMensaje("No se seleccionaron logros")
+                    mostrarMensaje(getString(R.string.no_se_seleccionaron_logros))
                 } else {
                     eliminarLogrosSeleccionados()
-                    mostrarMensaje("Logros eliminados")
+                    mostrarMensaje(getString(R.string.logros_eliminados))
                 }
                 // Desactiva el modo de selección
                 modoSeleccionActivo = false
-                botonBorrar.text = "Borrar"
+                botonBorrar.text = getString(R.string.borrar)
                 resetearEstadoLogros(contenedorLogros)
             }
         }
@@ -138,14 +137,19 @@ class LogrosActivity : AppCompatActivity() {
         // Procesar primero los no completados
         noCompletados.forEach { logro ->
             val descripcion =
-                "Tarea: ${logro.tareaAsociada}, Progreso: ${logro.progreso}/${logro.repeticionesNecesarias}"
+                getString(
+                    R.string.tarea_progreso,
+                    logro.tareaAsociada,
+                    logro.progreso.toString(),
+                    logro.repeticionesNecesarias.toString()
+                )
             val vistaLogro = crearVistaLogro(logro.id, logro.nombre, descripcion)
             contenedorLogros.addView(vistaLogro)
         }
 
         // Luego procesar los completados
         completados.forEach { logro ->
-            val descripcion = "¡Logro completado! ¡Felicidades!"
+            val descripcion = getString(R.string.logro_completado_felicidades)
             val vistaLogro = crearVistaLogro(logro.id, logro.nombre, descripcion)
             contenedorLogros.addView(vistaLogro)
         }
@@ -167,7 +171,7 @@ class LogrosActivity : AppCompatActivity() {
         val usuarioActual = obtenerUsuarioActual()
 
         if (usuarioActual == null) {
-            mostrarMensaje("No se ha encontrado un usuario activo")
+            mostrarMensaje(getString(R.string.error_al_obtener_usuario))
             bd.close()
             return emptyList()
         }
@@ -201,11 +205,11 @@ class LogrosActivity : AppCompatActivity() {
     }
 
     // Obtiene el usuario actual de la base de datos
-    fun obtenerUsuarioActual(): String? {
+    private fun obtenerUsuarioActual(): String? {
         var usuario: String? = null
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
         try {
-            var cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
+            val cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
             if (cursor.moveToFirst()) {
                 usuario = cursor.getString(0)
                 cursor.close()
@@ -213,11 +217,12 @@ class LogrosActivity : AppCompatActivity() {
                 return usuario
             }
         } catch (e: Exception) {
-            mostrarMensaje("Error al obtener el usuario actual")
+            mostrarMensaje(getString(R.string.error_al_obtener_usuario))
         }
         return usuario
     }
 
+    // Método para iniciar el reconocimiento de voz
     private fun startSpeechToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
@@ -225,18 +230,20 @@ class LogrosActivity : AppCompatActivity() {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mensaje_inicio_deteccion_voz))
         }
+
         try {
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
         } catch (e: Exception) {
             Toast.makeText(
-                this, "El reconocimiento de voz no está disponible",
+                this, getString(R.string.mensaje_error_No_reconocimiento_voz),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
+    // Método para manejar el resultado del reconocimiento de voz
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -244,58 +251,58 @@ class LogrosActivity : AppCompatActivity() {
             result?.let {
                 val accion = it[0].lowercase()
                 when (accion) {
-                    "tareas" -> {
+                    getString(R.string.tareas) -> {
                         val intent = Intent(this, TareasActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "logros" -> {
+                    getString(R.string.logros) -> {
                         val intent = Intent(this, LogrosActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "tienda" -> {
+                    getString(R.string.tienda) -> {
                         val intent = Intent(this, TiendaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "perfil" -> {
+                    getString(R.string.perfil) -> {
                         val intent = Intent(this, PerfilActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "ayuda" -> {
+                    getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda("Este es el menu de logros, aqui puedes ver los logros que has completado y los que te faltan por completar.")
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
                     }
 
-                    "añadir tarea" -> {
+                    getString(R.string.anadir_tarea) -> {
                         val intent = Intent(this, CrearTareaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "añadir logro" -> {
+                    getString(R.string.anadir_logro)-> {
                         val intent = Intent(this, CrearLogroActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "cambiar modo" -> {
+                    getString(R.string.cambiar_modo) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
                         menuSuperior.cambiarModo()
                     }
 
-                    "añadir premio" -> {
+                    getString(R.string.anadir_premio) -> {
                         val intent = Intent(this, CrearPremioActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "Terminos de uso" -> {
+                    getString(R.string.TOS) -> {
                         val intent = Intent(this, TOSActivity::class.java)
                         startActivity(intent)
                     }
 
                     else -> {
-                        Toast.makeText(this, "No se reconoció la acción", Toast.LENGTH_SHORT).show()
+                        mostrarMensaje(getString(R.string.accion_voz_No_reconocida))
                     }
                 }
             }

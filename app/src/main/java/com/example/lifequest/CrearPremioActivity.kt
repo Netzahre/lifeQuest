@@ -33,13 +33,13 @@ class CrearPremioActivity : AppCompatActivity() {
 
         // Configurar el menú superior
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-        menuSuperior.configurarTextoDeAyuda("Desde aquí puedes añadir un nuevo premio a la tienda.")
+        menuSuperior.configurarTextoDeAyuda(getString(R.string.ayuda_crear_premio))
         menuSuperior.microfono.setOnClickListener {
             startSpeechToText()
         }
 
         // Configurar los botones de la interfaz
-        val añadirPremioButton = findViewById<Button>(R.id.añadirPremio)
+        val anadirPremioButton = findViewById<Button>(R.id.anadirPremio)
         val botonAtras = findViewById<Button>(R.id.atrasPremio)
 
         nombrePremioEditText = findViewById(R.id.nombrePremio)
@@ -55,8 +55,8 @@ class CrearPremioActivity : AppCompatActivity() {
         })
 
         // Configurar los listeners de los botones
-        añadirPremioButton.setOnClickListener {
-            añadirPremio()
+        anadirPremioButton.setOnClickListener {
+            anadirPremio()
         }
 
         botonAtras.setOnClickListener {
@@ -71,7 +71,7 @@ class CrearPremioActivity : AppCompatActivity() {
     }
 
     // Añade un premio a la base de datos
-    private fun añadirPremio() {
+    private fun anadirPremio() {
         val dbHelper = SQLiteAyudante(this, "LifeQuest", null, 1)
         val db = dbHelper.writableDatabase
         val nombre = nombrePremioEditText.text.toString().trim()
@@ -80,13 +80,13 @@ class CrearPremioActivity : AppCompatActivity() {
 
         // Comprobar que los campos no están vacíos
         if (usuario.isEmpty()) {
-            mostrarMensaje("No se ha podido obtener el usuario actual")
+            mostrarMensaje(getString(R.string.error_al_obtener_usuario))
             return
 
         }
 
         if (nombre.isEmpty()) {
-            mostrarMensaje("El nombre del premio no puede estar vacío")
+            mostrarMensaje(getString(R.string.el_nombre_del_premio_no_puede_estar_vac_o))
             return
         }
 
@@ -103,10 +103,10 @@ class CrearPremioActivity : AppCompatActivity() {
 
         // Mostrar un mensaje en función del resultado
         if (resultado != -1L) {
-            mostrarMensaje("Premio añadido correctamente")
+            mostrarMensaje(getString(R.string.premio_a_adido_correctamente))
             finish()
         } else {
-            mostrarMensaje("No se ha podido añadir el premio")
+            mostrarMensaje(getString(R.string.no_se_ha_podido_a_adir_el_premio))
             finish()
         }
 
@@ -128,7 +128,7 @@ class CrearPremioActivity : AppCompatActivity() {
         return usuario
     }
 
-    // Inicia el reconocimiento de voz
+    // Método para iniciar el reconocimiento de voz
     private fun startSpeechToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
@@ -136,19 +136,20 @@ class CrearPremioActivity : AppCompatActivity() {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mensaje_inicio_deteccion_voz))
         }
+
         try {
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
         } catch (e: Exception) {
             Toast.makeText(
-                this, "El reconocimiento de voz no está disponible",
+                this, getString(R.string.mensaje_error_No_reconocimiento_voz),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
-    // Procesa el resultado del reconocimiento de voz
+    // Método para manejar el resultado del reconocimiento de voz
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -156,54 +157,58 @@ class CrearPremioActivity : AppCompatActivity() {
             result?.let {
                 val accion = it[0].lowercase()
                 when (accion) {
-                    "tareas" -> {
+                    getString(R.string.tareas) -> {
                         val intent = Intent(this, TareasActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "logros" -> {
+                    getString(R.string.logros) -> {
                         val intent = Intent(this, LogrosActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "tienda" -> {
+                    getString(R.string.tienda) -> {
                         val intent = Intent(this, TiendaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "perfil" -> {
+                    getString(R.string.perfil) -> {
                         val intent = Intent(this, PerfilActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "ayuda" -> {
+                    getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda("Desde aquí puedes añadir un nuevo premio a la tienda.")
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
                     }
 
-                    "añadir tarea" -> {
+                    getString(R.string.anadir_tarea) -> {
                         val intent = Intent(this, CrearTareaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "añadir logro" -> {
+                    getString(R.string.anadir_logro)-> {
                         val intent = Intent(this, CrearLogroActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "cambiar modo" -> {
+                    getString(R.string.cambiar_modo) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
                         menuSuperior.cambiarModo()
                     }
 
-                    "añadir premio" -> {
+                    getString(R.string.anadir_premio) -> {
                         val intent = Intent(this, CrearPremioActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "Terminos de uso" -> {
+                    getString(R.string.TOS) -> {
                         val intent = Intent(this, TOSActivity::class.java)
                         startActivity(intent)
+                    }
+
+                    else -> {
+                        mostrarMensaje(getString(R.string.accion_voz_No_reconocida))
                     }
                 }
             }

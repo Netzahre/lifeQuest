@@ -32,7 +32,7 @@ class TareasActivity : AppCompatActivity() {
         }
 
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-        menuSuperior.configurarTextoDeAyuda("Aquí puedes ver tus tareas pendientes y completarlas. Mantén pulsado el botón de borrar para seleccionar tareas y eliminar")
+        menuSuperior.configurarTextoDeAyuda(getString(R.string.ayudaTareasActivity))
         menuSuperior.microfono.setOnClickListener {
             startSpeechToText()
         }
@@ -54,13 +54,14 @@ class TareasActivity : AppCompatActivity() {
                 // Activar modo selección
                 modoSeleccionActivo = true
                 tareasSeleccionadas.clear()
-                botonBorrar.text = "Confirmar"
-                Toast.makeText(this, "Selecciona las tareas a eliminar", Toast.LENGTH_SHORT).show()
+                botonBorrar.text = getString(R.string.confirmar)
+                Toast.makeText(this,
+                    getString(R.string.selecciona_las_tareas_a_eliminar), Toast.LENGTH_SHORT).show()
             } else {
                 // Confirmar eliminación de tareas seleccionadas
                 borrarTareasSeleccionadas()
                 modoSeleccionActivo = false
-                botonBorrar.text = "Borrar"
+                botonBorrar.text = getString(R.string.borrar)
             }
         }
     }
@@ -86,22 +87,26 @@ class TareasActivity : AppCompatActivity() {
 
             val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
 
+            val dias = getString(R.string.dias)
+            val semanas = getString(R.string.semanas)
+            val veces = getString(R.string.veces)
+
             val cursor = bd.rawQuery(
                 """
                 SELECT * FROM Tareas 
                 WHERE usuario = ? 
                 AND (
-                    (tipoRepeticion = 'dias' AND 
+                    (tipoRepeticion = ? AND 
                      (julianday(?) - julianday(ultimaRepeticion) >= repeticiones OR ultimaRepeticion IS NULL)) 
                     OR 
-                    (tipoRepeticion = 'semanas' AND 
+                    (tipoRepeticion = ? AND 
                      (julianday(?) - julianday(ultimaRepeticion) >= repeticiones * 7 OR ultimaRepeticion IS NULL)) 
                     OR 
-                    (tipoRepeticion = 'veces')
+                    (tipoRepeticion = ?)
                 ) AND (fechaInicio <= ? OR fechaInicio IS NULL)
                 ORDER BY fechaInicio ASC
             """,
-                arrayOf(usuarioActivo, fechaActual, fechaActual, fechaActual)
+                arrayOf(usuarioActivo, dias, fechaActual, semanas, fechaActual, veces, fechaActual)
             )
 
             val tareasList = mutableListOf<Tarea>()
@@ -150,15 +155,20 @@ class TareasActivity : AppCompatActivity() {
             val checkBox = tareaView.findViewById<CheckBox>(R.id.checkbox)
 
             nombreTextView.text = tarea.nombre
-            if (tarea.tipoRepeticion == "veces") {
+            if (tarea.tipoRepeticion == getString(R.string.veces)) {
                 gananciaTextView.text =
-                    "${tarea.monedas} monedas - completado ${tarea.vecesCompletada} veces de ${tarea.repeticiones}"
-                gananciaTextView.text = "${tarea.monedas} monedas"
+                    getString(
+                        R.string.textoTareaRepetibleVeces,
+                        tarea.monedas.toString(),
+                        tarea.vecesCompletada.toString(),
+                        tarea.repeticiones.toString()
+                    )
+                gananciaTextView.text = getString(R.string.cantidad_monedas, tarea.monedas.toString())
             } else {
-                gananciaTextView.text = "${tarea.monedas} monedas"
+                gananciaTextView.text = getString(R.string.cantidad_monedas, tarea.monedas.toString())
             }
 
-            checkBox.isChecked = false;
+            checkBox.isChecked = false
 
             checkBox.isEnabled = isRepeticionPendiente(tarea)
 
@@ -183,7 +193,7 @@ class TareasActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this,
-                        "Mantén pulsado 'Borrar tareas' para activar la selección",
+                        getString(R.string.activar_Seleccion_tareas),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -195,7 +205,7 @@ class TareasActivity : AppCompatActivity() {
     private fun isRepeticionPendiente(tarea: Tarea): Boolean {
         val fechaActual = obtenerFechaActual()
         if (tarea.ultimaRepeticion == null) {
-            return true;
+            return true
         }
         if (tarea.ultimaRepeticion != fechaActual) {
             return true
@@ -220,13 +230,13 @@ class TareasActivity : AppCompatActivity() {
         bd.close()
 
         // Quitar de la vista las tareas completadas diarias/semanales
-        if (tarea.tipoRepeticion == "dias" || tarea.tipoRepeticion == "semanas") {
+        if (tarea.tipoRepeticion == getString(R.string.dias) || tarea.tipoRepeticion == getString(R.string.semanas)) {
             cargarTareas()
         } else if (tarea.vecesCompletada >= tarea.repeticiones) {
             // Eliminar tareas no recurrentes si se completaron todas las repeticiones
             eliminarTarea(tarea)
         }
-        mostrarMensaje("¡Tarea completada! +${tarea.monedas} monedas")
+        mostrarMensaje(getString(R.string.tarea_completada_monedas, tarea.monedas.toString()))
         cargarTareas()
     }
 
@@ -312,7 +322,8 @@ class TareasActivity : AppCompatActivity() {
 
     private fun borrarTareasSeleccionadas() {
         if (tareasSeleccionadas.isEmpty()) {
-            Toast.makeText(this, "No hay tareas seleccionadas para eliminar", Toast.LENGTH_SHORT)
+            Toast.makeText(this,
+                getString(R.string.no_hay_tareas_seleccionadas_para_eliminar), Toast.LENGTH_SHORT)
                 .show()
             return
         }
@@ -324,7 +335,7 @@ class TareasActivity : AppCompatActivity() {
         tareasSeleccionadas.clear()
         bd.close()
 
-        Toast.makeText(this, "Tareas eliminadas", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.tareas_eliminadas), Toast.LENGTH_SHORT).show()
 
         // Restablecer la transparencia de las tareas
         for (i in 0 until tareasLayout.childCount) {
@@ -351,11 +362,11 @@ class TareasActivity : AppCompatActivity() {
         bd.close()
     }
 
-    fun obtenerUsuarioActual(): String? {
+    private fun obtenerUsuarioActual(): String? {
         var usuario: String? = null
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
         try {
-            var cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
+            val cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
             if (cursor.moveToFirst()) {
                 usuario = cursor.getString(0)
                 cursor.close()
@@ -363,91 +374,95 @@ class TareasActivity : AppCompatActivity() {
                 return usuario
             }
         } catch (e: Exception) {
-            Toast.makeText(this, "Error al obtener usuario: ${e.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,
+                getString(R.string.error_al_obtener_usuario), Toast.LENGTH_LONG).show()
         }
         return usuario
     }
+    // Método para iniciar el reconocimiento de voz
     private fun startSpeechToText() {
-            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(
-                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                )
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-                putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
-            }
-            try {
-                startActivityForResult(intent, SPEECH_REQUEST_CODE)
-            } catch (e: Exception) {
-                Toast.makeText(
-                    this, "El reconocimiento de voz no está disponible",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mensaje_inicio_deteccion_voz))
         }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
-                val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                result?.let {
-                    val accion = it[0].lowercase()
-                    when (accion) {
-                        "tareas" -> {
-                            val intent = Intent(this, TareasActivity::class.java)
-                            startActivity(intent)
-                        }
+        try {
+            startActivityForResult(intent, SPEECH_REQUEST_CODE)
+        } catch (e: Exception) {
+            Toast.makeText(
+                this, getString(R.string.mensaje_error_No_reconocimiento_voz),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
-                        "logros" -> {
-                            val intent = Intent(this, LogrosActivity::class.java)
-                            startActivity(intent)
-                        }
+    // Método para manejar el resultado del reconocimiento de voz
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            result?.let {
+                val accion = it[0].lowercase()
+                when (accion) {
+                    getString(R.string.tareas) -> {
+                        val intent = Intent(this, TareasActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                        "tienda" -> {
-                            val intent = Intent(this, TiendaActivity::class.java)
-                            startActivity(intent)
-                        }
+                    getString(R.string.logros) -> {
+                        val intent = Intent(this, LogrosActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                        "perfil" -> {
-                            val intent = Intent(this, PerfilActivity::class.java)
-                            startActivity(intent)
-                        }
+                    getString(R.string.tienda) -> {
+                        val intent = Intent(this, TiendaActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                        "ayuda" -> {
-                            val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                            menuSuperior.mostrarAyuda("Aquí puedes ver tus tareas pendientes y completarlas. Mantén pulsado el botón de borrar para seleccionar tareas y eliminar")
-                        }
+                    getString(R.string.perfil) -> {
+                        val intent = Intent(this, PerfilActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                        "añadir tarea" -> {
-                            val intent = Intent(this, CrearTareaActivity::class.java)
-                            startActivity(intent)
-                        }
+                    getString(R.string.ayuda) -> {
+                        val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
+                    }
 
-                        "añadir logro" -> {
-                            val intent = Intent(this, CrearLogroActivity::class.java)
-                            startActivity(intent)
-                        }
+                    getString(R.string.anadir_tarea) -> {
+                        val intent = Intent(this, CrearTareaActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                        "cambiar modo" -> {
-                            val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                            menuSuperior.cambiarModo()
-                        }
+                    getString(R.string.anadir_logro)-> {
+                        val intent = Intent(this, CrearLogroActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                        "añadir premio" -> {
-                            val intent = Intent(this, CrearPremioActivity::class.java)
-                            startActivity(intent)
-                        }
+                    getString(R.string.cambiar_modo) -> {
+                        val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
+                        menuSuperior.cambiarModo()
+                    }
 
-                        "Terminos de uso" -> {
-                            val intent = Intent(this, TOSActivity::class.java)
-                            startActivity(intent)
-                        }
+                    getString(R.string.anadir_premio) -> {
+                        val intent = Intent(this, CrearPremioActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                        else -> {
-                            Toast.makeText(this, "No se reconoció la acción", Toast.LENGTH_SHORT).show()
-                        }
+                    getString(R.string.TOS) -> {
+                        val intent = Intent(this, TOSActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    else -> {
+                        mostrarMensaje(getString(R.string.accion_voz_No_reconocida))
                     }
                 }
             }
         }
+    }
 }

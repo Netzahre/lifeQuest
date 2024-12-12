@@ -38,7 +38,7 @@ class CrearLogroActivity : AppCompatActivity() {
         }
         // Configurar el menú superior
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-        menuSuperior.configurarTextoDeAyuda("Desde aquí puedes añadir un nuevo logro a la lista de logros.")
+        menuSuperior.configurarTextoDeAyuda(getString(R.string.ayuda_crear_logro))
         menuSuperior.microfono.setOnClickListener {
             startSpeechToText()
         }
@@ -57,7 +57,6 @@ class CrearLogroActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 premioLogroInput.text = progress.toString()
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
@@ -85,11 +84,13 @@ class CrearLogroActivity : AppCompatActivity() {
     private fun cargarTareasEnSpinner() {
         val db = db.readableDatabase
         val usuario = obtenerUsuarioActual()
+        val dias = getString(R.string.dias)
+        val semanas = getString(R.string.semanas)
 
         // Consulta para obtener las tareas del usuario actual y cuya repeticion sea dias o semanas
         val cursor = db.rawQuery(
-            "SELECT nombre FROM Tareas WHERE usuario = ? AND tipoRepeticion IN ('dias', 'semanas')",
-            arrayOf(usuario)
+            "SELECT nombre FROM Tareas WHERE usuario = ? AND tipoRepeticion IN (?, ?)",
+            arrayOf(usuario, dias, semanas)
         )
 
         // Extraer nombres de tareas en una lista
@@ -103,7 +104,7 @@ class CrearLogroActivity : AppCompatActivity() {
         db.close()
 
         if (tareasLista.isEmpty()) {
-            mostrarMensaje("No hay tareas con repeticiones diarias o semanales")
+            mostrarMensaje(getString(R.string.no_hay_tareas_con_repeticiones_diarias_o_semanales))
             finish()
         }
 
@@ -127,23 +128,23 @@ class CrearLogroActivity : AppCompatActivity() {
 
         // Validar que los campos no estén vacíos
         if (usuario == null) {
-            mostrarMensaje("No se encontró un usuario activo")
+            mostrarMensaje(getString(R.string.error_al_obtener_usuario))
             return
         }
         if (nombre.isEmpty()) {
-            mostrarMensaje("Por favor, ingrese un nombre para el logro")
+            mostrarMensaje(getString(R.string.por_favor_ingrese_un_nombre_para_el_logro))
             return
         }
         if (monedas.isEmpty()) {
-            mostrarMensaje("Por favor, ingrese un premio para el logro")
+            mostrarMensaje(getString(R.string.por_favor_ingrese_un_premio_para_el_logro))
             return
         }
         if (tareaAsociada == null) {
-            mostrarMensaje("Por favor, seleccione una tarea asociada")
+            mostrarMensaje(getString(R.string.por_favor_seleccione_una_tarea_asociada))
             return
         }
         if (repeticionesNecesarias.isEmpty()) {
-            mostrarMensaje("Por favor, ingrese un número de repeticiones necesarias")
+            mostrarMensaje(getString(R.string.por_favor_ingrese_un_n_mero_de_repeticiones_necesarias))
             return
         }
 
@@ -164,22 +165,22 @@ class CrearLogroActivity : AppCompatActivity() {
 
         // Mostrar un mensaje en función del resultado
         if (resultado != -1L) {
-            mostrarMensaje("Logro creado exitosamente")
+            mostrarMensaje(getString(R.string.logro_creado_exitosamente))
             finish()
         } else {
-            mostrarMensaje("Error al crear el logro")
+            mostrarMensaje(getString(R.string.error_al_crear_el_logro))
             finish()
         }
 
     }
 
     // Método para obtener el usuario activo
-    fun obtenerUsuarioActual(): String? {
+    private fun obtenerUsuarioActual(): String? {
         var usuario: String? = null
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
 
         try {
-            var cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
+            val cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
             if (cursor.moveToFirst()) {
                 usuario = cursor.getString(0)
                 cursor.close()
@@ -188,7 +189,7 @@ class CrearLogroActivity : AppCompatActivity() {
             }
 
         } catch (e: Exception) {
-            mostrarMensaje("Error al obtener el usuario actual")
+            mostrarMensaje(getString(R.string.error_al_obtener_usuario))
         }
 
         return usuario
@@ -202,14 +203,14 @@ class CrearLogroActivity : AppCompatActivity() {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mensaje_inicio_deteccion_voz))
         }
 
         try {
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
         } catch (e: Exception) {
             Toast.makeText(
-                this, "El reconocimiento de voz no está disponible",
+                this, getString(R.string.mensaje_error_No_reconocimiento_voz),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -223,58 +224,58 @@ class CrearLogroActivity : AppCompatActivity() {
             result?.let {
                 val accion = it[0].lowercase()
                 when (accion) {
-                    "tareas" -> {
+                    getString(R.string.tareas) -> {
                         val intent = Intent(this, TareasActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "logros" -> {
+                    getString(R.string.logros) -> {
                         val intent = Intent(this, LogrosActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "tienda" -> {
+                    getString(R.string.tienda) -> {
                         val intent = Intent(this, TiendaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "perfil" -> {
+                    getString(R.string.perfil) -> {
                         val intent = Intent(this, PerfilActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "ayuda" -> {
+                    getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda("Desde aquí puedes añadir un nuevo logro a la lista de logros.")
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
                     }
 
-                    "añadir tarea" -> {
+                    getString(R.string.anadir_tarea) -> {
                         val intent = Intent(this, CrearTareaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "añadir logro" -> {
+                    getString(R.string.anadir_logro)-> {
                         val intent = Intent(this, CrearLogroActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "cambiar modo" -> {
+                    getString(R.string.cambiar_modo) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
                         menuSuperior.cambiarModo()
                     }
 
-                    "añadir premio" -> {
+                    getString(R.string.anadir_premio) -> {
                         val intent = Intent(this, CrearPremioActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "Terminos de uso" -> {
+                    getString(R.string.TOS) -> {
                         val intent = Intent(this, TOSActivity::class.java)
                         startActivity(intent)
                     }
 
                     else -> {
-                        mostrarMensaje("No se reconoció el comando")
+                        mostrarMensaje(getString(R.string.accion_voz_No_reconocida))
                     }
                 }
             }

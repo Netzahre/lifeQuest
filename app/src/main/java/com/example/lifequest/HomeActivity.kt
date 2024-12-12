@@ -12,9 +12,9 @@ import androidx.core.view.WindowInsetsCompat
 import java.util.Locale
 
 class HomeActivity : AppCompatActivity() {
-    lateinit var tareasDash: Button
-    lateinit var logrosDash: Button
-    lateinit var tiendaDash: Button
+    private lateinit var tareasDash: Button
+    private lateinit var logrosDash: Button
+    private lateinit var tiendaDash: Button
     private val SPEECH_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-        menuSuperior.configurarTextoDeAyuda("Este es el menu principal de la aplicacion, desde aqui puedes navegar a las distintas secciones de la aplicacion.")
+        menuSuperior.configurarTextoDeAyuda(getString(R.string.ayuda_home))
         menuSuperior.microfono.setOnClickListener {
             startSpeechToText()
         }
@@ -53,7 +53,11 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    // Función para iniciar el reconocimiento de voz
+    // Método para mostrar un mensaje en pantalla
+    private fun mostrarMensaje(mensaje: String) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
+    }
+    // Método para iniciar el reconocimiento de voz
     private fun startSpeechToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
@@ -61,19 +65,20 @@ class HomeActivity : AppCompatActivity() {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mensaje_inicio_deteccion_voz))
         }
+
         try {
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
         } catch (e: Exception) {
             Toast.makeText(
-                this, "El reconocimiento de voz no está disponible",
+                this, getString(R.string.mensaje_error_No_reconocimiento_voz),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
-    // Función para manejar el resultado del reconocimiento de voz
+    // Método para manejar el resultado del reconocimiento de voz
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -81,58 +86,58 @@ class HomeActivity : AppCompatActivity() {
             result?.let {
                 val accion = it[0].lowercase()
                 when (accion) {
-                    "tareas" -> {
+                    getString(R.string.tareas) -> {
                         val intent = Intent(this, TareasActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "logros" -> {
+                    getString(R.string.logros) -> {
                         val intent = Intent(this, LogrosActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "tienda" -> {
+                    getString(R.string.tienda) -> {
                         val intent = Intent(this, TiendaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "perfil" -> {
+                    getString(R.string.perfil) -> {
                         val intent = Intent(this, PerfilActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "ayuda" -> {
+                    getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda("Este es el menu principal de la aplicacion, desde aqui puedes navegar a las distintas secciones de la aplicacion.")
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
                     }
 
-                    "añadir tarea" -> {
+                    getString(R.string.anadir_tarea) -> {
                         val intent = Intent(this, CrearTareaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "añadir logro" -> {
+                    getString(R.string.anadir_logro)-> {
                         val intent = Intent(this, CrearLogroActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "cambiar modo" -> {
+                    getString(R.string.cambiar_modo) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
                         menuSuperior.cambiarModo()
                     }
 
-                    "añadir premio" -> {
+                    getString(R.string.anadir_premio) -> {
                         val intent = Intent(this, CrearPremioActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "Terminos de uso" -> {
+                    getString(R.string.TOS) -> {
                         val intent = Intent(this, TOSActivity::class.java)
                         startActivity(intent)
                     }
 
                     else -> {
-                        Toast.makeText(this, "No se reconoció la acción", Toast.LENGTH_SHORT).show()
+                        mostrarMensaje(getString(R.string.accion_voz_No_reconocida))
                     }
                 }
             }

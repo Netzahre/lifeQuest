@@ -93,7 +93,7 @@ class ConfiguracionFragment : Fragment() {
         db.update("usuarios", contentValues, "usuario = ?", arrayOf("nombreUsuario"))
         db.close()
 
-        mostrarMensaje("Imagen de perfil actualizada")
+        mostrarMensaje(getString(R.string.imagen_de_perfil_actualizada))
     }
 
     // Cargar imagen desde SQLite

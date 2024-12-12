@@ -4,7 +4,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:contentDescription="cantidad"
     style="fondo"
     tools:context=".CrearTareaActivity">
 
@@ -45,7 +44,7 @@
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Crear Tarea"
+                android:text="@string/anadir_tarea"
                 style="@style/menuNaranja"
                 android:textAlignment="center"
                 android:textSize="34sp" />
@@ -67,7 +66,7 @@
                 style="@style/botonNaranja"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Añadir"
+                android:text="@string/anadir"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 
@@ -81,7 +80,7 @@
                 style="@style/botonNaranja"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Atras"
+                android:text="@string/atras"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 
@@ -111,16 +110,16 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Datos básicos"
+                        android:text="@string/datos_basicos"
                         android:textAlignment="center"
-                        android:textSize="24dp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/nombreTarea"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:hint="Nombre de la tarea" />
+                        android:hint="@string/nombre_de_la_tarea" />
 
                 </LinearLayout>
 
@@ -137,7 +136,7 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Monedas de recompensa"
+                        android:text="@string/monedas_de_recompensa"
                         android:textAlignment="center"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -171,7 +170,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="monedas"
+                            android:text="@string/monedas"
                             android:textSize="20sp" />
                     </LinearLayout>
 
@@ -190,9 +189,9 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Veces que se repite la tarea"
+                        android:text="@string/veces_que_se_repite_la_tarea"
                         android:textAlignment="center"
-                        android:textSize="24dp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <EditText
@@ -200,7 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:ems="10"
-                        android:hint="¿Cuantas veces se repite la tarea?"
+                        android:hint="@string/cuantas_veces_se_repite_la_tarea"
                         android:inputType="number" />
 
                     <Spinner
@@ -225,7 +224,7 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Fecha inicio tarea"
+                        android:text="@string/fecha_inicio_tarea"
                         android:textAlignment="center"
                         android:textSize="24sp"
                         android:textStyle="bold" />

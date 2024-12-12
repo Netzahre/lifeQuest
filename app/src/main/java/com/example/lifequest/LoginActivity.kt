@@ -12,10 +12,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var botonLogin: Button
-    lateinit var botonRegistro: Button
-    lateinit var passOlvidada: TextView
-    lateinit var urlTOS: TextView
+    private lateinit var botonLogin: Button
+    private lateinit var botonRegistro: Button
+    private lateinit var passOlvidada: TextView
+    private lateinit var urlTOS: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,26 +36,26 @@ class LoginActivity : AppCompatActivity() {
             val contrasena = findViewById<EditText>(R.id.contrasenauser).text.toString()
 
             if (loginUsuario(usuario, contrasena)) {
-                mostrarMensaje("Inicio de sesion exitoso")
+                mostrarMensaje(getString(R.string.inicio_de_sesion_exitoso))
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
             } else {
-                mostrarMensaje("Usuario o contraseña incorrectos")
+                mostrarMensaje(getString(R.string.usuario_o_contrase_a_incorrectos))
             }
         }
 
         botonRegistro.setOnClickListener {
-            val intent = android.content.Intent(this, RegistroActivity::class.java)
+            val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
         }
 
         passOlvidada.setOnClickListener {
-            val intent = android.content.Intent(this, RecuperarPassActivity::class.java)
+            val intent = Intent(this, RecuperarPassActivity::class.java)
             startActivity(intent)
         }
 
         urlTOS.setOnClickListener {
-            val intent = android.content.Intent(this, TOSActivity::class.java)
+            val intent = Intent(this, TOSActivity::class.java)
             startActivity(intent)
         }
     }
@@ -66,9 +66,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Función para iniciar sesión
-    fun loginUsuario(usuario: String, contrasena: String): Boolean {
+    private fun loginUsuario(usuario: String, contrasena: String): Boolean {
         if (usuario.isEmpty() || contrasena.isEmpty()) {
-            mostrarMensaje("Por favor, rellene todos los campos")
+            mostrarMensaje(getString(R.string.rellenar_todos_campos))
             return false
         }
 
@@ -86,6 +86,7 @@ class LoginActivity : AppCompatActivity() {
                     db.execSQL("DELETE FROM sesionActual")
                 }
                 db.execSQL("INSERT INTO sesionActual (usuario, modoOscuro) VALUES ('$usuario', '$modoOscuro')")
+                sesionActual.close()
             }
             cursor.close()
             db.close()

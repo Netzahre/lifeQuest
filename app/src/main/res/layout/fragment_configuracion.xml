@@ -12,8 +12,7 @@
         android:layout_marginBottom="16dp"
         android:scaleType="centerCrop"
         android:background="@drawable/imagenperfil"
-        android:src="@drawable/applogo"
-        android:contentDescription="Imagen de perfil" />
+        android:src="@drawable/applogo"/>
 
     <Button
         android:id="@+id/cambiarImagenPerfil"
@@ -21,7 +20,7 @@
         android:layout_height="wrap_content"
         style="@style/botonAzul"
         app:backgroundTint="@null"
-        android:text="Cambiar Imagen de Perfil" />
+        android:text="@string/cambiar_imagen_de_perfil" />
 
     <Space
         android:layout_width="match_parent"
@@ -33,5 +32,5 @@
         android:layout_height="wrap_content"
         style="@style/botonAzul"
         app:backgroundTint="@null"
-        android:text="Cerrar Sesión" />
+        android:text="@string/cerrar_sesi_n" />
 </LinearLayout>

@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="Tareas"
+            android:text="@string/tareas"
             android:textSize="60sp"
             app:backgroundTint="@null" />
 
@@ -55,7 +55,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:shadowColor="@color/black"
-            android:text="Logros"
+            android:text="@string/logros"
             android:textSize="60sp"
             app:backgroundTint="@null" />
 
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="Tienda"
+            android:text="@string/tienda"
             android:textSize="60sp"
             app:backgroundTint="@null" />
     </LinearLayout>

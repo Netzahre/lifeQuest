@@ -12,10 +12,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class RecuperarPassActivity : AppCompatActivity() {
-    lateinit var correoUser: EditText
-    lateinit var recuperar: Button
-    lateinit var cancelar: Button
-    lateinit var urlTOS: TextView
+    private lateinit var correoUser: EditText
+    private lateinit var recuperar: Button
+    private lateinit var cancelar: Button
+    private lateinit var urlTOS: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class RecuperarPassActivity : AppCompatActivity() {
     private fun recuperarPass() {
         val correo = correoUser.text.toString()
         if (correo.isEmpty()) {
-            correoUser.error = "Por favor, introduce un correo"
+            correoUser.error = getString(R.string.por_favor_introduce_un_correo)
             return
         }
 
@@ -66,11 +66,11 @@ class RecuperarPassActivity : AppCompatActivity() {
 
         if (cursor.moveToFirst()) {
             val contrasena = cursor.getString(0)
-            mostrarMensaje("Contraseña: $contrasena")
+            mostrarMensaje(getString(R.string.contrasena_recuperada, contrasena))
 
-            mostrarMensaje("Correo enviado con éxito")
+            mostrarMensaje(getString(R.string.correo_enviado_con_xito))
         } else {
-            correoUser.error = "Correo no registrado"
+            correoUser.error = getString(R.string.correo_no_registrado)
         }
         cursor.close()
         db.close()

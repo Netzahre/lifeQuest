@@ -12,9 +12,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class RegistroActivity : AppCompatActivity() {
-    lateinit var botonRegistro: Button
-    lateinit var botonAtras: Button
-    lateinit var urlTOS: TextView
+    private lateinit var botonRegistro: Button
+    private lateinit var botonAtras: Button
+    private lateinit var urlTOS: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class RegistroActivity : AppCompatActivity() {
                 findViewById<EditText>(R.id.contrasenaConfirmacion).text.toString()
 
             if (registrarUsuario(nombre, correo, contrasena, contrasenaConfirmacion)) {
-                mostrarMensaje("Usuario registrado con exito")
+                mostrarMensaje(getString(R.string.usuario_registrado_con_exito))
                 val intent = android.content.Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -58,26 +58,26 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     // Función para registrar un usuario
-    fun registrarUsuario(
+    private fun registrarUsuario(
         nombre: String,
         correo: String,
         contrasena: String,
         contrasenaConfirmacion: String
     ): Boolean {
         if (nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty() || contrasenaConfirmacion.isEmpty()) {
-            mostrarMensaje("Por favor, llena todos los campos")
+            mostrarMensaje(getString(R.string.rellenar_todos_campos))
             return false
         }
         if (contrasena != contrasenaConfirmacion) {
-            mostrarMensaje("Las contraseñas no coinciden")
+            mostrarMensaje(getString(R.string.las_contrase_as_no_coinciden))
             return false
         }
         if (usuarioExiste(nombre)) {
-            mostrarMensaje("El usuario ya existe")
+            mostrarMensaje(getString(R.string.el_usuario_ya_existe))
             return false
         }
         if (correoRegistrado(correo)) {
-            mostrarMensaje("El correo ya está registrado")
+            mostrarMensaje(getString(R.string.el_correo_ya_est_registrado))
             return false
         }
         try {
@@ -95,14 +95,14 @@ class RegistroActivity : AppCompatActivity() {
             return true
 
         } catch (e: Exception) {
-            mostrarMensaje("Error al registrar el usuario")
+            mostrarMensaje(getString(R.string.error_al_registrar_el_usuario))
             return false
         }
 
     }
 
     // Función para verificar si un usuario ya existe
-    fun usuarioExiste(nombre: String): Boolean {
+    private fun usuarioExiste(nombre: String): Boolean {
         val db = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
         val query = "SELECT * FROM usuarios WHERE usuario = '$nombre'"
         val cursor = db.rawQuery(query, null)
@@ -117,7 +117,7 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     // Función para verificar si un correo ya está registrado
-    fun correoRegistrado(correo: String): Boolean {
+    private fun correoRegistrado(correo: String): Boolean {
         val db = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
         val query = "SELECT * FROM usuarios WHERE correo = '$correo'"
         val cursor = db.rawQuery(query, null)

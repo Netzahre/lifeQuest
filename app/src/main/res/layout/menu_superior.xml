@@ -65,7 +65,7 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
-                android:contentDescription="Boton Ayuda"
+                android:contentDescription="@string/ayuda"
                 app:srcCompat="@drawable/help" />
 
             <ImageButton
@@ -75,7 +75,7 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
-                android:contentDescription="Cambiar Modo"
+                android:contentDescription="@string/cambiar_modo"
                 app:srcCompat="@drawable/cambiarmodo" />
 
         </LinearLayout>
@@ -93,7 +93,7 @@
 
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
-                android:contentDescription="Home"
+                android:contentDescription="@string/home"
                 app:srcCompat="@drawable/home" />
 
             <ImageButton
@@ -101,10 +101,9 @@
                 style="@style/icono"
                 android:layout_width="48dp"
                 android:layout_height="44dp"
-
                 android:layout_weight="1"
                 android:backgroundTint="#00FFFFFF"
-                android:contentDescription="Home"
+                android:contentDescription="@string/detectar_voz"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/mic" />
 
@@ -133,7 +132,7 @@
                 android:layout_width="133dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Tareas"
+                android:text="@string/tareas"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 
@@ -149,7 +148,7 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:shadowColor="@color/black"
-                android:text="Logros"
+                android:text="@string/logros"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 
@@ -164,7 +163,7 @@
                 android:layout_width="133dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Tienda"
+                android:text="@string/tienda"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 

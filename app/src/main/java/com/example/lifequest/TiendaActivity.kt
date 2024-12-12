@@ -38,7 +38,7 @@ class TiendaActivity : AppCompatActivity() {
         }
 
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-        menuSuperior.configurarTextoDeAyuda("En la tienda puedes comprar premios con las monedas que has ganado. ¡No olvides revisar tus tareas y logros para ganar más monedas!")
+        menuSuperior.configurarTextoDeAyuda(getString(R.string.ayuda_tienda))
         menuSuperior.microfono.setOnClickListener {
             startSpeechToText()
         }
@@ -60,12 +60,12 @@ class TiendaActivity : AppCompatActivity() {
             if (!modoSeleccionActivo) {
                 // Activa el modo de selección
                 modoSeleccionActivo = true
-                botonBorrar.text = "Confirmar"
-                mostrarMensaje("Selecciona los premios que deseas eliminar")
+                botonBorrar.text = getString(R.string.confirmar)
+                mostrarMensaje(getString(R.string.selecciona_los_premios_que_deseas_eliminar))
             } else {
                 // Verifica si hay premios seleccionados
                 if (premiosSeleccionados.isEmpty()) {
-                    mostrarMensaje("No se seleccionaron premios")
+                    mostrarMensaje(getString(R.string.no_se_seleccionaron_premios))
                 } else {
                     // Elimina los premios seleccionados y actualiza el contenedor
                     for (id in premiosSeleccionados) {
@@ -74,10 +74,10 @@ class TiendaActivity : AppCompatActivity() {
                     }
                     eliminarPremiosDeDB(premiosSeleccionados)
                     premiosSeleccionados.clear()
-                    mostrarMensaje("Premios eliminados")
+                    mostrarMensaje(getString(R.string.premios_eliminados))
                 }
                 modoSeleccionActivo = false
-                botonBorrar.text = "Borrar"
+                botonBorrar.text = getString(R.string.borrar)
                 resetearEstadoPremios(contenedorPremios)
             }
         }
@@ -135,7 +135,7 @@ class TiendaActivity : AppCompatActivity() {
             val premioCostoIndex = cursor.getColumnIndex("costo")
 
             if (premioCostoIndex == -1 || premioIdIndex == -1) {
-                mostrarMensaje("Error al cargar los premios")
+                mostrarMensaje(getString(R.string.error_al_cargar_los_premios))
                 return
             }
 
@@ -167,7 +167,7 @@ class TiendaActivity : AppCompatActivity() {
                     if (verificarCompra(premio)) {
                         mostrarDialogoCompra(nuevoPremio)
                     } else {
-                        mostrarMensaje("No tienes suficientes monedas para comprar este premio")
+                        mostrarMensaje(getString(R.string.no_tienes_suficientes_monedas_para_comprar_este_premio))
                     }
 
                 } else {
@@ -209,11 +209,11 @@ class TiendaActivity : AppCompatActivity() {
         val usuarioActual = obtenerUsuarioActual()
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Confirmar compra")
-            .setMessage("¿Deseas comprar el premio '$premioNombre'?")
-            .setPositiveButton("Comprar") { dialog: DialogInterface, id: Int ->
+        builder.setTitle(getString(R.string.confirmar_compra))
+            .setMessage(getString(R.string.deseas_comprar_el_premio, premioNombre))
+            .setPositiveButton(getString(R.string.comprar)) { dialog: DialogInterface, id: Int ->
                 // Lógica para procesar la compra del premio
-                mostrarMensaje("Premio comprado")
+                mostrarMensaje(getString(R.string.premio_comprado))
 
                 val db = SQLiteAyudante(this, "LifeQuest", null, 1).writableDatabase
                 // Actualiza la cantidad de monedas del usuario y las monedas gastadas
@@ -221,7 +221,7 @@ class TiendaActivity : AppCompatActivity() {
                 db.execSQL("UPDATE usuarios SET monedas_gastadas  = monedas_gastadas  + $premioPrecio WHERE usuario = '$usuarioActual'")
                 db.close()
 
-            }.setNegativeButton("Cancelar") { dialog: DialogInterface, id: Int ->
+            }.setNegativeButton(getString(R.string.cancelar)) { dialog: DialogInterface, id: Int ->
                 dialog.dismiss()
             }
 
@@ -241,7 +241,7 @@ class TiendaActivity : AppCompatActivity() {
         bd.close()
         return usuario
     }
-
+    // Método para iniciar el reconocimiento de voz
     private fun startSpeechToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
@@ -249,18 +249,20 @@ class TiendaActivity : AppCompatActivity() {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mensaje_inicio_deteccion_voz))
         }
+
         try {
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
         } catch (e: Exception) {
             Toast.makeText(
-                this, "El reconocimiento de voz no está disponible",
+                this, getString(R.string.mensaje_error_No_reconocimiento_voz),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
+    // Método para manejar el resultado del reconocimiento de voz
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -268,58 +270,58 @@ class TiendaActivity : AppCompatActivity() {
             result?.let {
                 val accion = it[0].lowercase()
                 when (accion) {
-                    "tareas" -> {
+                    getString(R.string.tareas) -> {
                         val intent = Intent(this, TareasActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "logros" -> {
+                    getString(R.string.logros) -> {
                         val intent = Intent(this, LogrosActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "tienda" -> {
+                    getString(R.string.tienda) -> {
                         val intent = Intent(this, TiendaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "perfil" -> {
+                    getString(R.string.perfil) -> {
                         val intent = Intent(this, PerfilActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "ayuda" -> {
+                    getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda("En la tienda puedes comprar premios con las monedas que has ganado. ¡No olvides revisar tus tareas y logros para ganar más monedas!")
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
                     }
 
-                    "añadir tarea" -> {
+                    getString(R.string.anadir_tarea) -> {
                         val intent = Intent(this, CrearTareaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "añadir logro" -> {
+                    getString(R.string.anadir_logro)-> {
                         val intent = Intent(this, CrearLogroActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "cambiar modo" -> {
+                    getString(R.string.cambiar_modo) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
                         menuSuperior.cambiarModo()
                     }
 
-                    "añadir premio" -> {
+                    getString(R.string.anadir_premio) -> {
                         val intent = Intent(this, CrearPremioActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "Terminos de uso" -> {
+                    getString(R.string.TOS) -> {
                         val intent = Intent(this, TOSActivity::class.java)
                         startActivity(intent)
                     }
 
                     else -> {
-                        Toast.makeText(this, "No se reconoció la acción", Toast.LENGTH_SHORT).show()
+                        mostrarMensaje(getString(R.string.accion_voz_No_reconocida))
                     }
                 }
             }

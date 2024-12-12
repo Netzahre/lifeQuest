@@ -34,8 +34,8 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¿Olvidaste tu contraseña?"
-            android:textSize="32dp"
+            android:text="@string/olvidaste_tu_contrase_a"
+            android:textSize="32sp"
             android:textStyle="bold|italic" />
 
         <Space
@@ -47,7 +47,7 @@
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Introduce tu email y te enviaremos un link para restablecerla"
+            android:text="@string/introduce_tu_email_y_te_enviaremos_un_link_para_restablecerla"
             android:textAlignment="center"
             android:textSize="20sp" />
 
@@ -71,7 +71,7 @@
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="@string/email"
             android:textAlignment="center"
             android:textSize="20sp" />
 
@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="text" />
 
     </LinearLayout>
@@ -102,7 +102,7 @@
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="restablecer"
+            android:text="@string/restablecer"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 
@@ -115,7 +115,7 @@
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="atras"
+            android:text="@string/atras"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 

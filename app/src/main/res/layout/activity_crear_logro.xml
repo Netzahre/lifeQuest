@@ -45,7 +45,7 @@
                 style="@style/menuAzul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Crear Logro"
+                android:text= "@string/anadir_logro"
                 android:textAlignment="center"
                 android:textSize="34sp" />
         </LinearLayout>
@@ -66,7 +66,7 @@
                 style="@style/botonAzul"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Añadir"
+                android:text="@string/anadir"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 
@@ -80,7 +80,7 @@
                 style="@style/botonAzul"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Atras"
+                android:text="@string/atras"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 
@@ -110,16 +110,17 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Datos básicos"
+                        android:text="@string/datos_basicos"
                         android:textAlignment="center"
-                        android:textSize="24dp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/nombreLogro"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:hint="Nombre de la tarea" />
+                        android:hint="@string/nombre_del_logro"
+                        android:inputType="text" />
 
                 </LinearLayout>
 
@@ -136,7 +137,7 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Monedas de recompensa"
+                        android:text="@string/monedas_de_recompensa"
                         android:textAlignment="center"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -170,7 +171,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="monedas"
+                            android:text="@string/monedas"
                             android:textSize="20sp" />
                     </LinearLayout>
 
@@ -185,7 +186,7 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Condicion para obtener"
+                        android:text="@string/condicion_para_obtener"
                         android:textAlignment="center"
                         android:textSize="24dp"
                         android:textStyle="bold" />
@@ -193,7 +194,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Repeticiones necesarias"
+                        android:text="@string/repeticiones_necesarias"
                         android:textAlignment="center" />
 
                     <EditText
@@ -201,7 +202,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:ems="10"
-                        android:hint="¿Cuantas veces debe repetirse la tarea?"
+                        android:hint="@string/cuantas_veces_debe_repetirse_la_tarea"
                         android:inputType="number" />
 
                     <Space
@@ -211,7 +212,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tarea a completar con exito X veces"
+                        android:text="@string/tarea_a_completar_con_exito_x_veces"
                         android:textAlignment="center" />
 
                     <Spinner

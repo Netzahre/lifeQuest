@@ -25,13 +25,13 @@ class CrearTareaActivity : AppCompatActivity() {
 
     // Variables de la vista
     lateinit var cantidadMonedas: TextView
-    lateinit var anadirTarea: Button
-    lateinit var botonAtras: Button
-    lateinit var nombreTextEdit: EditText
-    lateinit var barraProgreso: SeekBar
-    lateinit var cantidadRepeticiones: EditText
-    lateinit var tipoRepeticion: Spinner
-    lateinit var datePicker: DatePicker
+    private lateinit var anadirTarea: Button
+    private lateinit var botonAtras: Button
+    private lateinit var nombreTextEdit: EditText
+    private lateinit var barraProgreso: SeekBar
+    private lateinit var cantidadRepeticiones: EditText
+    private lateinit var tipoRepeticion: Spinner
+    private lateinit var datePicker: DatePicker
     private val SPEECH_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,13 +45,14 @@ class CrearTareaActivity : AppCompatActivity() {
         }
         // Configurar el menu superior
         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-        menuSuperior.configurarTextoDeAyuda("Desde aquí puedes añadir una nueva tarea a tu lista.")
+        menuSuperior.configurarTextoDeAyuda(getString(R.string.ayuda_crear_tarea))
         menuSuperior.microfono.setOnClickListener {
             startSpeechToText()
         }
 
         // Inicializar variables de la vista
-        var listaspinner = arrayOf("veces", "dias", "semanas")
+        val listaspinner = arrayOf(getString(R.string.veces), getString(R.string.dias),
+            getString(R.string.semanas))
         tipoRepeticion = findViewById(R.id.tipoRepeticion)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaspinner)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -78,7 +79,7 @@ class CrearTareaActivity : AppCompatActivity() {
 
         // Listener para el botón de añadir tarea
         anadirTarea.setOnClickListener {
-            añadirTarea()
+            anadirTarea()
         }
 
         // Listener para el botón de regresar
@@ -100,11 +101,11 @@ class CrearTareaActivity : AppCompatActivity() {
     }
 
     // Método para añadir una tarea a la base de datos
-    fun añadirTarea() {
+    private fun anadirTarea() {
         val usuarioActual = obtenerUsuarioActual()
         // Verificar si se obtuvo el usuario actual
         if (usuarioActual == null) {
-            mostrarMensaje("No se ha podido obtener el usuario actual")
+            mostrarMensaje(getString(R.string.error_al_obtener_usuario))
             return
         }
         val nombre = nombreTextEdit.text.toString()
@@ -122,12 +123,7 @@ class CrearTareaActivity : AppCompatActivity() {
         val fechaFormateada = formatearFecha(fechaEnMilisegundos)
 
         if (nombre.isEmpty()) {
-            mostrarMensaje("El nombre de la tarea no puede estar vacío")
-            return
-        }
-
-        if (repeticiones <= 0) {
-            mostrarMensaje("El número de repeticiones debe ser mayor que 0")
+            mostrarMensaje(getString(R.string.el_nombre_de_la_tarea_no_puede_estar_vac_o))
             return
         }
 
@@ -148,17 +144,20 @@ class CrearTareaActivity : AppCompatActivity() {
 
         // Mostrar un mensaje en función del resultado
         if (resultado != -1L) {
-            mostrarMensaje("Tarea añadida correctamente")
+            mostrarMensaje(getString(R.string.tarea_a_adida_correctamente))
             finish()
+        }
+        else {
+            mostrarMensaje(getString(R.string.error_crear_tarea))
         }
     }
 
     // Método para obtener el usuario actual de la base de datos
-    fun obtenerUsuarioActual(): String? {
+    private fun obtenerUsuarioActual(): String? {
         var usuario: String? = null
         val bd = SQLiteAyudante(this, "LifeQuest", null, 1).readableDatabase
         try {
-            var cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
+            val cursor = bd.rawQuery("SELECT usuario FROM sesionActual", null)
             if (cursor.moveToFirst()) {
                 usuario = cursor.getString(0)
                 cursor.close()
@@ -166,7 +165,7 @@ class CrearTareaActivity : AppCompatActivity() {
                 return usuario
             }
         } catch (e: Exception) {
-            mostrarMensaje("Error al obtener el usuario actual")
+            mostrarMensaje(getString(R.string.error_al_obtener_usuario))
         }
         return usuario
     }
@@ -179,12 +178,19 @@ class CrearTareaActivity : AppCompatActivity() {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora para transcribir tu voz")
+            putExtra(
+                RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.mensaje_inicio_deteccion_voz)
+            )
         }
+
         try {
             startActivityForResult(intent, SPEECH_REQUEST_CODE)
         } catch (e: Exception) {
-            mostrarMensaje("Error al iniciar el reconocimiento de voz")
+            Toast.makeText(
+                this, getString(R.string.mensaje_error_No_reconocimiento_voz),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -196,58 +202,58 @@ class CrearTareaActivity : AppCompatActivity() {
             result?.let {
                 val accion = it[0].lowercase()
                 when (accion) {
-                    "tareas" -> {
+                    getString(R.string.tareas) -> {
                         val intent = Intent(this, TareasActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "logros" -> {
+                    getString(R.string.logros) -> {
                         val intent = Intent(this, LogrosActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "tienda" -> {
+                    getString(R.string.tienda) -> {
                         val intent = Intent(this, TiendaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "perfil" -> {
+                    getString(R.string.perfil) -> {
                         val intent = Intent(this, PerfilActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "ayuda" -> {
+                    getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda("Desde aquí puedes añadir una nueva tarea a tu lista.")
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
                     }
 
-                    "añadir tarea" -> {
+                    getString(R.string.anadir_tarea) -> {
                         val intent = Intent(this, CrearTareaActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "añadir logro" -> {
+                    getString(R.string.anadir_logro) -> {
                         val intent = Intent(this, CrearLogroActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "cambiar modo" -> {
+                    getString(R.string.cambiar_modo) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
                         menuSuperior.cambiarModo()
                     }
 
-                    "añadir premio" -> {
+                    getString(R.string.anadir_premio) -> {
                         val intent = Intent(this, CrearPremioActivity::class.java)
                         startActivity(intent)
                     }
 
-                    "Terminos de uso" -> {
+                    getString(R.string.TOS) -> {
                         val intent = Intent(this, TOSActivity::class.java)
                         startActivity(intent)
                     }
 
                     else -> {
-                        mostrarMensaje("No se ha entendido la acción")
+                        mostrarMensaje(getString(R.string.accion_voz_No_reconocida))
                     }
                 }
             }

@@ -4,16 +4,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.BitmapFactory
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContentProviderCompat.requireContext
 
 // Clase que representa el menú superior de la aplicación que se muestra en todas las actividades
 class MenuSuperiorActivity @JvmOverloads constructor(
@@ -49,6 +46,7 @@ class MenuSuperiorActivity @JvmOverloads constructor(
                 }
             }
         }
+        cursor.close()
 
         // Configurar los botones del menú superior
         findViewById<ImageButton>(R.id.homa).setOnClickListener {
@@ -91,9 +89,9 @@ class MenuSuperiorActivity @JvmOverloads constructor(
     // Método para mostrar un mensaje de ayuda
     fun mostrarAyuda(mensaje: String) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Ayuda")
+        builder.setTitle(context.getString(R.string.ayuda))
             .setMessage(mensaje)
-            .setPositiveButton("Entendido", null)
+            .setPositiveButton(context.getString(R.string.entendido), null)
             .show()
     }
 

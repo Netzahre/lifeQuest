@@ -45,7 +45,7 @@
                 style="@style/menuRosa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tienda"
+                android:text="@string/anadir_premio"
                 android:textAlignment="center"
                 android:textSize="34sp" />
         </LinearLayout>
@@ -62,12 +62,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/añadirPremio"
+                android:id="@+id/anadirPremio"
                 app:backgroundTint="@null"
                 style="@style/botonRosa"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Añadir"
+                android:text="@string/anadir"
                 android:textSize="20sp"/>
 
             <Space
@@ -80,7 +80,7 @@
                 style="@style/botonRosa"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Atras"
+                android:text="@string/atras"
                 android:textSize="20sp"
                 app:backgroundTint="@null" />
 
@@ -110,16 +110,16 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Datos básicos"
+                        android:text="@string/datos_basicos"
                         android:textAlignment="center"
-                        android:textSize="24dp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/nombrePremio"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:hint="Nombre del premio" />
+                        android:hint="@string/nombre_del_premio" />
 
                 </LinearLayout>
 
@@ -136,7 +136,7 @@
                         style="@style/texto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Precio"
+                        android:text="@string/precio"
                         android:textAlignment="center"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -170,7 +170,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="monedas"
+                            android:text="@string/monedas"
                             android:textSize="20sp" />
                     </LinearLayout>
 

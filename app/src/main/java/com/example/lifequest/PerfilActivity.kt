@@ -1,18 +1,11 @@
 package com.example.lifequest
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import org.w3c.dom.Text
 
 class PerfilActivity : AppCompatActivity() {
 
@@ -36,9 +29,9 @@ class PerfilActivity : AppCompatActivity() {
         // Asociar el TabLayout con el ViewPager
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Datos"
-                1 -> "Configuración"
-                else -> "Otra pestaña"
+                0 -> getString(R.string.datos)
+                1 -> getString(R.string.configuracion)
+                else -> getString(R.string.otra_pestana)
             }
         }.attach()
     }

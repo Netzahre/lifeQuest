@@ -2,6 +2,157 @@
     <string name="app_name">LifeQuest</string>
     <string name="passRecovery"><u>Olvide mi contraseña</u></string>
     <string name="TOS"><u>Terminos de uso</u></string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_al_obtener_usuario">Error al obtener usuario</string>
+    <string name="rellenar_todos_campos">Por favor, rellene todos los campos</string>
+
+
+    <!-- Strings reconocimiento voz -->
+    <string name="mensaje_inicio_deteccion_voz">Habla ahora para transcribir tu voz</string>
+    <string name="mensaje_error_No_reconocimiento_voz">El reconocimiento de voz no está disponible</string>
+    <string name="accion_voz_No_reconocida">No se reconoció la acción</string>
+    <string name="tareas">tareas</string>
+    <string name="logros">logros</string>
+    <string name="tienda">tienda</string>
+    <string name="perfil">perfil</string>
+    <string name="ayuda">ayuda</string>
+    <string name="anadir_tarea">añadir tarea</string>
+    <string name="anadir_logro">añadir logro</string>
+    <string name="cambiar_modo">cambiar modo</string>
+    <string name="anadir_premio">añadir premio</string>
+    <string name="terminos_de_uso">Terminos de uso</string>
+
+    <!-- Strings Tareas Activity -->
+    <string name="textoTareaRepetibleVeces">%1$s monedas - completado %2$s veces de %3$s</string>
+    <string name="cantidad_monedas">%1$s monedas</string>
+    <string name="ayudaTareasActivity">Aquí puedes ver tus tareas pendientes y completarlas. Mantén pulsado el botón de borrar para seleccionar tareas y eliminar</string>
+    <string name="tareas_eliminadas">Tareas eliminadas</string>
+    <string name="no_hay_tareas_seleccionadas_para_eliminar">No hay tareas seleccionadas para eliminar</string>
+    <string name="tarea_completada_monedas">¡Tarea completada! +%1$s monedas</string>
+    <string name="activar_Seleccion_tareas">Mantén pulsado \'Borrar tareas\' para activar la selección</string>
+    <string name="selecciona_las_tareas_a_eliminar">Selecciona las tareas a eliminar</string>
+
+    <!-- Strings Perfil -->
+    <string name="imagen_de_perfil_actualizada">Imagen de perfil actualizada</string>
+    <string name="otra_pestana">Otra pestaña</string>
+
+
+    <!-- Strings Crear Logro -->
+    <string name="ayuda_crear_logro">Desde aquí puedes añadir un nuevo logro a la lista de logros.</string>
+    <string name="no_hay_tareas_con_repeticiones_diarias_o_semanales">No hay tareas con repeticiones diarias o semanales</string>
+    <string name="por_favor_ingrese_un_nombre_para_el_logro">Por favor, ingrese un nombre para el logro</string>
+    <string name="por_favor_ingrese_un_premio_para_el_logro">Por favor, ingrese un premio para el logro</string>
+    <string name="por_favor_seleccione_una_tarea_asociada">Por favor, seleccione una tarea asociada</string>
+    <string name="por_favor_ingrese_un_n_mero_de_repeticiones_necesarias">Por favor, ingrese un número de repeticiones necesarias</string>
+    <string name="logro_creado_exitosamente">Logro creado exitosamente</string>
+    <string name="error_al_crear_el_logro">Error al crear el logro</string>
+    <string name="cuantas_veces_debe_repetirse_la_tarea">¿Cuantas veces debe repetirse la tarea?</string>
+    <string name="tarea_a_completar_con_exito_x_veces">Tarea a completar con exito X veces</string>
+    <string name="condicion_para_obtener">Condicion para obtener</string>
+
+
+    <!-- Strings Crear Premio -->
+    <string name="ayuda_crear_premio">Desde aquí puedes añadir un nuevo premio a la tienda.</string>
+    <string name="el_nombre_del_premio_no_puede_estar_vac_o">El nombre del premio no puede estar vacío</string>
+    <string name="premio_a_adido_correctamente">Premio añadido correctamente</string>
+    <string name="nombre_del_premio">Nombre del premio</string>
+    <string name="no_se_ha_podido_a_adir_el_premio">No se ha podido añadir el premio</string>
+
+    <!-- Strings crear tarea -->
+    <string name="ayuda_crear_tarea">Desde aquí puedes añadir una nueva tarea a tu lista.</string>
+    <string name="el_nombre_de_la_tarea_no_puede_estar_vac_o">El nombre de la tarea no puede estar vacío</string>
+    <string name="tarea_a_adida_correctamente">Tarea añadida correctamente</string>
+    <string name="error_crear_tarea">No se ha podido añadir la tarea</string>
+
+    <!-- Strings home -->
+    <string name="ayuda_home">Este es el menu principal de la aplicacion, desde aqui puedes navegar a las distintas secciones de la aplicacion.</string>
+
+    <!-- Strings login -->
+    <string name="inicio_de_sesion_exitoso">Inicio de sesion exitoso</string>
+    <string name="usuario_o_contrase_a_incorrectos">Usuario o contraseña incorrectos</string>
+
+
+    <!-- Strings logros -->
+    <string name="logro_completado_felicidades">¡Logro completado! ¡Felicidades!</string>
+    <string name="tarea_progreso">Tarea: %1$s, Progreso: %2$s/%3$s</string>
+    <string name="logros_eliminados">Logros eliminados</string>
+    <string name="no_se_seleccionaron_logros">No se seleccionaron logros</string>
+    <string name="selecciona_los_logros_que_deseas_borrar">Selecciona los logros que deseas borrar</string>
+    <string name="ayuda_logros">Este es el menu de logros, aqui puedes ver los logros que has completado y los que te faltan por completar.</string>
+
+    <!-- Strings recuperarContrasena -->
+    <string name="por_favor_introduce_un_correo">Por favor, introduce un correo</string>
+    <string name="contrasena_recuperada">Contraseña: %1$s</string>
+    <string name="correo_enviado_con_xito">Correo enviado con éxito</string>
+    <string name="correo_no_registrado">Correo no registrado</string>
+
+    <!-- Strings registro -->
+    <string name="error_al_registrar_el_usuario">Error al registrar el usuario</string>
+    <string name="el_correo_ya_est_registrado">El correo ya está registrado</string>
+    <string name="el_usuario_ya_existe">El usuario ya existe</string>
+    <string name="las_contrase_as_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="usuario_registrado_con_exito">Usuario registrado con exito</string>
+
+    <!-- Strings tienda -->
+    <string name="ayuda_tienda">En la tienda puedes comprar premios con las monedas que has ganado. ¡No olvides revisar tus tareas y logros para ganar más monedas!</string>
+    <string name="selecciona_los_premios_que_deseas_eliminar">Selecciona los premios que deseas eliminar</string>
+    <string name="no_se_seleccionaron_premios">No se seleccionaron premios</string>
+    <string name="premios_eliminados">Premios eliminados</string>
+    <string name="error_al_cargar_los_premios">Error al cargar los premios</string>
+    <string name="no_tienes_suficientes_monedas_para_comprar_este_premio">No tienes suficientes monedas para comprar este premio</string>
+    <string name="confirmar_compra">Confirmar compra</string>
+    <string name="deseas_comprar_el_premio">¿Deseas comprar el premio \'%1$s\'?</string>
+    <string name="premio_comprado">Premio comprado</string>
+
+    <!-- Tipos repeticion -->
+    <string name="dias">dias</string>
+    <string name="semanas">semanas</string>
+
+    <!-- Palabras sueltas -->
+    <string name="anadir">Añadir</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="entendido">Entendido</string>
+    <string name="comprar">Comprar</string>
+    <string name="veces">veces</string>
+    <string name="datos">Datos</string>
+    <string name="configuracion">Configuración</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="borrar">Borrar</string>
+    <string name="atras">Atras</string>
+    <string name="datos_basicos">Datos básicos</string>
+    <string name="nombre_de_la_tarea">Nombre de la tarea</string>
+    <string name="monedas_de_recompensa">Monedas de recompensa</string>
+    <string name="monedas">monedas</string>
+    <string name="repeticiones_necesarias">Repeticiones necesarias</string>
+    <string name="precio">Precio</string>
+    <string name="nombre_del_logro">nombre del logro</string>
+    <string name="veces_que_se_repite_la_tarea">Veces que se repite la tarea</string>
+    <string name="cuantas_veces_se_repite_la_tarea">¿Cuantas veces se repite la tarea?</string>
+    <string name="fecha_inicio_tarea">Fecha inicio tarea</string>
+    <string name="bienvenido_a">Bienvenido/a</string>
+    <string name="nombre_usuario">Nombre usuario</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="acceder">Acceder</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="olvidaste_tu_contrase_a">¿Olvidaste tu contraseña?</string>
+    <string name="introduce_tu_email_y_te_enviaremos_un_link_para_restablecerla">Introduce tu email y te enviaremos un link para restablecerla</string>
+    <string name="email">Email</string>
+    <string name="restablecer">restablecer</string>
+    <string name="vamos_a_crear_una_cuenta_para_que_puedas_empezar">¡Vamos a crear una cuenta para que puedas empezar!</string>
+    <string name="repite_tu_contrase_a">Repite tu contraseña</string>
+    <string name="terminos_de_uso_titulo">Terminos de uso</string>
+    <string name="contenidoTOS">Última actualización: Cuando toque 1. ACEPTACIÓN DE LOS TÉRMINOS Al descargar, instalar, acceder o utilizar la aplicación \"[Nombre de la App]\" (en adelante, \"la Aplicación\"), usted acepta cumplir con estos Términos y Condiciones de uso (en adelante, \"los Términos\"). Si no está de acuerdo con estos Términos, debe desinstalar la Aplicación y dejar de utilizarla inmediatamente. 2. DESCRIPCIÓN DE LA APLICACIÓN La Aplicación está diseñada para ayudar a los usuarios a gestionar diversos aspectos de su vida, como la planificación de tareas, el seguimiento de la ingesta de alimentos, y la monitorización de actividades físicas. También incluye elementos de gamificación para incentivar hábitos de vida saludables, mediante la obtención de puntos y niveles en función de los objetivos logrados. 3. REQUISITOS DE USO Para utilizar la Aplicación, debe ser mayor de 18 años o tener el consentimiento de un padre o tutor legal si es menor de 18 años. También debe tener acceso a un dispositivo compatible y a una conexión a internet estable. El uso de la Aplicación está sujeto a cualquier tarifa aplicable que pueda cobrarse por el uso de servicios móviles y de datos. 4. INFORMACIÓN PERSONAL Y PRIVACIDAD El uso de la Aplicación puede implicar el procesamiento de su información personal. Para más detalles sobre cómo recopilamos, utilizamos y protegemos su información personal, consulte nuestra [Política de Privacidad]. Al utilizar la Aplicación, usted acepta la recopilación y uso de su información conforme a dicha Política. 5. USO DE LA APLICACIÓN Usted acepta utilizar la Aplicación exclusivamente para su uso personal. No debe utilizarla para fines comerciales, ilegales o no autorizados. En particular, usted se compromete a no: Usar la Aplicación de manera que pueda dañar, deshabilitar, sobrecargar o deteriorar los servidores o redes conectadas a la Aplicación. Interferir con el uso y disfrute de la Aplicación por parte de otros usuarios. Intentar acceder de manera no autorizada a otros sistemas o cuentas relacionados con la Aplicación. 6. PAGO Y SUSCRIPCIONES Algunas funcionalidades de la Aplicación pueden estar disponibles a través de una suscripción de pago o compras dentro de la Aplicación. Si elige comprar una suscripción o realizar una compra, acepta pagar todas las tarifas aplicables, incluidos los impuestos correspondientes. Nos reservamos el derecho de cambiar las tarifas en cualquier momento, notificándole con antelación cualquier cambio.</string>
+    <string name="cambiar_imagen_de_perfil">Cambiar Imagen de Perfil</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="email_usuario_com">email@usuario.com</string>
+    <string name="monedas_en_posesi_n">Monedas en posesión</string>
+    <string name="monedas_gastadas">Monedas gastadas</string>
+    <string name="tareas_completadas">Tareas completadas</string>
+    <string name="nombrepremio">NombrePremio</string>
+    <string name="costo">costo</string>
+    <string name="home">Home</string>
+    <string name="detectar_voz">Detectar voz</string>
+
+
 </resources>

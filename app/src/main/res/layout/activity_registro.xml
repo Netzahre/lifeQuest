@@ -35,7 +35,7 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bienvenido/a"
+            android:text="@string/bienvenido_a"
             android:textSize="34sp"
             android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
             style="@style/texto"
             android:layout_width="238dp"
             android:layout_height="wrap_content"
-            android:text="¡Vamos a crear una cuenta para que puedas empezar!"
+            android:text="@string/vamos_a_crear_una_cuenta_para_que_puedas_empezar"
             android:textAlignment="center"
             android:textSize="20sp" />
     </LinearLayout>
@@ -68,7 +68,7 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre usuario"
+            android:text="@string/nombre_usuario"
             android:textSize="20sp" />
 
         <EditText
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Usuario"
+            android:hint="@string/usuario"
             android:inputType="text"/>
 
         <Space
@@ -89,7 +89,7 @@
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="@string/email"
             android:textSize="20sp" />
 
         <EditText
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"/>
 
         <Space
@@ -110,7 +110,7 @@
             style="@style/texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contraseña"
+            android:text="@string/contrasena"
             android:textSize="20sp" />
 
         <EditText
@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Contraseña"
+            android:hint="@string/contrasena"
             android:inputType="textPassword"/>
 
         <Space
@@ -131,7 +131,7 @@
             style="@style/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Repite tu contraseña"
+            android:text="@string/repite_tu_contrase_a"
             android:textSize="20sp" />
 
         <EditText
@@ -140,7 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Contraseña"
+            android:hint="@string/contrasena"
             android:inputType="textPassword"/>
     </LinearLayout>
 
@@ -160,7 +160,7 @@
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="Registrarse"
+            android:text="@string/registrarse"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 
@@ -173,7 +173,7 @@
             style="@style/botonAzul"
             android:layout_width="243dp"
             android:layout_height="75dp"
-            android:text="Atras"
+            android:text="@string/atras"
             android:textSize="34sp"
             app:backgroundTint="@null" />
 
