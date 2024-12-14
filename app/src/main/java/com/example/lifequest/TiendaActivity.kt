@@ -182,6 +182,25 @@ class TiendaActivity : AppCompatActivity() {
                     }
                 }
             }
+            nuevoPremio.setOnLongClickListener {
+                if (!modoSeleccionActivo) {
+                    // Activar modo selección si no está activo
+                    modoSeleccionActivo = true
+                    val premioId = nuevoPremio.tag as Int
+                    premiosSeleccionados.clear()
+                    premiosSeleccionados.add(premioId)
+                    nuevoPremio.alpha = 0.5f
+                    findViewById<Button>(R.id.borrarPremio).text = getString(R.string.confirmar)
+                    mostrarMensaje(getString(R.string.selecciona_los_premios_que_deseas_eliminar))
+                } else if (modoSeleccionActivo) {
+                    // Desactivar modo selección si ya está activo
+                    modoSeleccionActivo = false
+                    premiosSeleccionados.clear()
+                    nuevoPremio.alpha = 1f
+                    findViewById<Button>(R.id.borrarPremio).text = getString(R.string.borrar)
+                }
+                true
+            }
 
             // Agregamos el nuevo premio al contenedor
             contenedorPremios.addView(nuevoPremio)
@@ -292,7 +311,7 @@ class TiendaActivity : AppCompatActivity() {
 
                     getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_tienda))
                     }
 
                     getString(R.string.anadir_tarea) -> {

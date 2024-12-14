@@ -2,28 +2,30 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/fondoCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="30dp"
     app:cardElevation="8dp"
+    app:layout_anchorGravity="right"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp"
-    style="@style/fondoCard">
+    tools:layout_editor_absoluteY="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:gravity="center"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/nombre"
             style="@style/texto"
-            android:layout_width="wrap_content"
+            android:layout_width="355dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:text="@string/logros"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -31,8 +33,10 @@
         <TextView
             android:id="@+id/ganancia"
             style="@style/texto"
-            android:layout_width="wrap_content"
+            android:layout_width="355dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
             android:text="@string/monedas"
             android:textSize="14sp" />
     </LinearLayout>

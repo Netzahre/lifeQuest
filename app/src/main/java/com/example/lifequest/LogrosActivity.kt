@@ -106,6 +106,24 @@ class LogrosActivity : AppCompatActivity() {
                 }
             }
         }
+        nuevoLogro.setOnLongClickListener {
+            if (!modoSeleccionActivo) {
+                // Activar modo selección si no está activo
+                modoSeleccionActivo = true
+                logrosSeleccionados.clear()
+                logrosSeleccionados.add(id)
+                nuevoLogro.alpha = 0.5f
+                findViewById<Button>(R.id.borrarLogro).text = getString(R.string.confirmar)
+                mostrarMensaje(getString(R.string.selecciona_los_logros_que_deseas_borrar))
+            } else if (modoSeleccionActivo) {
+                // Desactivar modo selección si ya está activo
+                modoSeleccionActivo = false
+                logrosSeleccionados.clear()
+                nuevoLogro.alpha = 1f
+                findViewById<Button>(R.id.borrarLogro).text = getString(R.string.borrar)
+            }
+            true
+        }
         return nuevoLogro
     }
 
@@ -273,7 +291,7 @@ class LogrosActivity : AppCompatActivity() {
 
                     getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
+                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_logros))
                     }
 
                     getString(R.string.anadir_tarea) -> {

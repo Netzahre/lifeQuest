@@ -24,6 +24,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/imagenperfil"
+            android:contentDescription="@string/avatar_usuario"
             android:src="@drawable/applogo"
             android:scaleType="centerCrop" />
 

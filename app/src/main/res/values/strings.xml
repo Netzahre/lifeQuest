@@ -153,6 +153,7 @@
     <string name="costo">costo</string>
     <string name="home">Home</string>
     <string name="detectar_voz">Detectar voz</string>
+    <string name="avatar_usuario">avatar usuario</string>
 
 
 </resources>

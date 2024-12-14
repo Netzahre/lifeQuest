@@ -198,6 +198,24 @@ class TareasActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+            tareaView.setOnLongClickListener {
+                if (!modoSeleccionActivo) {
+                    // Activar modo selección si no está activo
+                    modoSeleccionActivo = true
+                    tareasSeleccionadas.clear()
+                    tareasSeleccionadas.add(tarea.id)
+                    tareaView.alpha = 0.5f
+                    findViewById<Button>(R.id.borrarTarea).text = getString(R.string.confirmar)
+                    mostrarMensaje(getString(R.string.selecciona_las_tareas_a_eliminar))
+                } else if (modoSeleccionActivo) {
+                    // Desactivar modo selección si ya está activo
+                    modoSeleccionActivo = false
+                    tareasSeleccionadas.clear()
+                    tareaView.alpha = 1f
+                    findViewById<Button>(R.id.borrarTarea).text = getString(R.string.borrar)
+                }
+                true
+            }
             tareasLayout.addView(tareaView)
         }
     }
@@ -430,7 +448,7 @@ class TareasActivity : AppCompatActivity() {
 
                     getString(R.string.ayuda) -> {
                         val menuSuperior = findViewById<MenuSuperiorActivity>(R.id.menuSuperior)
-                        menuSuperior.mostrarAyuda(getString(R.string.ayuda_crear_logro))
+                        menuSuperior.mostrarAyuda(getString(R.string.ayudaTareasActivity))
                     }
 
                     getString(R.string.anadir_tarea) -> {
